@@ -1,0 +1,32 @@
+#vacature_info.postbox .inside {
+  padding: 0; }
+#vacature_info.postbox .field {
+  border-top: 1px solid #e8e8e8;
+  padding: 15px 10px; }
+  #vacature_info.postbox .field p.label {
+    font-size: 12px;
+    line-height: 1.5em;
+    margin: 0 0 1em;
+    padding: 0;
+    color: #666666;
+    text-shadow: 0 1px 0 #FFFFFF; }
+    #vacature_info.postbox .field p.label label {
+      color: #333333;
+      font-size: 13px;
+      line-height: 1.5em;
+      font-weight: bold;
+      padding: 0;
+      margin: 0 0 3px;
+      display: block;
+      vertical-align: text-bottom; }
+  #vacature_info.postbox .field select {
+    width: 100%;
+    padding: 2px;
+    resize: none; }
+  #vacature_info.postbox .field input[type="text"] {
+    width: 100%;
+    resize: none; }
+  #vacature_info.postbox .field:first-child {
+    border-top: none; }
+
+/*# sourceMappingURL=hockey_vacatures-admin.css.map */

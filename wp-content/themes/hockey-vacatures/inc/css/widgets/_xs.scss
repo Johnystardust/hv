@@ -1,0 +1,21 @@
+.widget {
+  h5.widget-title {
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  &.widget_nav_menu {
+    ul li {
+      margin-bottom: .5rem;
+      a {
+        text-transform: uppercase;
+        color: #171717;
+
+        &:hover {
+          color: $primary-color;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

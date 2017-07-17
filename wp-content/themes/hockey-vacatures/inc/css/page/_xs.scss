@@ -1,0 +1,36 @@
+.page {
+  .page-wrapper {
+    background-color: $light-grey;
+  }
+  .page-content {
+    padding: 3rem;
+    background-color: #ffffff;
+
+    .entry-header {
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.page-normal {
+}
+
+.page-sidebar {
+}
+
+/* ------------ Page Banner ------------ */
+#page-banner {
+  height: 300px;
+
+  h1 {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    color: #fff;
+    text-transform: uppercase;
+  }
+}

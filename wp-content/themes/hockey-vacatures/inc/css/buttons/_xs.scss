@@ -1,0 +1,41 @@
+.btn {
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.btn-primary {
+  border: 2px solid $primary-color;
+  border-radius: 0;
+  background-color: $primary-color;
+  color: #ffffff;
+  &:hover {
+    background-color: $primary-hover-color;
+  }
+}
+
+.btn-border {
+  border: 2px solid $primary-color;
+  border-radius: 0;
+  color: $primary-color;
+  &:hover {
+    background-color: $primary-color;
+    color: #ffffff;
+  }
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-set .btn {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  &:first-child {
+    margin-left: 0;
+  }
+}

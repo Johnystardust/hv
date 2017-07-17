@@ -1,0 +1,54 @@
+.icon-left i {margin-right: 1rem;}
+.icon-right i {margin-left: 1rem;}
+
+// Top Bar
+.top-bar {
+  height: 60px;
+  background-color: $primary-color;
+
+  .top-bar-item {
+    text-align: center;
+    border-right: 1px solid #cccccc;
+    &:first-child {
+      border-left: 1px solid #cccccc;
+    }
+    a {
+      height: 60px;
+      line-height: 60px;
+      display: block;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &:hover {
+      background-color: $primary-hover-color;
+      @include transition-ease-all;
+    }
+  }
+}
+
+// Main content
+.main-content {
+  background-color: $background-grey;
+  .main-column {
+    background-color: #ffffff;
+    padding: 3rem;
+  }
+}
+
+// Sidebar
+.sidebar-column {
+  .sidebar-widget {
+    padding: 2rem 2rem 1rem;
+    background-color: #ffffff;
+    margin-bottom: 2rem;
+
+    &:first-child {
+      padding-top: 3rem;
+    }
+  }
+}

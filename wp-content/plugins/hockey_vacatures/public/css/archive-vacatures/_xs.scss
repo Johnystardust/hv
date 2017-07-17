@@ -1,0 +1,32 @@
+#vacature-archive {
+  .main-content {
+    background-color: $background-grey;
+
+
+    .vacature-list {
+      .vacature-item {
+        border-bottom: 1px solid #cccccc;
+        padding-bottom: 3rem;
+        padding-top: 3rem;
+
+        .title {
+          margin-bottom: .5rem;
+          span {
+            font-size: 1rem;
+          }
+        }
+
+        .sub-line {
+          font-size: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .vacature-info {
+          li {
+            font-size: .9rem;
+          }
+        }
+      }
+    }
+  }
+}

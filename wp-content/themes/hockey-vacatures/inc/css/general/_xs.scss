@@ -1,0 +1,269 @@
+html {
+  font-size: 87.5%;
+  width: 100%;
+  overflow-x: hidden;
+}
+body {
+  font-size: 1rem;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+
+  &.admin-bar:not(.home) {
+    margin-top: 74px;
+  }
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+    color: $primary-color;
+  }
+}
+
+// Generalisation
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+form {
+  .form-group {margin-bottom: 2rem;}
+  .form-control {
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-radius: 0;
+    padding: 1rem;
+  }
+}
+
+
+
+
+
+// Panel group
+.panel-group {
+  .panel {
+    max-height: 54px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .panel-heading {
+      i {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        margin-top: 5px;
+      }
+    }
+
+    &.active {
+      max-height: 700px;
+    }
+  }
+}
+
+// Overlay
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+#banner {
+  position: relative;
+  padding: 0;
+  min-height: 600px;
+
+  h1 {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  h2 {
+    color: #fff;
+    text-transform: uppercase;
+  }
+}
+
+#panels {
+  h3 {
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+  p {
+    color: #ffffff;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
+
+
+#cta {
+  background-color: #171717;
+  h3 {
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 45px;
+  }
+}
+
+
+#cards {
+  .card {
+    border: none;
+    text-align: center;
+    i {
+      font-size: 2rem;
+      color: $primary-color;
+    }
+    h3 {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+    a i {
+      font-size: 1rem;
+      color: $primary-color;
+
+      &:hover {
+        color: $primary-hover-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+#contact {
+  ul {margin-top: 2rem;}
+  ul li {
+    margin-bottom: 1.4rem;
+
+    .circle {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      position: relative;
+      text-align: center;
+      background-color: #ffffff;
+      margin-right: 1rem;
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+      i {
+        position: relative;
+        top: 5px;
+        font-size: 1.2rem;
+        color: $primary-color;
+      }
+    }
+    a {
+      color: #000;
+      line-height: 45px;
+
+      &:hover {
+        color: $primary-hover-color;
+        text-decoration: none;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    background-color: #f8f8f8;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  form {
+    padding-left: 3rem;
+  }
+}
+
+
+
+
+#maps {
+  position: relative;
+  height: 100vh;
+  max-height: 100px;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  .map-side {
+    position: absolute;
+    left: -350px;
+    top: 0;
+    height: 100%;
+    width: 350px;
+    background-color: #ffffff;
+    z-index: 1;
+    @include transition-ease-all;
+
+    .map-side-inner {
+      padding: 3rem;
+      margin-top: 74px;
+      text-align: left;
+    }
+
+    .open-map-side, .map-exit {
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 1.4rem;
+    }
+    .map-exit {
+      bottom: 50px;
+    }
+
+    &.active {
+      left: -300px;
+    }
+    &.open {
+      left: 0;
+    }
+  }
+
+  #map-canvas {
+    height: 100%;
+  }
+
+  .overlay {
+    background-color: rgba(107,199,255, 0.7);
+    visibility: visible;
+    opacity: 1;
+    z-index: 2;
+    @include transition-ease-all;
+    h3 {
+      padding-top: 2rem;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 600;
+    }
+    i {
+      position: relative;
+      top: 0;
+      color: #ffffff;
+      font-size: 2rem;
+      @include transition-ease-all;
+    }
+  }
+
+  &.open {
+    max-height: 100vh;
+
+    .overlay {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}

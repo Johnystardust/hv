@@ -1,1 +1,12 @@
 .idea
+
+# UPLOADS
+wp-content/uploads
+
+# PLUGINS
+wp-content/plugins/*
+!wp-content/plugins/hockey_vacatures
+
+# THEMES
+wp-content/themes/*
+!wp-content/themes/hockey-vacatures

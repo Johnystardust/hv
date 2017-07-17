@@ -1,0 +1,191 @@
+.icon-left i {
+  margin-right: 1rem; }
+
+.icon-right i {
+  margin-left: 1rem; }
+
+.top-bar {
+  height: 60px;
+  background-color: #177FBF; }
+  .top-bar .top-bar-item {
+    text-align: center;
+    border-right: 1px solid #cccccc; }
+    .top-bar .top-bar-item:first-child {
+      border-left: 1px solid #cccccc; }
+    .top-bar .top-bar-item a {
+      height: 60px;
+      line-height: 60px;
+      display: block;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600; }
+      .top-bar .top-bar-item a:hover {
+        text-decoration: none; }
+    .top-bar .top-bar-item:hover {
+      background-color: #0E4C72;
+      transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out; }
+
+.main-content {
+  background-color: #f6f6f6; }
+  .main-content .main-column {
+    background-color: #ffffff;
+    padding: 3rem; }
+
+.sidebar-column .sidebar-widget {
+  padding: 2rem 2rem 1rem;
+  background-color: #ffffff;
+  margin-bottom: 2rem; }
+  .sidebar-column .sidebar-widget:first-child {
+    padding-top: 3rem; }
+
+#hv-side-panel {
+  position: fixed;
+  z-index: 1000001;
+  width: 100%;
+  height: calc(100% - 36px);
+  margin-top: 36px;
+  visibility: hidden; }
+  #hv-side-panel .hv-side-panel-inner {
+    position: absolute;
+    background: #ffffff;
+    width: 50%;
+    height: 100%;
+    right: -100%;
+    z-index: 2;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out; }
+  #hv-side-panel.active {
+    visibility: visible; }
+    #hv-side-panel.active .hv-side-panel-inner {
+      right: 0; }
+
+body:after {
+  content: '';
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out; }
+
+body.hv-side-panel-open:after {
+  visibility: visible;
+  opacity: 1; }
+
+#vacature-single .main-content .main-column .social-share {
+  position: absolute;
+  right: 0;
+  top: 50%; }
+  #vacature-single .main-content .main-column .social-share ul li {
+    display: block;
+    text-align: center;
+    width: 40px;
+    height: 40px; }
+    #vacature-single .main-content .main-column .social-share ul li a {
+      position: relative;
+      color: #ffffff;
+      display: block; }
+    #vacature-single .main-content .main-column .social-share ul li i {
+      position: relative;
+      top: 11px;
+      font-size: 1.2rem; }
+    #vacature-single .main-content .main-column .social-share ul li span {
+      display: none;
+      max-width: 0; }
+    #vacature-single .main-content .main-column .social-share ul li.facebook {
+      background-color: #3b5998; }
+    #vacature-single .main-content .main-column .social-share ul li.google {
+      background-color: #db4437; }
+    #vacature-single .main-content .main-column .social-share ul li.twitter {
+      background-color: #1da1f2; }
+    #vacature-single .main-content .main-column .social-share ul li.linkedin {
+      background-color: #0077b5; }
+#vacature-single .main-content .main-column .title {
+  margin-bottom: 2rem; }
+#vacature-single .main-content .main-column .the-content {
+  padding-right: 8rem; }
+#vacature-single .main-content .main-column .vacature-data li, #vacature-single .main-content .main-column .vacature-info li {
+  font-size: .9rem;
+  margin-bottom: .3rem; }
+  #vacature-single .main-content .main-column .vacature-data li strong, #vacature-single .main-content .main-column .vacature-info li strong {
+    min-width: 65px;
+    display: inline-block; }
+  #vacature-single .main-content .main-column .vacature-data li i, #vacature-single .main-content .main-column .vacature-info li i {
+    min-width: 20px;
+    color: #177FBF; }
+  #vacature-single .main-content .main-column .vacature-data li a, #vacature-single .main-content .main-column .vacature-info li a {
+    color: #000; }
+    #vacature-single .main-content .main-column .vacature-data li a:hover, #vacature-single .main-content .main-column .vacature-info li a:hover {
+      color: #177FBF; }
+
+#vacature-archive .main-content {
+  background-color: #f6f6f6; }
+  #vacature-archive .main-content .vacature-list .vacature-item {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 3rem;
+    padding-top: 3rem; }
+    #vacature-archive .main-content .vacature-list .vacature-item .title {
+      margin-bottom: .5rem; }
+      #vacature-archive .main-content .vacature-list .vacature-item .title span {
+        font-size: 1rem; }
+    #vacature-archive .main-content .vacature-list .vacature-item .sub-line {
+      font-size: 1rem;
+      margin-bottom: 1rem; }
+    #vacature-archive .main-content .vacature-list .vacature-item .vacature-info li {
+      font-size: .9rem; }
+
+.widget_hv_register_widget ul li a {
+  text-decoration: none; }
+.widget_hv_register_widget ul li.active a {
+  background-color: #0E4C72; }
+.widget_hv_register_widget ul li.hv-login-link .hv-register-widget-form {
+  display: none;
+  position: absolute;
+  border-top: 1px solid #ffffff;
+  background-color: #177FBF;
+  padding: 1rem;
+  top: 100%;
+  right: 0;
+  z-index: 1000; }
+  .widget_hv_register_widget ul li.hv-login-link .hv-register-widget-form label {
+    text-align: left;
+    color: #ffffff;
+    font-size: .8rem;
+    margin-bottom: .3rem;
+    text-transform: uppercase;
+    display: block; }
+  .widget_hv_register_widget ul li.hv-login-link .hv-register-widget-form .login-submit {
+    margin-bottom: 0; }
+    .widget_hv_register_widget ul li.hv-login-link .hv-register-widget-form .login-submit #wp-submit {
+      background: none;
+      border: 1px solid #ffffff;
+      padding: .5rem 1rem;
+      border-radius: 0;
+      color: #ffffff;
+      display: block;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out; }
+      .widget_hv_register_widget ul li.hv-login-link .hv-register-widget-form .login-submit #wp-submit:hover {
+        background-color: #ffffff;
+        color: #177FBF; }
+.widget_hv_register_widget ul li.hv-login-link.active .hv-register-widget-form {
+  display: block; }
+
+/*# sourceMappingURL=hockey_vacatures-public.css.map */
