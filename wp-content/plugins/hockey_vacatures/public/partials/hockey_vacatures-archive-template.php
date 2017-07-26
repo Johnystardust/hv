@@ -14,10 +14,8 @@
 
 get_header(); ?>
 
-<div id="vacature-archive" class="wrapper">
-    <div class="container-fluid px-0" style="background-image: url('<?php echo get_stylesheet_directory_uri().'/inc/img/hockeyvacatures-banner.jpg'; ?>'); min-height: 300px;">
-
-    </div>
+<div id="vacature-archive" class="page-normal">
+    <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
     <?php // Top Bar ?>
     <?php echo do_shortcode('[hockey_vacatures_top_bar]'); ?>
@@ -25,20 +23,45 @@ get_header(); ?>
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
             <div class="row">
+                <div class="col-8 archive-filter">
+                    <form action="" method="get">
+                        <div class="form-group">
+                            <label><?php echo __( 'Zoekwoorden', TEXTDOMAIN ); ?></label>
+                            <input type="text" name="s" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <select name="n">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="-1">Alles tonen</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-border">Zoeken</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-8 main-column vacature-list">
                     <?php
-                    $post_count = wp_count_posts('vacatures');
                     $args = array(
                         'post_type'         => 'vacatures',
-                        'posts_per_page'    => 10,
+                        'posts_per_page'    => $_GET['n'],
+                        's'                 => $_GET['s']
                     );
 
                     $the_query = new WP_Query( $args );
 
+
+
+                    $post_count = $the_query->post_count;
+
                     if($the_query->have_posts()):
                     ?>
                         <h1 class="title d-inline-block">Alle Vacatures</h1>
-                        <span class="d-inline pull-right" style="font-size: 1rem;"><?php echo __('Aantal vacatures', TEXTDOMAIN); ?>: <?php echo $post_count->publish ?></span>
+                        <span class="d-inline pull-right" style="font-size: 1rem;"><?php echo __('Aantal vacatures', TEXTDOMAIN); ?>: <?php echo $post_count ?></span>
                     <?php
                         while($the_query->have_posts()): $the_query->the_post();
                             // TODO: FIX GET TEMPLATE PART
@@ -92,7 +115,6 @@ get_header(); ?>
 
                 <div class="col-3 push-1 px-0 sidebar-column">
                     <?php get_sidebar(); ?>
-
                 </div>
             </div>
         </div>

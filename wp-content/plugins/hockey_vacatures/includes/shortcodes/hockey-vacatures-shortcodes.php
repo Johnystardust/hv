@@ -16,6 +16,8 @@ class Hockey_Vacatures_Shortcodes {
     private $sale_form;
     private $top_bar;
 
+    // @TODO: FIX NEW SHORTCODE WAY IF POSSIBLE
+
     /**
      * Initialize the class and set its properties.
      *

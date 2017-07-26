@@ -49,8 +49,12 @@ get_header(); ?>
         <div class="container main-content-inner">
             <div class="row">
                 <div class="col-8 main-column">
+                    <?php while ( have_posts() ) : the_post();
+                        get_template_part( 'template-parts/page/content', 'page' );
+                    endwhile; ?>
 
-                    <h2 class="mb-3"><?php echo get_the_title(); ?></h2><br>
+                    <br>
+                    <br>
 
                     <?php echo do_shortcode('[hockey_vacatures_register_form]'); ?>
                 </div>

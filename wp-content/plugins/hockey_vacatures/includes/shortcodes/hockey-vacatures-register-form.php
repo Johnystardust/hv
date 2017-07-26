@@ -19,43 +19,65 @@ class Hockey_Vacatures_Register_Form {
      */
     public function register_form(){
         ?>
-        <form class="px-0" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+        <form class="px-0" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
             <div class="row">
-                <div class="form-group col-4">
-                    <input class="form-control" type="text" name="hv_reg_name" placeholder="<?php echo __( 'Gebruikersnaam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
-                </div>
-                <div class="form-group col-4">
-                    <input class="form-control" type="text" name="hv_reg_fname" placeholder="<?php echo __( 'Naam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
-                </div>
-                <div class="form-group col-4">
-                    <input class="form-control" type="text" name="hv_reg_lname" placeholder="<?php echo __( 'Achternaam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
-                </div>
-            </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for=""><?php echo __( 'Gebruikersnaam', TEXTDOMAIN ); ?></label><br>
+                            <input class="form-control" type="text" name="hv_reg_name" placeholder="<?php echo __( 'Gebruikersnaam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
+                            <span class="description"><?php echo __( 'De gebruikersnaam word gebruikt voor het inloggen',  TEXTDOMAIN ); ?></span>
+                        </div>
 
-            <div class="row mt-3">
-                <div class="form-group col-8">
-                    <input class="form-control" type="text" name="hv_reg_email" placeholder="<?php echo __( 'E-mail', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_email']) ? $_POST['hv_reg_email'] : null); ?>">
-                </div>
-                <div class="form-group col-2">
-                    <input class="form-control" type="text" name="hv_reg_age" placeholder="<?php echo __( 'Leeftijd', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_age']) ? $_POST['hv_reg_age'] : null); ?>">
-                </div>
-                <div class="form-group col-2">
-                    <input class="form-control" type="text" name="hv_reg_gender" placeholder="<?php echo __( 'Geslacht', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_gender']) ? $_POST['hv_reg_gender'] : null); ?>">
-                </div>
-            </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Naam', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_fname" placeholder="<?php echo __( 'Naam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Achternaam', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_lname" placeholder="<?php echo __( 'Achternaam', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_name']) ? $_POST['hv_reg_name'] : null); ?>">
+                        </div>
 
-            <div class="row mt-3">
-                <div class="form-group col-6">
-                    <input class="form-control" type="text" name="hv_reg_password" placeholder="<?php echo __( 'Wachtwoord', TEXTDOMAIN ); ?>">
-                </div>
-                <div class="form-group col-6">
-                    <input class="form-control" type="text" name="hv_reg_password_check" placeholder="<?php echo __( 'Wachtwoord Check', TEXTDOMAIN ); ?>">
-                </div>
-            </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Soort profiel', TEXTDOMAIN ); ?></label>
+                            <select class="form-control custom-select" name="role" id="role">
+                                <option value="none"><?php echo __( 'Maak een keuze...', TEXTDOMAIN ); ?></option>
+                                <option value="club"><?php echo __( 'Club', TEXTDOMAIN ); ?></option>
+                                <option value="player"><?php echo __( 'Speler', TEXTDOMAIN ); ?></option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'E-mail', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_email" placeholder="<?php echo __( 'E-mail', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_email']) ? $_POST['hv_reg_email'] : null); ?>">
+                        </div>
 
-            <div class="row mt-3">
-                <div class="form-group col-12">
-                    <button class="btn btn-primary" type="submit" name="hv_reg_submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo __( 'Registreren', TEXTDOMAIN ); ?></button>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Leeftijd', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_age" placeholder="<?php echo __( 'Leeftijd', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_reg_age']) ? $_POST['hv_reg_age'] : null); ?>">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Geslacht', TEXTDOMAIN ); ?></label>
+                            <select class="form-control custom-select" name="hv_reg_gender" id="hv_reg_gender">
+                                <option value="none"><?php echo __( 'Maak een keuze...', TEXTDOMAIN ); ?></option>
+                                <option value="male"><?php echo __( 'Man', TEXTDOMAIN ); ?></option>
+                                <option value="female"><?php echo __( 'Vrouw', TEXTDOMAIN ); ?></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Wachtwoord', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_password" placeholder="<?php echo __( 'Wachtwoord', TEXTDOMAIN ); ?>">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for=""><?php echo __( 'Wachtwoord Check', TEXTDOMAIN ); ?></label>
+                            <input class="form-control" type="text" name="hv_reg_password_check" placeholder="<?php echo __( 'Wachtwoord Check', TEXTDOMAIN ); ?>">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <button class="btn btn-primary" type="submit" name="hv_reg_submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo __( 'Registreren', TEXTDOMAIN ); ?></button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </form>

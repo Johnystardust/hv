@@ -133,6 +133,11 @@ body.hv-side-panel-open:after {
 
 #vacature-archive .main-content {
   background-color: #f6f6f6; }
+  #vacature-archive .main-content .archive-filter {
+    height: 200px;
+    background-color: #177FBF;
+    border: 1px solid #ffffff;
+    border-bottom: none; }
   #vacature-archive .main-content .vacature-list .vacature-item {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 3rem;
