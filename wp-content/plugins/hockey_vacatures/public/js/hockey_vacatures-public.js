@@ -32,6 +32,10 @@
 
 	$(function(){
 
+		// 1.0	Side Panel
+		// 2.0 	Form Validation
+
+
 		// 1.0 Side Panel
 		// =============================================================================================================
 		var side_panel = $('#hv-side-panel');
@@ -68,16 +72,86 @@
 			$('header').removeClass('fixed');
 		});
 
+
+		// 2.0 Form Validation
+		// =============================================================================================================
+
+		// jQuery validate addMethods
+		$.validator.addMethod("valueNotEquals", function(value, element, arg){
+			return arg !== value;
+		}, "Value must not equal arg.");
+
+		// Register Form Validation
+		// ========================
+		$('#hv_reg_form').validate({
+			rules: {
+				hv_reg_name: {
+					required: true,
+					minlength: 4
+				},
+				hv_reg_fname: {
+					required: true,
+					minlength: 2
+				},
+				hv_reg_lname: {
+					required: true,
+					minlength: 2
+				},
+				hv_reg_role: {
+					valueNotEquals: 'default'
+				},
+				hv_reg_email: {
+					required: true,
+					email: true
+				},
+				hv_reg_age: {
+					required: true,
+					number: true,
+					min: 13,
+					max: 130
+				},
+				hv_reg_gender: {
+					valueNotEquals: 'default'
+				},
+				hv_reg_password: {
+					required: true,
+					minlength: 5
+				},
+				hv_reg_password_check: {
+					equalTo: '#hv_reg_password'
+				}
+			},
+			messages: {
+				hv_reg_name: {
+					required: 'Gebruikersnaam is verplicht.',
+					minlength: 'Tenmninste 4 letters.'
+				},
+				hv_reg_fname: 'Geef een naam op.',
+				hv_reg_lname: 'Geef een achternaam op.',
+				hv_reg_role: 'Kies een rol.',
+				hv_reg_email: 'Geef een geldig email adres op.',
+				hv_reg_age: 'Geef een leeftijd op.',
+				hv_reg_gender: 'Kies een geslacht.',
+				hv_reg_password: {
+					required: 'Geef een wachtwoord op.',
+					minlength: 'Password moet tenminste 5 letters zijn.'
+				},
+				hv_reg_password_check: {
+					equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
+				}
+			}
+		});
+
 	});
 
 
-	function hv_messages($type, $text){
-		var $message = $('<div></div>');
-		$message.addClass('message '+ $type);
-		$message.text($text);
-
-		$('body #hv-messages').append($message);
-	}
+	//function hv_messages($type, $text){
+	//	var $message = $('<div></div>');
+	//	$message.addClass('message '+ $type);
+	//	$message.text($text);
+    //
+	//	$('body #hv-messages').append($message);
+	//}
 
 
 

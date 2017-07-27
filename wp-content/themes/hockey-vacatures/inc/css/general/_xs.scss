@@ -27,13 +27,28 @@ ul {
 }
 
 form {
-  label {font-weight: 600;}
+  label {
+    font-weight: 600;
+    &.error {
+      display: block;
+      padding: .3rem;
+      background: red;
+      color: #fff;
+      font-size: .8rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  }
   .description {font-size: .8rem; font-weight: 300; color: #999999;}
   .form-group {margin-bottom: 2rem;}
   .form-control {
-    border-bottom: 1px solid rgba(0,0,0,.12);
+    border: 1px solid rgba(0,0,0,.12);
     border-radius: 0;
     padding: 1rem;
+    &.error {
+      border-color: red;
+    }
   }
 
   .custom-select {

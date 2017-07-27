@@ -11,8 +11,7 @@
 <?php get_header(); ?>
 
 <div id="page-<?php the_ID(); ?>" class="page-sidebar <?php post_class(); ?>">
-    <div class="container-fluid px-0" style="background-image: url('<?php echo get_stylesheet_directory_uri().'/inc/img/hockeyvacatures-banner.jpg'; ?>'); min-height: 300px;">
-    </div>
+    <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
     <div class="container-fluid page-wrapper">
         <div class="container">

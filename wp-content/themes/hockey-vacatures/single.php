@@ -11,17 +11,10 @@ get_header(); ?>
 
 
 <div id="single" class="wrapper">
-    <div class="container-fluid px-0" style="background-image: url('<?php echo get_stylesheet_directory_uri().'/inc/img/hockeyvacatures-banner.jpg'; ?>'); min-height: 300px;">
+    <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
-    </div>
-
-    <div class="top-bar container-fluid">
-        <div class="container">
-            <div class="row">
-            </div>
-        </div>
-    </div>
-
+    <?php // Top Bar ?>
+    <?php echo do_shortcode('[hockey_vacatures_top_bar]'); ?>
 
     <div class="container-fluid main-content">
         <div class="container main-content-inner">

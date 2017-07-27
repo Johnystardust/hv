@@ -89,6 +89,15 @@ ul {
 
 form label {
   font-weight: 600; }
+  form label.error {
+    display: block;
+    padding: .3rem;
+    background: red;
+    color: #fff;
+    font-size: .8rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    text-align: center; }
 form .description {
   font-size: .8rem;
   font-weight: 300;
@@ -96,9 +105,11 @@ form .description {
 form .form-group {
   margin-bottom: 2rem; }
 form .form-control {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0;
   padding: 1rem; }
+  form .form-control.error {
+    border-color: red; }
 form .custom-select {
   padding-top: 0;
   padding-bottom: 0;
@@ -275,10 +286,10 @@ form .custom-select {
 
 .page .page-wrapper {
   background-color: #f6f6f6; }
-.page .page-content {
+.page .page-content, .page .main-column {
   padding: 3rem;
   background-color: #ffffff; }
-  .page .page-content .entry-header {
+  .page .page-content .entry-header, .page .main-column .entry-header {
     margin-bottom: 2rem; }
 
 .page-normal {

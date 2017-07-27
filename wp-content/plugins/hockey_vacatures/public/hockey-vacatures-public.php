@@ -74,6 +74,9 @@ class Hockey_vacatures_Public {
 		// TODO: FIX: Dependency with theme file
 		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery-cdn' ), null, true );
+
+		wp_enqueue_script( 'jquery-validate', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js', array( 'jquery-cdn' ), null, true );
+//		wp_enqueue_script( 'jquery-validate-am', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js', array( 'jquery-cdn', 'jquery-validate' ), null, true );
 	}
 
 	/**
