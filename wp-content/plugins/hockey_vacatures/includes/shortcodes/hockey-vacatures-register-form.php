@@ -140,6 +140,12 @@ class Hockey_Vacatures_Register_Form {
         }
     }
 
+    /**
+     * The Registration Functionality
+     *
+     * @since   1.0.0
+     *
+     */
     public function register_form_registration(){
         $userdata = array(
             'user_login'    => esc_attr($this->username),
@@ -147,9 +153,6 @@ class Hockey_Vacatures_Register_Form {
             'user_pass'     => esc_attr($this->password),
             'first_name'    => esc_attr($this->first_name),
             'last_name'     => esc_attr($this->last_name),
-//            'user_url'      => esc_attr($this->website),
-//            'nickname'      => esc_attr($this->nickname),
-//            'description'   => esc_attr($this->bio),
         );
 
         // TODO: FIX: STYLE MESSAGES
@@ -162,6 +165,13 @@ class Hockey_Vacatures_Register_Form {
             $register_user = wp_insert_user($userdata);
             if (!is_wp_error($register_user)) {
 
+                // Set 1st month free membership
+                // =============================
+                $date = new DateTime("+30 days");
+                add_user_meta( $register_user, 'membership_end_date', $date->format("d-m-Y"), false );
+
+                // Set role specific meta data
+                // ===========================
                 if($this->role == 'club'){
                     wp_update_user( array( 'ID', $register_user, 'role' => 'club' ) );
 

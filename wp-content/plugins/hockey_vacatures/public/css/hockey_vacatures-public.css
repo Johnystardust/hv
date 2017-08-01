@@ -41,6 +41,11 @@
   .sidebar-column .sidebar-widget:first-child {
     padding-top: 3rem; }
 
+.totals h3 i {
+  font-size: 1.2rem; }
+.totals h3 .total {
+  margin-left: .5rem; }
+
 #hv-side-panel {
   position: fixed;
   z-index: 1000001;

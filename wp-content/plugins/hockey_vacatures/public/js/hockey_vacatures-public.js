@@ -77,6 +77,7 @@
 		// =============================================================================================================
 
 		// jQuery validate addMethods
+		// ==========================
 		$.validator.addMethod("valueNotEquals", function(value, element, arg){
 			return arg !== value;
 		}, "Value must not equal arg.");
@@ -142,17 +143,43 @@
 			}
 		});
 
+
+		// Sale form validation
+		// ====================
+		$('#hv_sale_num').on('change', function(event){
+			var num 	= $(this).val();
+			var other 	= $('#hv_sale_num_other');
+			var total;
+			var staffel;
+			var discount;
+
+			// If the value is other show the number field
+			if(num == 'other'){
+				other.removeClass('hidden').focus();
+				$(this).addClass('hidden');
+			} else {
+				staffel = Math.floor(num / 5);
+				discount = staffel * 5;
+
+				total = (num * 10) - discount;
+
+				$('.total').text(total+',-');
+			}
+		});
+
+		$('#hv_sale_form').validate({
+			rules: {
+				hv_sale_num: {
+					required: true
+				}
+
+			},
+			messages: {
+				hv_sale_num: 'Vul een aantal vacatures in.'
+
+			}
+		});
+
 	});
-
-
-	//function hv_messages($type, $text){
-	//	var $message = $('<div></div>');
-	//	$message.addClass('message '+ $type);
-	//	$message.text($text);
-    //
-	//	$('body #hv-messages').append($message);
-	//}
-
-
 
 })( jQuery );

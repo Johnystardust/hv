@@ -20,12 +20,22 @@ a {
   }
 }
 
+// Misc
+#wpadminbar {
+  z-index: 999999999;
+}
+
+.hidden {
+  display: none;
+}
+
 // Generalisation
 ul {
   list-style: none;
   padding-left: 0;
 }
 
+// Form
 form {
   label {
     font-weight: 600;

@@ -28,15 +28,11 @@ get_header(); ?>
                         get_template_part( 'template-parts/page/content', 'page' );
                     endwhile; ?>
 
-                    <br>
-                    <br>
-
                     <?php echo do_shortcode('[hockey_vacatures_register_form]'); ?>
                 </div>
 
                 <div class="col-3 push-1 px-0 sidebar-column">
                     <?php get_sidebar(); ?>
-
                 </div>
             </div>
         </div>

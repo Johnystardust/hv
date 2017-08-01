@@ -14,26 +14,41 @@ class Hockey_Vacatures_Sale_Form {
 
     public function sale_form(){
         ?>
-        <form class="px-0" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
-            <div class="radio">
-                <label><input type="radio" name="hv_scl" value="1"> 1 Vacature</label>
+        <form id="hv_sale_form" class="px-0" method="post" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for=""><?php echo __( 'Aantal vacatures', TEXTDOMAIN ); ?></label><br>
+                            <select name="hv_sale_num" class="form-control custom-select" id="hv_sale_num">
+                                <?php for($x = 0; $x <= 15; $x++): ?>
+                                    <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                <?php endfor; ?>
+                                <option value="other"><?php echo __( 'Anders namelijk', TEXTDOMAIN ); ?></option>
+                            </select>
+                            <input class="form-control hidden" id="hv_sale_num_other" type="number" name="hv_sale_num" placeholder="<?php echo __( 'Vul aantal vacatures in', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_sale_num']) ? $_POST['hv_sale_num'] : null); ?>">
+                        </div>
+                        <div class="form-group col-12 col-md-6 totals">
+                            <label><?php echo __( 'Totaal', TEXTDOMAIN ); ?></label>
+                            <hr>
+                            <h3><i class="fa fa-eur"></i><span class="total">-</span></h3>
+                        </div>
+                        <div class="form-group col-12">
+                            <button class="btn btn-primary" type="submit" name="hv_reg_submit"><?php echo __( 'Afrekenen', TEXTDOMAIN ); ?></button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="radio">
-                <label><input type="radio" name="hv_scl" value="5"> 5 Vacatures</label>
-            </div>
-            <button type="submit" class="btn btn-primary" name="hv_scl_submit">Opwaarderen</button>
         </form>
         <?php
     }
-
-
 
     public function sale_form_shortcode(){
         ob_start();
 
         if(isset($_POST['hv_scl_submit'])){
             // Add the new value to the user counter
-            //
+            // =====================================
             $user_id = get_current_user_id();
             $user_counter = get_user_meta($user_id, 'vacature_credit', true);
             $new_user_counter = $user_counter + $_POST['hv_scl'];

@@ -219,6 +219,27 @@ class Hockey_vacatures_Admin {
 		}
 	}
 
+	/**
+	 * Block the /wp-admin for all users except admins.
+	 *
+	 * @since	1.0.0
+	 */
+	public function block_users_form_admin(){
+		if(is_admin() && !current_user_can( 'administrator' ) && !(defined( 'DOING_AJAX' ) && DOING_AJAX ) ){
+			wp_redirect( home_url() );
+			exit;
+		}
+	}
+
+	/**
+	 * Hide the admin bar for all users except admins.
+	 */
+	public function remove_admin_bar(){
+		if( !current_user_can( 'administrator' ) && !is_admin() ){
+			show_admin_bar( false );
+		}
+	}
+
 
 
 

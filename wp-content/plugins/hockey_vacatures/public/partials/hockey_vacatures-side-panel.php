@@ -30,10 +30,12 @@
 
         <div class="row mt-5">
             <div class="col-12">
-                <?php $user_data = get_userdata(get_current_user_id()); ?>
+                <?php $user_id = get_current_user_id(); ?>
+                <?php $user_data = get_userdata($user_id); ?>
 
-                <h3><?php echo __( 'Hallo ', TEXTDOMAIN ) . $user_data->first_name; ?> </h3>
-                <p><?php echo __( 'U kunt nog '. get_user_meta(get_current_user_id(), 'vacature_s_count', true) .' vacatures plaatsen'); ?></p>
+                <h3><?php echo __( 'Hallo ', TEXTDOMAIN ) . $user_data->first_name; ?></h3>
+                <span><?php echo __( 'Uw lidmaatschap is nog geldig tot: ' ); ?><?php echo date('d-m-Y', strtotime(get_user_meta($user_id, 'membership_end_date', true))); ?></span><br>
+                <span><?php echo __( 'U kunt nog '. get_user_meta($user_id, 'vacature_s_count', true) .' vacatures plaatsen'); ?></span>
             </div>
 
             <?php

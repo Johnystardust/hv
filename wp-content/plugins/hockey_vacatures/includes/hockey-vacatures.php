@@ -159,6 +159,9 @@ class Hockey_Vacatures {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( 'init', $plugin_admin, 'block_users_form_admin' );
+		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'remove_admin_bar' );
+
 
 		// Add Settings Link
 		$plugin_basename = plugin_basename(plugin_dir_path(__DIR__). $this->plugin_name .'.php' );
