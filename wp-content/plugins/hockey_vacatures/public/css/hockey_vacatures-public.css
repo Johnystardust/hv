@@ -41,6 +41,12 @@
   .sidebar-column .sidebar-widget:first-child {
     padding-top: 3rem; }
 
+.totals table {
+  width: 300px; }
+  .totals table tr td:last-child {
+    text-align: right; }
+  .totals table tr.totals-sale {
+    display: none; }
 .totals h3 i {
   font-size: 1.2rem; }
 .totals h3 .total {

@@ -149,6 +149,7 @@
 		$('#hv_sale_num').on('change', function(event){
 			var num 	= $(this).val();
 			var other 	= $('#hv_sale_num_other');
+			var vacatures;
 			var total;
 			var staffel;
 			var discount;
@@ -160,10 +161,16 @@
 			} else {
 				staffel = Math.floor(num / 5);
 				discount = staffel * 5;
+				vacatures = (num * 10);
+				total = vacatures - discount;
 
-				total = (num * 10) - discount;
-
-				$('.total').text(total+',-');
+				console.log(discount);
+				if(discount > 0){
+					$('.total-sale').text(discount+',-');
+					$('.totals-sale').show();
+				}
+				$('.total-vacatures').text(vacatures+',-');
+				$('.total').text(total+',-')
 			}
 		});
 

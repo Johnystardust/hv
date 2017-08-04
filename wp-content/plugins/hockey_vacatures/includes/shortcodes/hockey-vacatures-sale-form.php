@@ -29,9 +29,25 @@ class Hockey_Vacatures_Sale_Form {
                             <input class="form-control hidden" id="hv_sale_num_other" type="number" name="hv_sale_num" placeholder="<?php echo __( 'Vul aantal vacatures in', TEXTDOMAIN ); ?>" value="<?php echo(isset($_POST['hv_sale_num']) ? $_POST['hv_sale_num'] : null); ?>">
                         </div>
                         <div class="form-group col-12 col-md-6 totals">
-                            <label><?php echo __( 'Totaal', TEXTDOMAIN ); ?></label>
-                            <hr>
-                            <h3><i class="fa fa-eur"></i><span class="total">-</span></h3>
+                            <table>
+                                <tr>
+                                    <td><?php echo __( 'Totaal vacatures', TEXTDOMAIN ); ?></td>
+                                    <td><i class="fa fa-euro"></i> <span class="total-vacatures">-</span></td>
+                                </tr>
+                                <tr class="totals-sale">
+                                    <td><?php echo __( 'Korting', TEXTDOMAIN ); ?></td>
+                                    <td><i class="fa fa-euro"></i> <span class="total-sale">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo __( 'Totaal', TEXTDOMAIN); ?></td>
+                                    <td><i class="fa fa-euro"></i> <span class="total">-</span></td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="form-group col-12">
                             <button class="btn btn-primary" type="submit" name="hv_reg_submit"><?php echo __( 'Afrekenen', TEXTDOMAIN ); ?></button>

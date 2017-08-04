@@ -55,6 +55,19 @@
 
 // Sale Page
 .totals {
+
+
+  table {
+    width: 300px;
+    tr td:last-child {
+      text-align: right;
+    }
+
+    tr.totals-sale {
+      display: none;
+    }
+  }
+
   h3 {
     i {
       font-size: 1.2rem;
