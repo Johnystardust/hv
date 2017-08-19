@@ -8,9 +8,11 @@
  */
 
 global $post;
-?>
 
-<div id="page-banner" style="background-image: url('<?php echo get_field('banner_image'); ?>');">
+$background_image = !empty(get_field('banner_image')) ? get_field('banner_image') : get_stylesheet_directory_uri().'/inc/img/hockeyvacatures-banner.jpg';
+
+?>
+<div id="page-banner" style="background-image: url('<?php echo $background_image ?>');">
     <div class="d-table w-100 h-100">
         <div class="d-table-cell align-middle">
             <div class="container">

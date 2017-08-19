@@ -21,6 +21,14 @@
       font-weight: 600; }
       .top-bar .top-bar-item a:hover {
         text-decoration: none; }
+      .top-bar .top-bar-item a[rel='prev']:before {
+        content: "\f104";
+        margin-right: 1rem;
+        font: normal normal normal 14px/1 FontAwesome; }
+      .top-bar .top-bar-item a[rel='next']:after {
+        content: "\f105";
+        margin-left: 1rem;
+        font: normal normal normal 14px/1 FontAwesome; }
     .top-bar .top-bar-item:hover {
       background-color: #0E4C72;
       transition: all 0.3s ease-in-out;
@@ -51,6 +59,9 @@
   font-size: 1.2rem; }
 .totals h3 .total {
   margin-left: .5rem; }
+
+#register-page form .disabled {
+  display: none; }
 
 #hv-side-panel {
   position: fixed;

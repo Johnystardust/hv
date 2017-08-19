@@ -136,40 +136,41 @@ class Hockey_Vacatures_Activator {
 			)
 		);
 
-//		// Player Role
-//		add_role(
-//			'player',
-//			__( 'Speler', 'hockey_vacatures' ),
-//			array(
-//				// Post/Page
-//				'read'							=> false,
-//				'edit_posts'					=> false,
-//				'edit_pages'					=> false,
-//				'edit_others_posts'				=> false,
-//				'create_posts'					=> false,
-//				'publish_posts'					=> false,
-//				'delete_posts'					=> false,
-//
-//				// Vacatures
-//				'create_vacatures'				=> true,
-//				'read_vacatures'				=> true,
-//				'read_private_vacatures'		=> true,
-//				'edit_others_vacatures'			=> false,
-//				'edit_private_vacatures'		=> true,
-//				'edit_published_vacatures'		=> true,
-//				'edit_vacatures'				=> true,
-//				'delete_others_vacatures'		=> false,
-//				'delete_private_vacatures'		=> true,
-//				'delete_published_vacatures'	=> true,
-//				'delete_vacatures'				=> true,
-//				'publish_vacatures'				=> true,
-//
-//				// Theme functionality
-//				'edit_themes'					=> false,
-//				'install_plugins'				=> false,
-//				'update_plugin'					=> false,
-//				'update_core'					=> false,
-//			)
-//		);
+		// Player Role
+		// ===========
+		add_role(
+			'player',
+			__( 'Speler', 'hockey_vacatures' ),
+			array(
+				// Post/Page
+				'read'							=> false,
+				'edit_posts'					=> false,
+				'edit_pages'					=> false,
+				'edit_others_posts'				=> false,
+				'create_posts'					=> false,
+				'publish_posts'					=> false,
+				'delete_posts'					=> false,
+
+				// Vacatures
+				'create_vacatures'				=> true,
+				'read_vacatures'				=> true,
+				'read_private_vacatures'		=> true,
+				'edit_others_vacatures'			=> false,
+				'edit_private_vacatures'		=> true,
+				'edit_published_vacatures'		=> true,
+				'edit_vacatures'				=> true,
+				'delete_others_vacatures'		=> false,
+				'delete_private_vacatures'		=> true,
+				'delete_published_vacatures'	=> true,
+				'delete_vacatures'				=> true,
+				'publish_vacatures'				=> true,
+
+				// Theme functionality
+				'edit_themes'					=> false,
+				'install_plugins'				=> false,
+				'update_plugin'					=> false,
+				'update_core'					=> false,
+			)
+		);
 	}
 }

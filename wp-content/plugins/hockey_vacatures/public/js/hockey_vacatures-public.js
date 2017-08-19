@@ -34,6 +34,7 @@
 
 		// 1.0	Side Panel
 		// 2.0 	Form Validation
+		// 3.0 	Register Page
 
 
 		// 1.0 Side Panel
@@ -86,60 +87,79 @@
 		// ========================
 		$('#hv_reg_form').validate({
 			rules: {
-				hv_reg_name: {
+				// General
+				username: {
 					required: true,
 					minlength: 4
 				},
-				hv_reg_fname: {
-					required: true,
-					minlength: 2
-				},
-				hv_reg_lname: {
-					required: true,
-					minlength: 2
-				},
-				hv_reg_role: {
+				role: {
 					valueNotEquals: 'default'
 				},
-				hv_reg_email: {
+				password: {
+					required: true,
+					minlength: 5
+				},
+				password_check: {
+					equalTo: '#password'
+				},
+
+				// Club
+				c_name: {
+					required: true,
+					minlength: 2
+				},
+				c_place: {required: true},
+				c_cname: {required: true},
+				c_email: {
 					required: true,
 					email: true
 				},
-				hv_reg_age: {
+				c_web_url: {url: true},
+
+				// Player
+				p_fname: {
+					required: true,
+					minlength: 2
+				},
+				p_lname: {
+					required: true,
+					minlength: 2
+				},
+				p_place: {required: true},
+				p_email: {
+					required: true,
+					email: true
+				},
+				p_age: {
 					required: true,
 					number: true,
 					min: 13,
 					max: 130
 				},
-				hv_reg_gender: {
-					valueNotEquals: 'default'
-				},
-				hv_reg_password: {
-					required: true,
-					minlength: 5
-				},
-				hv_reg_password_check: {
-					equalTo: '#hv_reg_password'
-				}
+				p_gender: {valueNotEquals: 'default'}
 			},
 			messages: {
-				hv_reg_name: {
+				// General
+				username: {
 					required: 'Gebruikersnaam is verplicht.',
 					minlength: 'Tenmninste 4 letters.'
 				},
-				hv_reg_fname: 'Geef een naam op.',
-				hv_reg_lname: 'Geef een achternaam op.',
-				hv_reg_role: 'Kies een rol.',
+				role: 'Kies een rol.',
 				hv_reg_email: 'Geef een geldig email adres op.',
-				hv_reg_age: 'Geef een leeftijd op.',
-				hv_reg_gender: 'Kies een geslacht.',
-				hv_reg_password: {
+				password: {
 					required: 'Geef een wachtwoord op.',
 					minlength: 'Password moet tenminste 5 letters zijn.'
 				},
-				hv_reg_password_check: {
+				password_check: {
 					equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
-				}
+				},
+
+				// Club
+				// Player
+				hv_reg_fname: 'Geef een naam op.',
+				hv_reg_lname: 'Geef een achternaam op.',
+				hv_reg_age: 'Geef een leeftijd op.',
+				hv_reg_gender: 'Kies een geslacht.',
 			}
 		});
 
@@ -184,6 +204,34 @@
 			messages: {
 				hv_sale_num: 'Vul een aantal vacatures in.'
 
+			}
+		});
+
+		// 3.0 Register Page
+		// =============================================================================================================
+
+		// Disable the fields when disabled class is active
+		// ================================================
+		//$('')
+
+		// Show correct form fields based on role
+		// ======================================
+		$('#hv_reg_form select[name="role"]').on('change', function(event){
+			if($(this).val() == 'player'){
+				$('.club-fields').addClass('disabled');
+				$('.player-fields.disabled').removeClass('disabled');
+				$('.player-fields input, .player-fields select').removeAttr('disabled');
+			}
+			else if($(this).val() == 'club'){
+				$('.player-fields').addClass('disabled');
+				$('.club-fields.disabled').removeClass('disabled');
+				$('.club-fields input, .club-fields select').removeAttr('disabled');
+			}
+			else {
+				$('.player-fields').addClass('disabled');
+				$('.player-fields input, .player-fields select').attr('disabled', 'disabled');
+				$('.club-fields').addClass('disabled');
+				$('.club-fields input, .club-fields select').attr('disabled', 'disabled');
 			}
 		});
 

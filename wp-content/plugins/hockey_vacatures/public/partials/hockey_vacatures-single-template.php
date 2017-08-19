@@ -26,7 +26,6 @@ get_header(); ?>
             <div class="row">
                 <div class="col-8 main-column">
                     <?php while(have_posts()) : the_post(); ?>
-
                         <h1 class="title"><?php echo get_the_title(); ?></h1>
 
                         <div class="row mb-3">
@@ -89,7 +88,6 @@ get_header(); ?>
 
                         <div class="btn-set mt-3">
                             <a href="#" class="btn btn-primary"><?php echo __('Solliciteren', TEXTDOMAIN); ?></a>
-                            <a href="#" class="btn btn-border"><?php echo __('Meer informatie', TEXTDOMAIN); ?></a>
                         </div>
 
                         <div class="social-share">

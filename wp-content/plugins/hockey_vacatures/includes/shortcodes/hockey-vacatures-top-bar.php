@@ -24,9 +24,10 @@ class Hockey_Vacatures_Top_Bar {
                                 <a href="#open-side-panel" class="icon-left"><i class="fa fa-user"></i>Mijn Profiel</a>
                             </div>
                         <?php endif; ?>
-                    <?php endif; ?>
-
-                    <?php if(is_singular('vacatures')): ?>
+                    <?php elseif(is_singular('vacatures')): ?>
+                        <div class="top-bar-item col-md-3">
+                            <?php previous_post_link( '%link', __( 'Vorige', TEXTDOMAIN ), false ); ?>
+                        </div>
                         <?php global $post; ?>
                         <?php if(get_current_user_id() == $post->post_author): ?>
                             <div class="top-bar-item col-md-3">
@@ -37,18 +38,15 @@ class Hockey_Vacatures_Top_Bar {
                             </div>
                         <?php else: ?>
                             <div class="top-bar-item col-md-3">
-                                <a href="#" class="icon-left"><i class="fa fa-angle-left"></i>Vorige</a>
-                            </div>
-                            <div class="top-bar-item col-md-3">
                                 <a href="<?php echo get_post_type_archive_link('vacatures'); ?>" class="icon-left"><i class="fa fa-id-card-o"></i>Alle Vacatures</a>
                             </div>
                             <div class="top-bar-item col-md-3">
                                 <a href="#" class="icon-right">Bekijk op kaart<i class="fa fa-map-signs"></i></a>
                             </div>
-                            <div class="top-bar-item col-md-3">
-                                <a href="#" class="icon-right">Volgende<i class="fa fa-angle-right"></i></a>
-                            </div>
                         <?php endif; ?>
+                        <div class="top-bar-item col-md-3">
+                            <?php next_post_link( '%link', __( 'Vorige', TEXTDOMAIN ), false ); ?>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

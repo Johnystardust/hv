@@ -23,39 +23,13 @@ get_header(); ?>
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
             <div class="row">
-                <div class="col-8 archive-filter">
-                    <form action="" method="get">
-                        <div class="form-group">
-                            <label><?php echo __( 'Zoekwoorden', TEXTDOMAIN ); ?></label>
-                            <input type="text" name="s" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <select name="n">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="-1">Alles tonen</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-border">Zoeken</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-8 main-column vacature-list">
                     <?php
                     $args = array(
                         'post_type'         => 'vacatures',
-                        'posts_per_page'    => $_GET['n'],
-                        's'                 => $_GET['s']
                     );
 
                     $the_query = new WP_Query( $args );
-
-
-
                     $post_count = $the_query->post_count;
 
                     if($the_query->have_posts()):
@@ -91,8 +65,8 @@ get_header(); ?>
                                     <?php endif; ?>
                                 </ul>
                                 <div class="btn-set">
-                                    <a class="btn btn-primary" href="<?php echo get_the_permalink(); ?>">Meer informatie</a>
-                                    <a class="btn btn-border" href="mailto:info@timvanderslik.nl">solliciteer</a>
+                                    <a class="btn btn-primary" href="<?php echo get_the_permalink(); ?>"><?php echo __( 'Meer informatie', TEXTDOMAIN ); ?></a>
+                                    <a class="btn btn-border" href="mailto:info@timvanderslik.nl"><?php echo __( 'Solliciteer direct', TEXTDOMAIN ); ?></a>
                                 </div>
                             </div>
                             <?php

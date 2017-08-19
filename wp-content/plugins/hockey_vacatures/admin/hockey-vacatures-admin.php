@@ -13,22 +13,8 @@
  */
 class Hockey_vacatures_Admin {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
+	private $plugin_name;
 	private $version;
 
 	/**
@@ -54,6 +40,7 @@ class Hockey_vacatures_Admin {
 		// Add the stylesheet for the color picker on the plugin options page
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/hockey_vacatures-admin.css', array('wp-color-picker'), false, 'all' );
+
 		// @todo: fix loading wrong version when using $this->version
 		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/hockey_vacatures-admin.css', array('wp-color-picker'), $this->version, 'all' );
 

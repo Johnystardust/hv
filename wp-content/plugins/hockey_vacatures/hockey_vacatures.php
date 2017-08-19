@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function activate_hockey_vacatures() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/hockey-vacatures-activator.php';
-	Hockey_Vacatures_Activator::register_pages();
+//	Hockey_Vacatures_Activator::register_pages();
 	Hockey_Vacatures_Activator::register_user_roles();
 }
 
