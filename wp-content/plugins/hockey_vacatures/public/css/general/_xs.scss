@@ -89,7 +89,68 @@
 
 // Register Page
 #register-page {
+
+  .registration-success, .registration-error {
+    margin-bottom: 6px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1000000;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+
+    .registration-success-inner, .registration-error-inner {
+      background: #ffffff;
+      width: 400px;
+      height: 300px;
+      padding: 2rem;
+      margin: 0 auto;
+      top: 50%;
+      position: relative;
+      transform: translate(0, -50%);
+    }
+
+  }
+
+
   form .disabled {
       display: none;
+  }
+}
+
+// Form validation
+.message-popup {
+  margin-bottom: 6px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 1000000;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+
+  .message-popup-inner {
+    background: #ffffff;
+    width: 400px;
+    height: 300px;
+    padding: 2rem;
+    margin: 0 auto;
+    top: 50%;
+    position: relative;
+    transform: translate(0, -50%);
+  }
+
+  // TODO CHANGE COLOR
+  &.error {
+    .message-popup-inner {
+      border-bottom: 2px solid red;
+    }
+  }
+
+  &.success {
+    .message-popup-inner {
+      border-bottom: 2px solid green;
+    }
   }
 }

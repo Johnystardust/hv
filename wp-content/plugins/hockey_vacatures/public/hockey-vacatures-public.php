@@ -153,4 +153,15 @@ class Hockey_vacatures_Public {
 		echo '<div id="hv-messages"></div>';
 		include_once(plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-side-panel.php');
 	}
+
+	/**
+	 * Redirect after successful registration
+	 *
+	 * @return string|void
+	 *
+	 * TODO: FIX Redirect after registration
+	 */
+	public function registration_redirect(){
+		return home_url();
+	}
 }

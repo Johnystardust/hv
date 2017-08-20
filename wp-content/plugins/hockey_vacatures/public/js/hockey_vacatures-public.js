@@ -210,19 +210,15 @@
 		// 3.0 Register Page
 		// =============================================================================================================
 
-		// Disable the fields when disabled class is active
-		// ================================================
-		//$('')
-
 		// Show correct form fields based on role
 		// ======================================
-		$('#hv_reg_form select[name="role"]').on('change', function(event){
-			if($(this).val() == 'player'){
+		function role_select($value){
+			if($value == 'player'){
 				$('.club-fields').addClass('disabled');
 				$('.player-fields.disabled').removeClass('disabled');
 				$('.player-fields input, .player-fields select').removeAttr('disabled');
 			}
-			else if($(this).val() == 'club'){
+			else if($value == 'club'){
 				$('.player-fields').addClass('disabled');
 				$('.club-fields.disabled').removeClass('disabled');
 				$('.club-fields input, .club-fields select').removeAttr('disabled');
@@ -233,6 +229,23 @@
 				$('.club-fields').addClass('disabled');
 				$('.club-fields input, .club-fields select').attr('disabled', 'disabled');
 			}
+		}
+
+		// On page refresh
+		var role = $('#hv_reg_form #role').find(":selected").val();
+		role_select(role);
+
+		// On select
+		$('#hv_reg_form select[name="role"]').on('change', function(event){
+			role_select($(this).val());
+		});
+
+		// Message popup close
+		// ===================
+		$('.message-popup a[href="#message-popup-close"]').on('click', function(event){
+			event.preventDefault();
+
+			$(this).parentsUntil('.message-popup').parent().fadeOut();
 		});
 
 	});

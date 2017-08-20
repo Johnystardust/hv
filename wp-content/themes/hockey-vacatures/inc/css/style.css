@@ -104,6 +104,8 @@ form label {
     border-radius: 5px;
     margin-top: 1rem;
     text-align: center; }
+  form label .required {
+    color: red; }
 form .description {
   font-size: .8rem;
   font-weight: 300;

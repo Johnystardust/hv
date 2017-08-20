@@ -49,6 +49,9 @@ form {
       margin-top: 1rem;
       text-align: center;
     }
+    .required {
+      color: red;
+    }
   }
   .description {font-size: .8rem; font-weight: 300; color: #999999;}
   .form-group {margin-bottom: 2rem;}
