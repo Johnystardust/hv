@@ -110,6 +110,7 @@
   width: 100%;
   height: calc(100% - 36px);
   margin-top: 36px;
+  top: 0;
   visibility: hidden; }
   #hv-side-panel .hv-side-panel-inner {
     position: absolute;

@@ -33,6 +33,10 @@
                         <?php if(get_theme_mod('header_social_linkedin')): ?>
                             <li><a href="<?php echo get_theme_mod('header_social_linkedin'); ?>"><i class="fa fa-linkedin"></i></a></li>
                         <?php endif; ?>
+                        <?php if(get_theme_mod('header_social_whatsapp')): ?>
+                            <?php // TODO: FIX: whatsapp-open-chat-link ?>
+                            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                        <?php endif; ?>
                         <?php if(get_theme_mod('header_social_phone')): ?>
                             <?php // TODO: FIX: tel:phone-number ?>
                             <li><a href="#"><i class="fa fa-phone"></i> <?php echo get_theme_mod('header_social_phone'); ?></a></li>

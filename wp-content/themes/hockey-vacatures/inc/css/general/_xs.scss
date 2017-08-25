@@ -42,15 +42,10 @@ form {
     &.error {
       display: block;
       padding: .3rem;
-      background: red;
+      background: $danger;
       color: #fff;
       font-size: .8rem;
-      border-radius: 5px;
-      margin-top: 1rem;
       text-align: center;
-    }
-    .required {
-      color: red;
     }
   }
   .description {font-size: .8rem; font-weight: 300; color: #999999;}
@@ -60,7 +55,10 @@ form {
     border-radius: 0;
     padding: 1rem;
     &.error {
-      border-color: red;
+      border-bottom-color: $danger;
+    }
+    &.valid {
+      border-bottom-color: $success;
     }
   }
 
@@ -69,6 +67,9 @@ form {
     padding-bottom: 0;
     min-height: 46px;
   }
+}
+.required {
+  color: $danger;
 }
 
 

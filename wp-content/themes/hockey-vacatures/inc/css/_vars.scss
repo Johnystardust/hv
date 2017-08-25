@@ -6,6 +6,13 @@ $light-grey: #f6f6f6;
 
 $red: rgb(255, 82, 82);
 
+
+$danger: #d9534f!important;
+$warning: #f0ad4e!important;
+$info: #5bc0de!important;
+$success: #5cb85c!important;
+$primary: #0275d8!important;
+
 @mixin transition-ease-all {
   transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;

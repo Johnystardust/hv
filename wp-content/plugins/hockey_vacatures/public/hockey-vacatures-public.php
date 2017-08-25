@@ -22,22 +22,7 @@
  */
 class Hockey_vacatures_Public {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
 	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
 	private $version;
 
 	/**
@@ -128,6 +113,7 @@ class Hockey_vacatures_Public {
 	 * @since	1.0.0
 	 */
 	public function custom_page_templates($template){
+		// TODO: FIX TEMPLATE IN THEME OVERRIDE SUPPORT
 		$theme_files = array('page-register.php');
 		$exists_in_theme = locate_template($theme_files, false);
 
@@ -138,6 +124,9 @@ class Hockey_vacatures_Public {
 		}
 		elseif(is_page('tegoed')){
 			$template = plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-sale-template.php';
+		}
+		elseif(is_page('nieuwe-vacature')){
+			$template = plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-new-vacature-template.php';
 		}
 		return $template;
 	}
@@ -163,5 +152,20 @@ class Hockey_vacatures_Public {
 	 */
 	public function registration_redirect(){
 		return home_url();
+	}
+
+	/**
+	 * Redirect after successful registration
+	 *
+	 * @return string|void
+	 *
+	 * TODO: FIX Redirect after registration
+	 */
+	public function edit_mce_buttons($buttons){
+		if(in_array('fullscreen', $buttons)){
+			$buttons = array_diff($buttons, array('fullscreen', 'wp_more'));
+		}
+
+		return $buttons;
 	}
 }

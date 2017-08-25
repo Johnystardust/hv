@@ -49,6 +49,16 @@ function hv_register_theme_customizer($wp_customize){
         'type'          => 'text',
     ));
 
+    // Whatsapp
+    $wp_customize->add_setting('header_social_whatsapp', array(
+        'default'       => '',
+    ));
+    $wp_customize->add_control('header_social_whatsapp', array(
+        'label'         => __( 'Social Whatsapp', TEXTDOMAIN ),
+        'section'       => 'header',
+        'type'          => 'text',
+    ));
+
     // Phone
     $wp_customize->add_setting('header_social_phone', array(
         'default'       => '',

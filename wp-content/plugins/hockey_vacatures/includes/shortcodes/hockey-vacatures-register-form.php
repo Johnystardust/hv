@@ -197,6 +197,9 @@ class Hockey_Vacatures_Register_Form {
 
                     <div class="row">
                         <div class="form-group col-12">
+                            <span class="description"><?php echo __( 'Velden met een',  TEXTDOMAIN ); ?><span class="required">&nbsp;*&nbsp;</span><?php echo __( 'zijn verplicht',  TEXTDOMAIN ); ?></span>
+                        </div>
+                        <div class="form-group col-12">
                             <button class="btn btn-primary" type="submit" name="hv_reg_submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo __( 'Registreren', TEXTDOMAIN ); ?></button>
                         </div>
                     </div>
@@ -214,6 +217,8 @@ class Hockey_Vacatures_Register_Form {
      * @since   1.0.0
      *
      * @param array $form_fields
+     *
+     * TODO: FIX MULTIPLE FUNCTION
      *
      */
     private function build_form($form_fields = array()){
@@ -248,7 +253,7 @@ class Hockey_Vacatures_Register_Form {
                         <label for="<?php echo $field['name']; ?>"><?php echo $field['label'] ?></label>
                         <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>">
                             <?php foreach( $field['options'] as $option => $value ): ?>
-                                <option value="<?php echo $option; ?>"><?php echo $value; ?></option>
+                                <option <?php if(isset($_POST[$field['name']]) && $_POST[$field['name']] == $option){ echo 'selected'; }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php if(array_key_exists('description', $field)): ?>

@@ -29,6 +29,10 @@
         </div>
 
         <div class="row mt-5">
+            <?php
+//                $additional_data = get_user_meta(get_current_user_id(), 'user_data', false);
+//                var_dump($additional_data);
+            ?>
             <div class="col-12">
                 <?php $user_id = get_current_user_id(); ?>
                 <?php $user_data = get_userdata($user_id); ?>

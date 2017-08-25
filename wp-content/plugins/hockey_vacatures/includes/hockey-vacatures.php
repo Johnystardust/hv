@@ -194,8 +194,11 @@ class Hockey_Vacatures {
 		// Wp head
 		$this->loader->add_action( 'wp_head', $plugin_public, 'wp_head_templates' );
 
+		// Redirect
 		$this->loader->add_filter( 'registration_redirect', $plugin_public, 'registration_redirect' );
 
+		// Tiny mce buttons
+		$this->loader->add_filter( 'mce_buttons', $plugin_public, 'edit_mce_buttons' );
 	}
 
 	/**

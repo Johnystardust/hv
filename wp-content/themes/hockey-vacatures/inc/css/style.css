@@ -98,14 +98,10 @@ form label {
   form label.error {
     display: block;
     padding: .3rem;
-    background: red;
+    background: #d9534f !important;
     color: #fff;
     font-size: .8rem;
-    border-radius: 5px;
-    margin-top: 1rem;
     text-align: center; }
-  form label .required {
-    color: red; }
 form .description {
   font-size: .8rem;
   font-weight: 300;
@@ -117,11 +113,16 @@ form .form-control {
   border-radius: 0;
   padding: 1rem; }
   form .form-control.error {
-    border-color: red; }
+    border-bottom-color: #d9534f !important; }
+  form .form-control.valid {
+    border-bottom-color: #5cb85c !important; }
 form .custom-select {
   padding-top: 0;
   padding-bottom: 0;
   min-height: 46px; }
+
+.required {
+  color: #d9534f !important; }
 
 .panel-group .panel {
   max-height: 54px;

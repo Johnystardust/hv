@@ -67,12 +67,31 @@ class Hockey_Vacatures_Activator {
 			deactivate_plugins( plugin_basename( 'hockey_vacatures' ) );
 			wp_die( __('Tegoed pagina bestaat al. Los het probleem op en activeer de plugin opnieuw', 'hockey_vacatures') );
 		}
+
+		// Vacature Create Page
+		// ====================
+		$vacature_create_page_title = 'Nieuwe Vacature';
+		$vacature_create_page_check = get_page_by_title($vacature_create_page_title);
+		$vacature_create_page 		= array(
+			'post_type'		=> 'page',
+			'post_title' 	=> $vacature_create_page_title,
+			'post_status'	=> 'publish',
+			'post_author'	=> 1,
+		);
+
+		$vacature_create_page_slug = get_page_by_path( 'nieuwe_vacature', OBJECT );
+		if(!isset($vacature_create_page_slug) && !isset($vacature_create_page_check->ID)){
+			$vacature_create_page_id = wp_insert_post($vacature_create_page);
+		} else {
+			wp_delete_post($register_page_id);
+			wp_delete_post($sale_page_id);
+			deactivate_plugins( plugin_basename( 'hockey_vacatures' ) );
+			wp_die( __('Nieuwe Vacature pagina bestaat al. Los het probleem op en activeer de plugin opnieuw', 'hockey_vacatures') );
+		}
 	}
 
 	/**
 	 * Register/Edit the user roles
-	 *
-	 * TODO: FIX: IMPLEMENT USER ROLE 'speler'
 	 *
 	 * @since	1.0.0
 	 */
