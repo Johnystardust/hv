@@ -38,14 +38,18 @@ get_header(); ?>
                                     </li>
                                     <?php if($gender = get_post_meta($post->ID, 'gender', true)): ?>
                                         <li>
-                                            <?php if($gender == 'men'): ?>
+                                            <?php if($gender == 'male'): ?>
                                                 <i class="fa fa-mars"></i>
                                                 <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
                                                 <?php echo __('Man', TEXTDOMAIN); ?>
-                                            <?php elseif($gender == 'women'): ?>
+                                            <?php elseif($gender == 'female'): ?>
                                                 <i class="fa fa-venus"></i>
                                                 <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
                                                 <?php echo __('Vrouw', TEXTDOMAIN); ?>
+                                            <?php elseif($gender == 'either'): ?>
+                                                <i class="fa fa-venus-mars"></i>
+                                                <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
+                                                <?php echo __('Geen voorkeur', TEXTDOMAIN); ?>
                                             <?php endif; ?>
                                         </li>
                                     <?php endif; ?>
@@ -53,6 +57,7 @@ get_header(); ?>
                                         <i class="fa fa-map-marker"></i>
                                         <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
                                         <?php echo get_post_meta($post->ID, 'city', true); ?>
+
                                     </li>
                                     <li>
                                         <i class="fa fa-globe"></i>
@@ -71,12 +76,17 @@ get_header(); ?>
                                     <li>
                                         <i class="fa fa-envelope-o"></i>
                                         <strong><?php echo __('Mail:', TEXTDOMAIN); ?></strong>
-                                        <a href="mailto:">info@trainers_nijmegen.nl</a>
+                                        <a href="mailto:<?php echo get_post_meta($post->ID, 'mail', true); ?>"><?php echo get_post_meta($post->ID, 'mail', true); ?></a>
                                     </li>
                                     <li>
                                         <i class="fa fa-phone"></i>
                                         <strong><?php echo __('Tel:', TEXTDOMAIN); ?></strong>
-                                        <a href="mailto:">06-452 457 68</a>
+                                        <a href="tel:<?php echo get_post_meta($post->ID, 'tel', true); ?>"><?php echo get_post_meta($post->ID, 'tel', true); ?></a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-external-link"></i>
+                                        <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
+                                        <a href="<?php echo get_post_meta($post->ID, 'web_url', true); ?>"><?php echo get_post_meta($post->ID, 'web_url', true); ?></a>
                                     </li>
                                 </ul>
                             </div>
@@ -87,7 +97,7 @@ get_header(); ?>
                         </div>
 
                         <div class="btn-set mt-3">
-                            <a href="#" class="btn btn-primary"><?php echo __('Solliciteren', TEXTDOMAIN); ?></a>
+                            <a href="mailto:<?php echo get_post_meta($post->ID, 'mail', true); ?>" class="btn btn-primary"><?php echo __('Solliciteren', TEXTDOMAIN); ?></a>
                         </div>
 
                         <div class="social-share">

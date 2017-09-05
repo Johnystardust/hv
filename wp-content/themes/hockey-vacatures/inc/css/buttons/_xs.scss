@@ -18,6 +18,16 @@
   }
 }
 
+.btn-alternate {
+  border: 2px solid #76d164;
+  border-radius: 0;
+  background-color: #76d164;
+  color: #ffffff;
+  &:hover {
+    background-color: #76d164;
+  }
+}
+
 .btn-border {
   border: 2px solid $primary-color;
   border-radius: 0;

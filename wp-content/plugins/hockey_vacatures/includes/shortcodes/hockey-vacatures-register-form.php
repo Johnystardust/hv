@@ -10,10 +10,18 @@ class Hockey_Vacatures_Register_Form {
     private $username;
     private $email;
     private $role;
-    private $place;
     private $description;
+    private $tel;
     private $password;
     private $password_check;
+
+    // Location Vars
+    private $postal;
+    private $street_number;
+    private $addition;
+    private $city;
+    private $province;
+    private $street;
 
     // Player Vars
     private $first_name;
@@ -35,7 +43,7 @@ class Hockey_Vacatures_Register_Form {
         ?>
         <form class="px-0" id="hv_reg_form" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
             <div class="row">
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-11">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="username"><?php echo __( 'Gebruikersnaam', TEXTDOMAIN ); ?><span class="required">*</span></label><br>
@@ -54,6 +62,10 @@ class Hockey_Vacatures_Register_Form {
                     </div>
 
                     <div class="club-fields disabled row animated fadeIn">
+                        <div class="col-12">
+                            <strong class="text-uppercase"><?php echo __('Club', TEXTDOMAIN); ?></strong>
+                            <hr>
+                        </div>
                         <?php
                         $club_register = array(
                             'c_name' => array(
@@ -61,14 +73,6 @@ class Hockey_Vacatures_Register_Form {
                                 'label'         => __( 'Club naam', TEXTDOMAIN ),
                                 'name'          => 'c_name',
                                 'placeholder'   => __( 'Naam', TEXTDOMAIN ),
-                                'col_size'      => 'col-12 col-md-6',
-                                'required'      => true
-                            ),
-                            'c_place' => array(
-                                'type'          => 'text',
-                                'label'         => __( 'Plaats', TEXTDOMAIN ),
-                                'name'          => 'c_place',
-                                'placeholder'   => __( 'Plaats', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true
                             ),
@@ -95,12 +99,39 @@ class Hockey_Vacatures_Register_Form {
                                 'placeholder'   => __( 'https://example.nl', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6'
                             ),
+                            // TODO: FIX VALIDATION FOR C_TEL
+                            'c_tel' => array(
+                                'type'          => 'text',
+                                'label'         => __( 'Telefoonnummer', TEXTDOMAIN ),
+                                'name'          => 'c_tel',
+                                'placeholder'   => __( 'Telefoonnummer', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6'
+                            ),
+                            'blank' => array(
+                                'type'          => 'blank',
+                                'col_size'      => 'col-md-6 hidden-md-down'
+                            ),
+                            'c_description' => array(
+                                'type'          => 'textarea',
+                                'label'         => __( 'Omschrijving', TEXTDOMAIN ),
+                                'name'          => 'description',
+                                'placeholder'   => __( 'Uw bericht', TEXTDOMAIN ),
+                                'rows'          => '7',
+                                'cols'          => '30',
+                                'col_size'      => 'col-12',
+                                'required'      => false,
+                                'description'   => __( 'Vul hier een korte omschrijving over u zelf/club', TEXTDOMAIN )
+                            )
                         );
                         $this->build_form($club_register);
                         ?>
                     </div>
 
                     <div class="player-fields disabled row animated fadeIn">
+                        <div class="col-12">
+                            <strong class="text-uppercase"><?php echo __('Speler', TEXTDOMAIN); ?></strong>
+                            <hr>
+                        </div>
                         <?php
                         $player_register = array(
                             'p_fname' => array(
@@ -119,13 +150,13 @@ class Hockey_Vacatures_Register_Form {
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true
                             ),
-                            'p_place' => array(
+                            // TODO: FIX VALIDATION FOR P_TEL
+                            'p_tel' => array(
                                 'type'          => 'text',
-                                'label'         => __( 'Plaats', TEXTDOMAIN ),
-                                'name'          => 'p_place',
-                                'placeholder'   => __( 'Plaats', TEXTDOMAIN ),
-                                'col_size'      => 'col-12 col-md-6',
-                                'required'      => true
+                                'label'         => __( 'Telefoonnummer', TEXTDOMAIN ),
+                                'name'          => 'p_tel',
+                                'placeholder'   => __( 'Telefoonnummer', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6'
                             ),
                             'p_email' => array(
                                 'type'          => 'text',
@@ -155,12 +186,102 @@ class Hockey_Vacatures_Register_Form {
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true
                             ),
+                            'p_description' => array(
+                                'type'          => 'textarea',
+                                'label'         => __( 'Omschrijving', TEXTDOMAIN ),
+                                'name'          => 'description',
+                                'placeholder'   => __( 'Uw bericht', TEXTDOMAIN ),
+                                'rows'          => '7',
+                                'cols'          => '30',
+                                'col_size'      => 'col-12',
+                                'required'      => false,
+                                'description'   => __( 'Vul hier een korte omschrijving over u zelf/club', TEXTDOMAIN )
+                            )
                         );
                         $this->build_form($player_register);
                         ?>
                     </div>
 
                     <div class="row">
+                        <div class="col-12">
+                            <strong class="text-uppercase"><?php echo __('adresgegevens', TEXTDOMAIN); ?></strong>
+                            <hr>
+                        </div>
+                        <?php
+                        $place_register = array(
+                            'postal' => array(
+                                'type'          => 'text',
+                                'label'         => __( 'Postcode', TEXTDOMAIN ),
+                                'name'          => 'postal',
+                                'placeholder'   => __( 'Postcode', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6',
+                                'required'      => true,
+                            ),
+                            'street_number' => array(
+                                'type'          => 'number',
+                                'label'         => __( 'Huisnummer', TEXTDOMAIN ),
+                                'name'          => 'street_number',
+                                'placeholder'   => __( 'Huisnummer', TEXTDOMAIN ),
+                                'col_size'      => 'col-6 col-md-3',
+                                'required'      => true,
+                            ),
+                            'addition' => array(
+                                'type'          => 'number',
+                                'label'         => __( 'Toevoeging', TEXTDOMAIN ),
+                                'name'          => 'addition',
+                                'placeholder'   => __( 'Toevoeging', TEXTDOMAIN ),
+                                'col_size'      => 'col-6 col-md-3',
+                                'required'      => false,
+                            ),
+                            'city' => array(
+                                'type'          => 'text',
+                                'label'         => __( 'Stad', TEXTDOMAIN ),
+                                'name'          => 'city',
+                                'placeholder'   => __( 'Stad', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6',
+                                'required'      => true,
+                                'disabled'      => false
+                            ),
+                            'province' => array(
+                                'type'          => 'text',
+                                'label'         => __( 'Provincie', TEXTDOMAIN ),
+                                'name'          => 'province',
+                                'placeholder'   => __( 'Provincie', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6',
+                                'required'      => true,
+                                'disabled'      => false
+                            ),
+                            'street' => array(
+                                'type'          => 'text',
+                                'label'         => __( 'Straat', TEXTDOMAIN ),
+                                'name'          => 'street',
+                                'placeholder'   => __( 'Straat', TEXTDOMAIN ),
+                                'col_size'      => 'col-12 col-md-6',
+                                'required'      => true,
+                                'disabled'      => false
+                            ),
+                            'blank' => array(
+                                'type'          => 'blank',
+                                'col_size'      => 'col-md-6 hidden-md-down'
+                            ),
+                            'manual_location' => array(
+                                'type'          => 'checkbox',
+                                'label'         => __( 'Handmatig adres invullen', TEXTDOMAIN ),
+                                'name'          => 'manual_location',
+                                'col_size'      => 'col-12',
+                                'required'      => false,
+                            )
+                        );
+
+                        $this->build_form($place_register);
+                        ?>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <strong class="text-uppercase"><?php echo __('Wachtwoord / omschrijving', TEXTDOMAIN); ?></strong>
+                            <hr>
+                        </div>
                         <?php
                         $user_register = array(
                             'password' => array(
@@ -179,17 +300,7 @@ class Hockey_Vacatures_Register_Form {
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true
                             ),
-                            'description' => array(
-                                'type'          => 'textarea',
-                                'label'         => __( 'Omschrijving', TEXTDOMAIN ),
-                                'name'          => 'description',
-                                'placeholder'   => __( 'Uw bericht', TEXTDOMAIN ),
-                                'rows'          => '7',
-                                'cols'          => '30',
-                                'col_size'      => 'col-12',
-                                'required'      => false,
-                                'description'   => __( 'Vul hier een korte omschrijving over u zelf/club', TEXTDOMAIN )
-                            )
+
                         );
                         $this->build_form($user_register);
                         ?>
@@ -241,8 +352,8 @@ class Hockey_Vacatures_Register_Form {
                                 <span class="required">*</span>
                             <?php endif; ?>
                         </label>
-                        <input id="<?php echo $field['name']; ?>" class="form-control" type="<?php echo $field['type']; ?>" name="<?php echo $field['name']; ?>"
-                               placeholder="<?php echo $field['placeholder']; ?>" value="<?php if($field['name'] !== 'password_check'){ echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); } ?>">
+                        <input id="<?php echo $field['name']; ?>" class="form-control" type="<?php echo $field['type']; ?>" name="<?php echo $field['name']; ?>" placeholder="<?php echo $field['placeholder']; ?>"
+                               value="<?php if($field['name'] !== 'password_check'){ echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); } ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> >
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>
@@ -251,7 +362,7 @@ class Hockey_Vacatures_Register_Form {
                 case('select'): ?>
                     <div class="form-group <?php echo $field['col_size']; ?>">
                         <label for="<?php echo $field['name']; ?>"><?php echo $field['label'] ?></label>
-                        <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>">
+                        <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>>
                             <?php foreach( $field['options'] as $option => $value ): ?>
                                 <option <?php if(isset($_POST[$field['name']]) && $_POST[$field['name']] == $option){ echo 'selected'; }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
                             <?php endforeach; ?>
@@ -264,12 +375,24 @@ class Hockey_Vacatures_Register_Form {
                 case('textarea'): ?>
                     <div class="form-group <?php echo $field['col_size']; ?>">
                         <label for="<?php echo $field['name']; ?>"><?php echo $field['label'] ?></label>
-                        <textarea class="form-control" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" cols="<?php echo $field['cols']; ?>" rows="<?php echo $field['rows']; ?>"
+                        <textarea class="form-control" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" cols="<?php echo $field['cols']; ?>" rows="<?php echo $field['rows']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>
                                   placeholder="<?php echo $field['placeholder']; ?>"><?php echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); ?></textarea>
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>
                     </div>
+                <?php break;
+                case('checkbox'): ?>
+                    <div class="form-group <?php echo $field['col_size']; ?>">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description"><?php echo $field['label'] ?></span>
+                        </label>
+                    </div>
+                <?php break;
+                case('blank'): ?>
+                    <div class="<?php echo $field['col_size']; ?>"></div>
                 <?php break;
             }
         }
@@ -319,7 +442,7 @@ class Hockey_Vacatures_Register_Form {
         // Club
         // ====
         if($this->role == 'club'){
-            if(empty($this->club_name) || empty($this->place) || empty($this->contactperson)){
+            if(empty($this->club_name) || empty($this->contactperson)){
                 return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
             }
 
@@ -362,8 +485,9 @@ class Hockey_Vacatures_Register_Form {
         // Add The Role Specific User Data
         // ===============================
         if($this->role == 'club'){
+            // TODO: FIX CLUB FIRST LAST NAME
             $userdata['first_name'] = esc_attr($this->club_name);
-            $userdata['last_name'] = esc_attr($this->place);
+            $userdata['last_name'] = esc_attr($this->city);
             $userdata['user_url'] = esc_attr($this->web_url);
         }
         elseif($this->role == 'player'){
@@ -409,20 +533,24 @@ class Hockey_Vacatures_Register_Form {
 
                 // Add the rest of the user info in the user meta data
                 // ===================================================
+                $userinfo = array(
+                    'postal' => $this->postal,
+                    'street_number' => $this->street_number,
+                    'addition' => $this->addition,
+                    'city' => $this->city,
+                    'province' => $this->province,
+                    'street' => $this->street,
+                    'tel' => $this->tel,
+                );
+
                 if( $this->role == 'club' ){
-                    $userinfo = array(
-                        'name' => $this->club_name,
-                        'place' => $this->place,
-                        'contactperson' => $this->contactperson,
-                        'web_url' => $this->web_url,
-                    );
+                    $userinfo['name'] = $this->club_name;
+                    $userinfo['contactperson'] = $this->contactperson;
+                    $userinfo['web_url'] = $this->web_url;
                 }
                 elseif( $this->role == 'player' ){
-                    $userinfo = array(
-                        'place' => $this->place,
-                        'age' => $this->age,
-                        'gender' => $this->gender,
-                    );
+                    $userinfo['age'] = $this->age;
+                    $userinfo['gender'] = $this->gender;
                 }
 
                 if(!empty($userinfo)){
@@ -466,21 +594,27 @@ class Hockey_Vacatures_Register_Form {
             $this->description      = $_POST['description'];
             $this->password         = $_POST['password'];
             $this->password_check   = $_POST['password_check'];
+            $this->postal           = $_POST['postal'];
+            $this->street_number    = $_POST['street_number'];
+            $this->addition       = $_POST['addition'];
+            $this->city             = $_POST['city'];
+            $this->province         = $_POST['province'];
+            $this->street           = $_POST['street'];
 
             if($this->role == 'club'){
                 $this->club_name        = $_POST['c_name'];
-                $this->place            = $_POST['c_place'];
                 $this->contactperson    = $_POST['c_cname'];
                 $this->web_url          = $_POST['c_web_url'];
                 $this->email            = $_POST['c_email'];
+                $this->tel              = $_POST['c_tel'];
             }
             elseif($this->role == 'player'){
                 $this->first_name       = $_POST['p_fname'];
                 $this->last_name        = $_POST['p_lname'];
-                $this->place            = $_POST['p_place'];
                 $this->email            = $_POST['p_email'];
                 $this->age              = $_POST['p_age'];
                 $this->gender           = $_POST['p_gender'];
+                $this->tel              = $_POST['p_tel'];
             }
 
             $this->register_form_validation();

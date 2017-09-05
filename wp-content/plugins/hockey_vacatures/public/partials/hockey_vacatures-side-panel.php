@@ -17,7 +17,8 @@
     <div class="hv-side-panel-inner slideInRight animated p-3">
         <div class="row">
             <div class="col-3">
-                <a href="#" class="btn btn-primary btn-full"><?php echo __( 'Vacature Plaatsen', TEXTDOMAIN ); ?>&nbsp;<i class="fa fa-address-book-o"></i></a>
+                <?php $new_vacature = get_page_by_path( 'nieuwe-vacature' ); ?>
+                <a href="<?php echo get_page_link($new_vacature->ID); ?>" class="btn btn-primary btn-full"><?php echo __( 'Vacature Plaatsen', TEXTDOMAIN ); ?>&nbsp;<i class="fa fa-address-book-o"></i></a>
             </div>
             <div class="col-3">
                 <?php $sale_page = get_page_by_path( 'tegoed' ); ?>
@@ -30,8 +31,8 @@
 
         <div class="row mt-5">
             <?php
-//                $additional_data = get_user_meta(get_current_user_id(), 'user_data', false);
-//                var_dump($additional_data);
+                $additional_data = get_user_meta(get_current_user_id(), 'user_data', true);
+                var_dump($additional_data);
             ?>
             <div class="col-12">
                 <?php $user_id = get_current_user_id(); ?>

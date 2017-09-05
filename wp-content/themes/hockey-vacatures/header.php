@@ -14,6 +14,8 @@
     <meta charset="UTF-8">
     <title>Hockey Vacatures | Home</title>
 
+    <meta name="viewport" content="width=device-width">
+
     <?php wp_head(); ?>
 </head>
 <body <?php body_class() ?>>
@@ -57,7 +59,7 @@
                 <div class="col-6">
                     <div class="logo">
                         <a href="<?php echo get_home_url() ?>">
-                            <img class="img-fluid" src="http://matx.coderpixel.com/wp/wp-content/uploads/2016/05/logo_lite.png" alt="">
+                            <img class="img-fluid" src="<?php echo get_stylesheet_directory_uri().'/inc/img/hockey-vacatures-logo.png'; ?>" alt="">
                         </a>
                     </div>
                 </div>
@@ -74,6 +76,5 @@
 </header>
 
 <div id="main" class="page">
-
 
 

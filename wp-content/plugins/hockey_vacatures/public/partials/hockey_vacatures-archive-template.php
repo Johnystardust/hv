@@ -41,7 +41,7 @@ get_header(); ?>
                             // TODO: FIX GET TEMPLATE PART
                             ?>
                             <div class="vacature-item col-12 px-0">
-                                <h3 class="title"><?php echo get_the_title(); ?></h3>
+                                <h3 class="title"><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
                                 <h5 class="sub-line"><strong><?php echo get_the_author(); ?></strong><span> - <?php echo get_post_meta($post->ID, 'city', true); ?></span></h5>
                                 <p><?php echo wp_trim_words(get_the_content(), 40); ?></p>
                                 <ul class="vacature-info row mt-2">
@@ -52,14 +52,18 @@ get_header(); ?>
                                     </li>
                                     <?php if($gender = get_post_meta($post->ID, 'gender', true)): ?>
                                         <li class="col-3">
-                                            <?php if($gender == 'men'): ?>
+                                            <?php if($gender == 'male'): ?>
                                                 <i class="fa fa-mars"></i>
                                                 <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
                                                 <?php echo __('Man', TEXTDOMAIN); ?>
-                                            <?php elseif($gender == 'women'): ?>
+                                            <?php elseif($gender == 'female'): ?>
                                                 <i class="fa fa-venus"></i>
                                                 <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
                                                 <?php echo __('Vrouw', TEXTDOMAIN); ?>
+                                            <?php elseif($gender == 'either'): ?>
+                                                <i class="fa fa-venus-mars"></i>
+                                                <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
+                                                <?php echo __('Geen voorkeur', TEXTDOMAIN); ?>
                                             <?php endif; ?>
                                         </li>
                                     <?php endif; ?>

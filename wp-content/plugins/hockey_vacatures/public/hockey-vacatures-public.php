@@ -56,11 +56,17 @@ class Hockey_vacatures_Public {
 	 */
 	public function enqueue_scripts() {
 		// TODO: FIX: loading wrong version when using $this->version
-		// TODO: FIX: Dependency with theme file
-		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery-cdn' ), null, true );
+		// TODO: FIX: Dependency with theme js jquery-cdn file
+		wp_enqueue_script( 'hockey_vacatures_public', plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery-cdn' ), null, true );
 
-		wp_enqueue_script( 'jquery-validate', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js', array( 'jquery-cdn' ), null, true );
+		wp_enqueue_script( 'hv-public', plugin_dir_url( __FILE__ ) . 'js/hv-public.js', array( 'jquery-cdn' ), null, true );
+
+		if(is_page('registreren')){
+			wp_enqueue_script( 'hv-register', plugin_dir_url( __FILE__ ) . 'js/hv-register.js', array( 'jquery-cdn' ), null, true );
+			wp_enqueue_script( 'jquery-validate', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js', array( 'jquery-cdn' ), null, true );
+		}
+
+//		wp_enqueue_script( 'jquery-validate', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js', array( 'jquery-cdn' ), null, true );
 //		wp_enqueue_script( 'jquery-validate-am', 'https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js', array( 'jquery-cdn', 'jquery-validate' ), null, true );
 	}
 
@@ -155,15 +161,16 @@ class Hockey_vacatures_Public {
 	}
 
 	/**
-	 * Redirect after successful registration
+	 * Edit the mce editor buttons
 	 *
-	 * @return string|void
-	 *
-	 * TODO: FIX Redirect after registration
+	 * @param $buttons
+	 * @return array
 	 */
 	public function edit_mce_buttons($buttons){
-		if(in_array('fullscreen', $buttons)){
-			$buttons = array_diff($buttons, array('fullscreen', 'wp_more'));
+		if(!is_admin()){
+			if(in_array('fullscreen', $buttons)){
+				$buttons = array_diff($buttons, array('fullscreen', 'wp_more'));
+			}
 		}
 
 		return $buttons;

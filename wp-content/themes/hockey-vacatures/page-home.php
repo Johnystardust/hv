@@ -24,16 +24,40 @@
     </div>
 </div>
 
-<div id="cta" class="container-fluid mb-5 py-3">
+
+<!-- TODO: MAKE SHORTCODE FUNCTION -->
+<!-- TODO: Visual composer search form element -->
+<div id="hv-vac-search" class="container-fluid">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Meld u nu aan!</h3>
+        <form action="">
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="search" placeholder="zoekwoorden" />
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <select name="category" class="form-control custom-select">
+                            <option value="default">Alle functies</option>
+                            <option value="default">Coaches</option>
+                            <option value="default">Spelers</option>
+                            <option value="default">Trainers</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="location" placeholder="Locatie">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-alternate form-control" value="Zoeken">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 text-right">
-                <a href="#" class="btn btn-primary">Aanmelden <i class="fa fa-angle-double-down"></i></a>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 

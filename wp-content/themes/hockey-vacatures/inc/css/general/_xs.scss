@@ -139,14 +139,23 @@ form {
 }
 
 
-#cta {
-  background-color: #171717;
-  h3 {
-    color: #ffffff;
-    text-transform: uppercase;
-    line-height: 45px;
+// TODO: VISUAL COMPOSER SEARCH ELEMENT
+#hv-vac-search {
+  background-color: $primary-color;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  form {
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
+  .btn-alternate {
+    width: 100%;
+    display: block;
   }
 }
+
 
 
 #cards {

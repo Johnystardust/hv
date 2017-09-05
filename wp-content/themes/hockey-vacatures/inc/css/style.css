@@ -42,6 +42,9 @@ body.admin-bar #header {
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out; }
+    #header .main-header .logo img {
+      height: 49px;
+      width: auto; }
     #header .main-header ul {
       text-align: right; }
       #header .main-header ul li {
@@ -166,12 +169,15 @@ form .custom-select {
   max-width: 80%;
   margin: 0 auto; }
 
-#cta {
-  background-color: #171717; }
-  #cta h3 {
-    color: #ffffff;
-    text-transform: uppercase;
-    line-height: 45px; }
+#hv-vac-search {
+  background-color: #177FBF;
+  padding-top: 2rem;
+  padding-bottom: 2rem; }
+  #hv-vac-search form .form-group {
+    margin-bottom: 0; }
+  #hv-vac-search .btn-alternate {
+    width: 100%;
+    display: block; }
 
 #cards .card {
   border: none;
@@ -377,6 +383,14 @@ footer ul li {
   color: #ffffff; }
   .btn-primary:hover {
     background-color: #0E4C72; }
+
+.btn-alternate {
+  border: 2px solid #76d164;
+  border-radius: 0;
+  background-color: #76d164;
+  color: #ffffff; }
+  .btn-alternate:hover {
+    background-color: #76d164; }
 
 .btn-border {
   border: 2px solid #177FBF;

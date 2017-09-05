@@ -52,6 +52,13 @@ body.admin-bar #header {
     padding: .5rem 3rem;
     @include transition-ease-all;
 
+    .logo {
+      img {
+        height: 49px;
+        width: auto;
+      }
+    }
+
     ul {
       text-align: right;
       li {
