@@ -22,6 +22,7 @@ class Hockey_Vacatures_Register_Form {
     private $city;
     private $province;
     private $street;
+    private $coordinates;
 
     // Player Vars
     private $first_name;
@@ -270,6 +271,10 @@ class Hockey_Vacatures_Register_Form {
                                 'name'          => 'manual_location',
                                 'col_size'      => 'col-12',
                                 'required'      => false,
+                            ),
+                            'coordinates' => array(
+                                'type'          => 'hidden',
+                                'name'          => 'coordinates'
                             )
                         );
 
@@ -393,6 +398,9 @@ class Hockey_Vacatures_Register_Form {
                 <?php break;
                 case('blank'): ?>
                     <div class="<?php echo $field['col_size']; ?>"></div>
+                <?php break;
+                case('hidden'): ?>
+                    <input id="<?php echo $field['name']; ?>" type="hidden" name="<?php echo $field['name']; ?>" value="<?php echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); ?>">
                 <?php break;
             }
         }
@@ -540,6 +548,7 @@ class Hockey_Vacatures_Register_Form {
                     'city' => $this->city,
                     'province' => $this->province,
                     'street' => $this->street,
+                    'coordinates' => $this->coordinates,
                     'tel' => $this->tel,
                 );
 
@@ -589,6 +598,7 @@ class Hockey_Vacatures_Register_Form {
         ob_start();
 
         if(isset($_POST['hv_reg_submit'])){
+
             $this->username         = $_POST['username'];
             $this->role             = $_POST['role'];
             $this->description      = $_POST['description'];
@@ -596,10 +606,11 @@ class Hockey_Vacatures_Register_Form {
             $this->password_check   = $_POST['password_check'];
             $this->postal           = $_POST['postal'];
             $this->street_number    = $_POST['street_number'];
-            $this->addition       = $_POST['addition'];
+            $this->addition         = $_POST['addition'];
             $this->city             = $_POST['city'];
             $this->province         = $_POST['province'];
             $this->street           = $_POST['street'];
+            $this->coordinates      = $_POST['coordinates'];
 
             if($this->role == 'club'){
                 $this->club_name        = $_POST['c_name'];

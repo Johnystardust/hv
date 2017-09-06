@@ -125,19 +125,6 @@
             var street_number 	= $(this).val();
             var postal 			= $regForm.find('#postal').val();
 
-            console.log(street_number);
-
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://api.postcodeapi.nu/v2/addresses/?postcode="+postal+"&number="+street_number,
-                "method": "GET",
-                "headers": {
-                    "x-api-key": "1vRaaykvlV3pcEmP6sGjG3wVMxYcgvMD6buKoVHg",
-                    "accept": "application/hal+json"
-                }
-            };
-
             $.ajax({
                 url: "https://api.postcodeapi.nu/v2/addresses/?postcode="+postal+"&number="+street_number,
                 "method": "GET",
@@ -148,13 +135,20 @@
                 "async": true,
                 "crossDomain": true,
             }).done(function(response){
-                var addresses = response._embedded.addresses[0].city.label;
-
                 $regForm.find('#city').val(response._embedded.addresses[0].city.label);
                 $regForm.find('#province').val(response._embedded.addresses[0].province.label);
                 $regForm.find('#street').val(response._embedded.addresses[0].street);
 
+                var coordinates = [
+                    response._embedded.addresses[0].geo.center.wgs84.coordinates[0],
+                    response._embedded.addresses[0].geo.center.wgs84.coordinates[1],
+                ];
+
+                $regForm.find('#coordinates').val(coordinates);
+
+                // TODO: REMOVE !!!
                 console.log(response._embedded.addresses);
+                console.log(response._embedded.addresses[0].geo.center.wgs84.coordinates);
             });
         });
 

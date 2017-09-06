@@ -86,7 +86,7 @@ get_header(); ?>
                                     <li>
                                         <i class="fa fa-external-link"></i>
                                         <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
-                                        <a href="<?php echo get_post_meta($post->ID, 'web_url', true); ?>"><?php echo get_post_meta($post->ID, 'web_url', true); ?></a>
+                                        <a target="_blank" href="<?php echo get_post_meta($post->ID, 'web_url', true); ?>"><?php echo get_post_meta($post->ID, 'web_url', true); ?></a>
                                     </li>
                                 </ul>
                             </div>
@@ -98,6 +98,15 @@ get_header(); ?>
 
                         <div class="btn-set mt-3">
                             <a href="mailto:<?php echo get_post_meta($post->ID, 'mail', true); ?>" class="btn btn-primary"><?php echo __('Solliciteren', TEXTDOMAIN); ?></a>
+                        </div>
+
+                        <div class="send-notification">
+                            <form action="">
+                                <input type="hidden" value="<?php echo $post->ID; ?>">
+                            </form>
+
+
+                            <a href="#"><?php echo __('Vacature niet oke? Laat het ons weten!', TEXTDOMAIN); ?></a>
                         </div>
 
                         <div class="social-share">

@@ -181,6 +181,13 @@ body.hv-side-panel-open:after {
   margin-bottom: 2rem; }
 #vacature-single .main-content .main-column .the-content {
   padding-right: 8rem; }
+#vacature-single .main-content .main-column .send-notification {
+  margin: 2rem 0 1rem 0; }
+  #vacature-single .main-content .main-column .send-notification a {
+    color: #cccccc;
+    font-size: .8rem; }
+    #vacature-single .main-content .main-column .send-notification a:hover {
+      color: #177FBF; }
 #vacature-single .main-content .main-column .vacature-data li, #vacature-single .main-content .main-column .vacature-info li {
   font-size: .9rem;
   margin-bottom: .3rem; }

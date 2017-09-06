@@ -44,6 +44,18 @@
         padding-right: 8rem;
       }
 
+      .send-notification {
+        margin: 2rem 0 1rem 0;
+        a {
+          color: #cccccc;
+          font-size: .8rem;
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+
       .vacature-data, .vacature-info {
         li {
           font-size: .9rem;
