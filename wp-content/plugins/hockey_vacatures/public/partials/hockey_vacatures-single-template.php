@@ -31,12 +31,20 @@ get_header(); ?>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <ul class="vacature-info">
+                                    <?php
+                                    global $post;
+                                    $additional_data = get_post_meta($post->ID, 'additional_data', true);
+
+                                    // TODO: FIX SINGLE VACATURE MAPS
+                                    // $additional_data['latlng'];
+                                    ?>
+
                                     <li>
                                         <i class="fa fa-user"></i>
                                         <strong><?php echo __('Functie:', TEXTDOMAIN); ?></strong>
-                                        <?php echo ucfirst(get_post_meta($post->ID, 'function', true)); ?>
+                                        <?php echo ucfirst($additional_data['function']); ?>
                                     </li>
-                                    <?php if($gender = get_post_meta($post->ID, 'gender', true)): ?>
+                                    <?php if($gender = $additional_data['gender']): ?>
                                         <li>
                                             <?php if($gender == 'male'): ?>
                                                 <i class="fa fa-mars"></i>
@@ -56,13 +64,13 @@ get_header(); ?>
                                     <li>
                                         <i class="fa fa-map-marker"></i>
                                         <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
-                                        <?php echo get_post_meta($post->ID, 'city', true); ?>
+                                        <?php echo $additional_data['city']; ?>
 
                                     </li>
                                     <li>
                                         <i class="fa fa-globe"></i>
                                         <strong><?php echo __('Provincie:', TEXTDOMAIN); ?></strong>
-                                        <?php echo get_post_meta($post->ID, 'province', true); ?>
+                                        <?php echo $additional_data['province']; ?>
                                     </li>
                                 </ul>
                             </div>
@@ -76,17 +84,17 @@ get_header(); ?>
                                     <li>
                                         <i class="fa fa-envelope-o"></i>
                                         <strong><?php echo __('Mail:', TEXTDOMAIN); ?></strong>
-                                        <a href="mailto:<?php echo get_post_meta($post->ID, 'mail', true); ?>"><?php echo get_post_meta($post->ID, 'mail', true); ?></a>
+                                        <a href="mailto:<?php echo $additional_data['mail']; ?>"><?php echo $additional_data['mail']; ?></a>
                                     </li>
                                     <li>
                                         <i class="fa fa-phone"></i>
                                         <strong><?php echo __('Tel:', TEXTDOMAIN); ?></strong>
-                                        <a href="tel:<?php echo get_post_meta($post->ID, 'tel', true); ?>"><?php echo get_post_meta($post->ID, 'tel', true); ?></a>
+                                        <a href="tel:<?php echo $additional_data['tel']; ?>"><?php echo $additional_data['tel']; ?></a>
                                     </li>
                                     <li>
                                         <i class="fa fa-external-link"></i>
                                         <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
-                                        <a target="_blank" href="<?php echo get_post_meta($post->ID, 'web_url', true); ?>"><?php echo get_post_meta($post->ID, 'web_url', true); ?></a>
+                                        <a target="_blank" href="<?php echo $additional_data['web_url']; ?>"><?php echo $additional_data['web_url']; ?></a>
                                     </li>
                                 </ul>
                             </div>

@@ -8,18 +8,13 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . '/hockey-vacatures-forms.p
 
 class Hockey_Vacatures_New_Vacature_Form extends Hockey_Vacatures_Forms {
 
-    private $user_info;
-
     private $title;
     private $function;
     private $gender;
-    private $city;
-    private $province;
-    private $tel;
-    private $url;
     private $content;
 
     public function __construct(){
+        require_once( ABSPATH . 'wp-admin/includes/post.php' );
     }
 
     public function new_vacature_form(){
@@ -101,56 +96,51 @@ class Hockey_Vacatures_New_Vacature_Form extends Hockey_Vacatures_Forms {
         <?php
     }
 
-    private function add_new_vacature_meta($post_id){
-
-
-
-
-
-
-
-        $user_info = get_userdata(get_current_user_id());
+    private function add_post_meta($post_id){
         $additional_data = get_user_meta(get_current_user_id(), 'user_data', true);
+        $user_info = get_userdata(get_current_user_id());
+        $data = array();
 
-        // Users Variables
-        // TODO: FIX MULTIPLE ROLES ADD PLAYER ROLE !!
-        add_post_meta($post_id, 'city', $additional_data['city']);
-        add_post_meta($post_id, 'province', $additional_data['province']);
-        add_post_meta($post_id, 'tel', $additional_data['tel']);
-        add_post_meta($post_id, 'web_url', $additional_data['web_url']);
+        if($additional_data){
+            $data['function']   = $this->function;
+            $data['gender']     = $this->gender;
+            $data['city']       = $additional_data['city'];
+            $data['province']   = $additional_data['province'];
+            $data['mail']       = $user_info->user_email;
+            $data['tel']        = $additional_data['tel'];
+            $data['web_url']    = $additional_data['web_url'];
+            $data['latlng']     = $additional_data['coordinates'];
+        }
 
-        // Post Variables
-        add_post_meta($post_id, 'gender', $this->gender);
-        add_post_meta($post_id, 'function', $this->function);
+        if(add_post_meta($post_id, 'additional_data', $data)){
+            return true;
+        }
 
-        add_post_meta($post_id, 'mail', $user_info->user_email);
+        return false;
     }
 
-    public function new_vacature_form_shortcode(){
+    // TODO: FIX VALIDATION !!!
+    public function new_vacature_validation(){
+        if(empty($this->title) || empty($this->content)) {
+            return new WP_Error('field', 'Required form field is missing');
+        }
+        if(post_exists($this->title) != 0) {
+            return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
+        }
+    }
 
-        if(isset($_POST['submit'])){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $this->title    = $_POST['title'];
-            $this->function = $_POST['function'];
-            $this->gender   = $_POST['gender'];
-            $this->content  = $_POST['content'];
-
+    public function new_vacature_add_page(){
+        if (is_wp_error($this->new_vacature_validation())) {
+            echo '<div class="message-popup error">';
+                echo '<div class="message-popup-inner">';
+                    echo '<h3>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h3>';
+                        echo '<p>' . __( 'De vacature kan niet geplaatst worden door de volgende reden(en)', TEXTDOMAIN ) . '</p>';
+                        echo '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $this->new_vacature_validation()->get_error_message() . '</strong>';
+                    echo '<br><br><a href="#message-popup-close" class="btn btn-primary"> ' . __( 'Terug', TEXTDOMAIN ) . ' </a>';
+                echo '</div>';
+            echo '</div>';
+        }
+        else {
             $new_vacature = array(
                 'post_title' => wp_strip_all_tags( $this->title ),
                 'post_content' => $this->content,
@@ -158,13 +148,36 @@ class Hockey_Vacatures_New_Vacature_Form extends Hockey_Vacatures_Forms {
                 'post_status' => 'publish'
             );
 
-            $post_id = wp_insert_post($new_vacature);
-
-            if($post_id){
-                $this->add_new_vacature_meta($post_id);
-
-                var_dump($post_id);
+            if($post_id = wp_insert_post($new_vacature)){
+                if($this->add_post_meta($post_id)){
+                    // Render the success message
+                    // ==========================
+                    echo '<div class="message-popup success">';
+                        echo '<div class="message-popup-inner">';
+                            echo '<h3>' . __( 'Vacature geplaatst!', TEXTDOMAIN ) . '</h3>';
+                            echo '<a class="btn btn-primary" href="' . get_page_link($post_id).'">' . __( 'Vacature bekijken', TEXTDOMAIN ) . '</a>';
+                        echo '</div>';
+                    echo '</div>';
+                }
             }
+            else {
+                // TODO: FIX ME !!!!!
+                print 'ERROR!!!!!!!!!!!!!';
+            }
+        }
+    }
+
+    public function new_vacature_form_shortcode(){
+
+        if(isset($_POST['submit'])){
+
+            $this->title    = $_POST['title'];
+            $this->content  = $_POST['content'];
+            $this->function = $_POST['function'];
+            $this->gender   = $_POST['gender'];
+
+            $this->new_vacature_validation();
+            $this->new_vacature_add_page();
         }
         $this->new_vacature_form();
     }

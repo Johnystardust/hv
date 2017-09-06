@@ -33,6 +33,7 @@
     $(function(){
 
         // 1.0	Side Panel
+        // 2.0  Messages
 
 
         // 1.0 Side Panel
@@ -102,17 +103,29 @@
             }
         });
 
-        $('#hv_sale_form').validate({
-            rules: {
-                hv_sale_num: {
-                    required: true
-                }
+        //$('#hv_sale_form').validate({
+        //    rules: {
+        //        hv_sale_num: {
+        //            required: true
+        //        }
+        //
+        //    },
+        //    messages: {
+        //        hv_sale_num: 'Vul een aantal vacatures in.'
+        //
+        //    }
+        //});
 
-            },
-            messages: {
-                hv_sale_num: 'Vul een aantal vacatures in.'
 
-            }
+        // 2.0 Messages
+        // =============================================================================================================
+
+        // Message popup close
+        // ===================
+        $('.message-popup a[href="#message-popup-close"]').on('click', function(event){
+            event.preventDefault();
+
+            $(this).parentsUntil('.message-popup').parent().fadeOut();
         });
 
     });

@@ -186,14 +186,6 @@
             role_select($(this).val());
         });
 
-        // Message popup close
-        // ===================
-        $('.message-popup a[href="#message-popup-close"]').on('click', function(event){
-            event.preventDefault();
-
-            $(this).parentsUntil('.message-popup').parent().fadeOut();
-        });
-
         // Manual Location
         // ===============
         $regForm.find('#manual_location').on('change', function(){
