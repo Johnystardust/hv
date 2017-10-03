@@ -19,8 +19,14 @@ a {
     color: $primary-color;
   }
 }
+/* ------------ Colors ------------ */
+.text-blue {color: $text-blue;}
+.text-grey {color: $text-grey;}
+.text-white {color: #ffffff;}
+.background-grey {background-color: $background-grey;}
 
-// Misc
+
+/* ------------ Misc ------------ */
 #wpadminbar {
   z-index: 999999999;
 }
@@ -29,16 +35,62 @@ a {
   display: none;
 }
 
+.spacer {
+  margin-bottom: 18px;
+  width: 31px;
+  border-top: 3px solid $primary-color;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.lb-photo {
+  display: block;
+  &:after {
+    content: '';
+    display: block;
+    background-color: transparent;
+    @include transition-ease-all;
+  }
+}
+
+.big-block > .row {
+  padding: 10rem 0;
+}
+.half-block > .row {
+  padding: 5rem 0;
+}
+
 // Generalisation
 ul {
   list-style: none;
   padding-left: 0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#main {
+  margin-top: 113px;
+}
+
 // Form
 form {
   label {
     font-weight: 600;
+    width: 100%;
     &.error {
       display: block;
       padding: .3rem;
@@ -49,8 +101,8 @@ form {
     }
   }
   .description {font-size: .8rem; font-weight: 300; color: #999999;}
-  .form-group {margin-bottom: 2rem;}
-  .form-control {
+  .form-group, .wpcf7-form-control-wrap {margin-bottom: 2rem; width: 100%}
+  .form-control, .wpcf7-form-control {
     border: 1px solid rgba(0,0,0,.12);
     border-radius: 0;
     padding: 1rem;
@@ -60,6 +112,24 @@ form {
     &.valid {
       border-bottom-color: $success;
     }
+  }
+
+  .wpcf7-form-control:not(.wpcf7-submit) {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-color: #fff;
+    background-image: none;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
   }
 
   .custom-select {
@@ -107,23 +177,6 @@ form {
   top: 0;
   left: 0;
   box-sizing: border-box;
-}
-
-#banner {
-  position: relative;
-  padding: 0;
-  min-height: 600px;
-
-  h1 {
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-  h2 {
-    color: #fff;
-    text-transform: uppercase;
-  }
 }
 
 #panels {
@@ -312,3 +365,9 @@ form {
     }
   }
 }
+
+
+// About Us
+
+// VC ELEMENTS
+

@@ -9,7 +9,7 @@
 
 global $post;
 
-$background_image = !empty(get_field('banner_image')) ? get_field('banner_image') : get_stylesheet_directory_uri().'/inc/img/hockeyvacatures-banner.jpg';
+$background_image = !empty(get_field('banner_image')) ? get_field('banner_image') : get_stylesheet_directory_uri().'/inc/img/hockey-vacatures-random-1.jpg';
 
 ?>
 <div id="page-banner" style="background-image: url('<?php echo $background_image ?>');">

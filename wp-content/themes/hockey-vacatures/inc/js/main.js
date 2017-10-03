@@ -33,6 +33,13 @@ $(document).ready(function(){
         return false;
     });
 
+    // Slick Slider
+    // ============
+    $('.banner-full-width').slick({
+        dots: true,
+        arrows: false
+    });
+
 
 
     $(window).scroll(function(){

@@ -26,6 +26,10 @@
 // Widgets
 @import "widgets/xs";
 
+@import "banner/xs";
+
+@import "typography";
+@import "vc-elements/xs";
 
 @media screen and (min-width: 1400px) {
   .container {

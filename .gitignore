@@ -10,3 +10,8 @@ wp-content/plugins/*
 # THEMES
 wp-content/themes/*
 !wp-content/themes/hockey-vacatures
+wp-content/themes/hockey-vacatures/inc/img
+!wp-content/themes/hockey-vacatures/inc/img/logo.png
+!wp-content/themes/hockey-vacatures/inc/img/glenn.png
+
+

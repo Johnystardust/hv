@@ -38,8 +38,23 @@
   }
 }
 
+.btn-border-white {
+  border: 2px solid #ffffff;
+  border-radius: 0;
+  color: #ffffff;
+  &:hover {
+    background-color: #ffffff;
+    color: $primary-color;
+  }
+}
+
 .btn-full {
   width: 100%;
+}
+
+.btn-big {
+  padding: 1.2rem 2rem;
+  font-size: 1.1rem;
 }
 
 .btn-set .btn {

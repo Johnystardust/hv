@@ -11,6 +11,7 @@
 define('TEXTDOMAIN', 'hockeyvacatures');
 
 get_template_part('theme-functions/customizer');
+get_template_part('theme-functions/vc_map');
 get_template_part('inc/admin/admin');
 
 // Remove Wordpress branding from admin footer
@@ -34,6 +35,7 @@ function hv_enqueue(){
 
     wp_enqueue_script('tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', array('jquery-cdn'), null, true);
     wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', array('jquery-cdn', 'tether'), null, true);
+    wp_enqueue_script('slick-slider', get_stylesheet_directory_uri().'/inc/js/slick.min.js', array('jquery-cdn'), null, true);
 }
 add_action('wp_enqueue_scripts', 'hv_enqueue');
 

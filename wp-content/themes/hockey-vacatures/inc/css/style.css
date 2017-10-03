@@ -86,18 +86,60 @@ a:hover {
   text-decoration: none;
   color: #177FBF; }
 
+/* ------------ Colors ------------ */
+.text-blue {
+  color: #0973b5; }
+
+.text-grey {
+  color: #999999; }
+
+.text-white {
+  color: #ffffff; }
+
+.background-grey {
+  background-color: #f6f6f6; }
+
+/* ------------ Misc ------------ */
 #wpadminbar {
   z-index: 999999999; }
 
 .hidden {
   display: none; }
 
+.spacer {
+  margin-bottom: 18px;
+  width: 31px;
+  border-top: 3px solid #177FBF;
+  margin-left: 0;
+  margin-right: auto; }
+
+.lb-photo {
+  display: block; }
+  .lb-photo:after {
+    content: '';
+    display: block;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out; }
+
+.big-block > .row {
+  padding: 10rem 0; }
+
+.half-block > .row {
+  padding: 5rem 0; }
+
 ul {
   list-style: none;
   padding-left: 0; }
 
+#main {
+  margin-top: 113px; }
+
 form label {
-  font-weight: 600; }
+  font-weight: 600;
+  width: 100%; }
   form label.error {
     display: block;
     padding: .3rem;
@@ -109,16 +151,33 @@ form .description {
   font-size: .8rem;
   font-weight: 300;
   color: #999999; }
-form .form-group {
-  margin-bottom: 2rem; }
-form .form-control {
+form .form-group, form .wpcf7-form-control-wrap {
+  margin-bottom: 2rem;
+  width: 100%; }
+form .form-control, form .wpcf7-form-control {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0;
   padding: 1rem; }
-  form .form-control.error {
+  form .form-control.error, form .wpcf7-form-control.error {
     border-bottom-color: #d9534f !important; }
-  form .form-control.valid {
+  form .form-control.valid, form .wpcf7-form-control.valid {
     border-bottom-color: #5cb85c !important; }
+form .wpcf7-form-control:not(.wpcf7-submit) {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #464a4c;
+  background-color: #fff;
+  background-image: none;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; }
 form .custom-select {
   padding-top: 0;
   padding-bottom: 0;
@@ -147,19 +206,6 @@ form .custom-select {
   top: 0;
   left: 0;
   box-sizing: border-box; }
-
-#banner {
-  position: relative;
-  padding: 0;
-  min-height: 600px; }
-  #banner h1 {
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 600;
-    text-transform: uppercase; }
-  #banner h2 {
-    color: #fff;
-    text-transform: uppercase; }
 
 #panels h3 {
   color: #ffffff;
@@ -299,30 +345,11 @@ form .custom-select {
       visibility: hidden;
       opacity: 0; }
 
-.page .page-wrapper {
-  background-color: #f6f6f6; }
 .page .page-content, .page .main-column {
-  padding: 3rem;
   background-color: #ffffff; }
-  .page .page-content .entry-header, .page .main-column .entry-header {
-    margin-bottom: 2rem; }
-  .page .page-content .entry-content, .page .main-column .entry-content {
-    margin-bottom: 2rem; }
 
 .page-normal {
   margin-top: 110px; }
-
-/* ------------ Page Banner ------------ */
-#page-banner {
-  height: 300px; }
-  #page-banner h1 {
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 600;
-    text-transform: uppercase; }
-  #page-banner h2 {
-    color: #fff;
-    text-transform: uppercase; }
 
 footer h5 {
   margin-bottom: 2rem;
@@ -400,8 +427,20 @@ footer ul li {
     background-color: #177FBF;
     color: #ffffff; }
 
+.btn-border-white {
+  border: 2px solid #ffffff;
+  border-radius: 0;
+  color: #ffffff; }
+  .btn-border-white:hover {
+    background-color: #ffffff;
+    color: #177FBF; }
+
 .btn-full {
   width: 100%; }
+
+.btn-big {
+  padding: 1.2rem 2rem;
+  font-size: 1.1rem; }
 
 .btn-set .btn {
   margin-top: 1rem;
@@ -420,6 +459,190 @@ footer ul li {
     .widget.widget_nav_menu ul li a:hover {
       color: #177FBF;
       text-decoration: none; }
+
+/* ------------ Page Banner ------------ */
+#page-banner {
+  height: 370px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  #page-banner h1 {
+    color: #fff;
+    text-transform: uppercase; }
+  #page-banner h2 {
+    color: #fff;
+    text-transform: uppercase; }
+
+/* ------------ Full Width Banner ------------ */
+.banner-full-width {
+  position: relative;
+  height: 553px;
+  z-index: 1; }
+  .banner-full-width:after {
+    content: '';
+    display: block;
+    clear: both; }
+  .banner-full-width .slide {
+    position: relative;
+    padding-top: 9rem;
+    padding-bottom: 11rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    float: left;
+    height: 553px; }
+    .banner-full-width .slide:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3); }
+    .banner-full-width .slide:focus {
+      outline: none; }
+  .banner-full-width .banner-content {
+    color: #ffffff;
+    z-index: 1; }
+    .banner-full-width .banner-content h1 {
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 2rem; }
+    .banner-full-width .banner-content p {
+      padding-right: 6rem;
+      line-height: 1.2;
+      color: #f6f6f6;
+      margin-bottom: 2rem; }
+
+.slick-dots {
+  position: absolute;
+  bottom: 40px;
+  list-style: none;
+  display: block;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  width: 100%; }
+  .slick-dots li {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer; }
+    .slick-dots li button {
+      border: 0;
+      background: transparent;
+      display: block;
+      height: 20px;
+      width: 20px;
+      outline: none;
+      line-height: 0px;
+      font-size: 0px;
+      color: transparent;
+      padding: 5px;
+      cursor: pointer; }
+      .slick-dots li button:hover, .slick-dots li button:focus {
+        outline: none; }
+      .slick-dots li button:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "\2022";
+        width: 20px;
+        height: 20px;
+        font-size: 35px;
+        line-height: 20px;
+        text-align: center;
+        color: black; }
+    .slick-dots li.slick-active button:before {
+      color: #177FBF; }
+
+h1 {
+  font-size: 45px;
+  line-height: 55px;
+  font-weight: 700; }
+
+h2 {
+  font-weight: 600;
+  font-size: 38px; }
+
+h3 {
+  font-size: 32px;
+  font-weight: 600; }
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600; }
+
+h5 {
+  font-size: 1.1rem;
+  font-weight: 600; }
+
+p {
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.8rem; }
+
+/* ------------ Concept Block ------------ */
+.concept-block i {
+  font-size: 2rem;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  z-index: 1; }
+.concept-block h2 {
+  position: relative;
+  z-index: 2; }
+.concept-block p {
+  line-height: 1.8rem; }
+
+/* ------------ Facts Block ------------ */
+.facts-block .fact .counter {
+  font-size: 3rem;
+  font-weight: 700; }
+
+/* ------------ Quote Block ------------ */
+.quote-block img {
+  display: inline-block; }
+.quote-block h2 {
+  margin-top: 3rem; }
+  .quote-block h2 span {
+    font-size: larger;
+    color: #999999; }
+
+.quote {
+  padding-top: 3rem;
+  padding-bottom: 3rem; }
+  .quote img {
+    height: 109px;
+    width: auto;
+    display: inline-block;
+    float: left; }
+  .quote h2 {
+    float: left;
+    font-weight: 700;
+    display: inline-block;
+    max-width: 420px;
+    margin-left: 2rem;
+    margin-top: 15px;
+    line-height: 1.2; }
+
+/* ------------ GMaps ------------ */
+/* ------------ Icon Box ------------ */
+.hv-icon-box {
+  width: 100%;
+  margin-bottom: 2rem;
+  overflow: hidden; }
+  .hv-icon-box .icon-container {
+    min-width: 40px;
+    float: left; }
+    .hv-icon-box .icon-container i {
+      font-size: 2rem; }
+  .hv-icon-box .text-container {
+    float: left;
+    margin-left: 2rem; }
 
 @media screen and (min-width: 1400px) {
   .container {

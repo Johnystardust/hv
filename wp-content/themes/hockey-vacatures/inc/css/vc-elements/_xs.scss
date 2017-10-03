@@ -1,0 +1,84 @@
+/* ------------ Concept Block ------------ */
+.concept-block {
+  i {
+    font-size: 2rem;
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    z-index: 1;
+  }
+  h2 {
+    position: relative;
+    z-index: 2;
+  }
+  p {
+    line-height: 1.8rem;
+  }
+}
+
+/* ------------ Facts Block ------------ */
+.facts-block {
+  .fact {
+    .counter {
+      font-size: 3rem;
+      font-weight: 700;
+
+    }
+  }
+}
+
+/* ------------ Quote Block ------------ */
+.quote-block {
+  img {
+    display: inline-block;
+  }
+  h2 {
+    margin-top: 3rem;
+    span {
+      font-size: larger;
+      color: $text-grey;
+    }
+  }
+}
+
+
+// TODO: CLEANUP !!!
+.quote {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  img {
+    height: 109px;
+    width: auto;
+    display: inline-block;
+    float: left;
+  }
+  h2 {
+    float: left;
+    font-weight: 700;
+    display: inline-block;
+    max-width: 420px;
+    margin-left: 2rem;
+    margin-top: 15px;
+    line-height: 1.2;
+  }
+}
+
+/* ------------ GMaps ------------ */
+
+/* ------------ Icon Box ------------ */
+.hv-icon-box {
+  width: 100%;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  .icon-container {
+    min-width: 40px;
+    float: left;
+    i {
+      font-size: 2rem;
+    }
+  }
+  .text-container {
+    float: left;
+    margin-left: 2rem;
+  }
+}
