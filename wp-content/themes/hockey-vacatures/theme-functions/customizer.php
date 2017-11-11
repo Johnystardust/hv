@@ -78,44 +78,6 @@ function hv_register_theme_customizer($wp_customize){
         'priority'      => 35,
     ));
 
-    // Footer company information widget
-    // =================================
-    $wp_customize->add_setting('footer_company_widget', array(
-        'default'       => 1,
-    ));
-    $wp_customize->add_control(new WP_Customize_Control(
-        $wp_customize,
-        'footer_company_widget',
-        array(
-            'label'     => __('Show company widget in footer', TEXTDOMAIN),
-            'section'   => 'footer',
-            'settings'  => 'footer_company_widget',
-            'type'      => 'checkbox',
-        )
-    ));
-
-    // Footer company title
-    $wp_customize->add_setting('footer_company_title', array(
-        'default'       => '',
-        'transport'     => 'refresh',
-    ));
-    $wp_customize->add_control('footer_company_title', array(
-        'label'         => __('Footer company title', TEXTDOMAIN),
-        'section'       => 'footer',
-        'type'          => 'text',
-    ));
-
-    // Footer company text
-    $wp_customize->add_setting('footer_company_text', array(
-        'default'       => '',
-        'transport'     => 'refresh',
-    ));
-    $wp_customize->add_control('footer_company_text', array(
-        'label'         => __('Footer company text', TEXTDOMAIN),
-        'section'       => 'footer',
-        'type'          => 'textarea',
-    ));
-
     // Footer Copyright text
     // =====================
     $wp_customize->add_setting('footer_copyright_text', array(

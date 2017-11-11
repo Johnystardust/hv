@@ -17,6 +17,7 @@ class Hockey_Vacatures_Shortcodes {
     private $sale_form;
     private $top_bar;
     private $new_vacature_form;
+    private $vacature_maps;
 
     // @TODO: FIX NEW SHORTCODE WAY IF POSSIBLE
 
@@ -37,6 +38,7 @@ class Hockey_Vacatures_Shortcodes {
         $this->sale_form            = new Hockey_Vacatures_Sale_Form();
         $this->top_bar              = new Hockey_Vacatures_Top_Bar();
         $this->new_vacature_form    = new Hockey_Vacatures_New_Vacature_Form();
+        $this->vacature_maps        = new Hockey_Vacatures_Vacature_Map();
     }
 
     /**
@@ -49,6 +51,7 @@ class Hockey_Vacatures_Shortcodes {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/hockey-vacatures-sale-form.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/hockey-vacatures-top-bar.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/hockey-vacatures-new-vacature-form.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/hockey-vacatures-map.php';
     }
 
     /**
@@ -61,5 +64,6 @@ class Hockey_Vacatures_Shortcodes {
         add_shortcode( 'hockey_vacatures_sale_form', array($this->sale_form, 'sale_form_shortcode') );
         add_shortcode( 'hockey_vacatures_top_bar', array($this->top_bar, 'top_bar_shortcode') );
         add_shortcode( 'hockey_vacatures_vacature_form', array($this->new_vacature_form, 'new_vacature_form_shortcode'));
+        add_shortcode( 'hockey_vacatures_vacature_map', array($this->vacature_maps, 'vacature_map_shortcode'));
     }
 }

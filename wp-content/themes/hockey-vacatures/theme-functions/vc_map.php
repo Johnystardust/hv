@@ -16,8 +16,9 @@
 
 get_template_part('theme-functions/vc-elements/hv-vc-maps');
 get_template_part('theme-functions/vc-elements/hv-vc-iconbox');
-
-
+get_template_part('theme-functions/vc-elements/hv-vc-title-spacer');
+get_template_part('theme-functions/vc-elements/hv-vc-button');
+get_template_part('theme-functions/vc-elements/hv-vc-vacature-list');
 
 function hv_vc_remove_params(){
     vc_remove_param( "vc_row", "gap" );

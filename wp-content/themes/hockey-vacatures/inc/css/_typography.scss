@@ -1,29 +1,87 @@
 // Typography
 
+html { font-size: 87.5%; }
+
+body {
+  font-size: 1rem;
+}
+
+
 h1 {
-  font-size: 45px;
-  line-height: 55px;
   font-weight: 700;
+  font-size: 3rem;
+  line-height: 55px;
 }
 h2 {
   font-weight: 600;
-  font-size: 38px;
+  font-size: 2.8rem;
 }
 h3 {
-  font-size: 32px;
+  font-size: 2.4rem;
   font-weight: 600;
 }
 h4 {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 h5 {
   font-size: 1.1rem;
   font-weight: 600;
 }
+h6 {
+  font-size: 1rem;
+}
 
 p {
   font-weight: 300;
   font-size: 1.1rem;
   line-height: 1.8rem;
+
+  a {
+    color: $text-blue;
+    font-weight: 500;
+
+    &:hover {
+      color: $primary-hover-color;
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (min-width: 576px){
+}
+
+// Medium devices (tablets, 768px and up)
+@media screen and (min-width: 768px){
+  //h1 {
+  //  font-size: 45px;
+  //  line-height: 55px;
+  //  font-weight: 700;
+  //}
+  //h2 {
+  //  font-weight: 600;
+  //  font-size: 38px;
+  //}
+  //h3 {
+  //  font-size: 32px;
+  //  font-weight: 600;
+  //}
+  //h4 {
+  //  font-size: 1.5rem;
+  //  font-weight: 600;
+  //}
+  //h5 {
+  //  font-size: 1.1rem;
+  //  font-weight: 600;
+  //}
+}
+
+// Large devices (desktops, 992px and up)
+@media screen and (min-width: 992px){
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media screen and (min-width: 1200px){
+
 }

@@ -1,8 +1,5 @@
 #vacature-archive {
   .main-content {
-    background-color: $background-grey;
-
-
 
     .archive-filter {
       height: 200px;
@@ -13,13 +10,23 @@
 
 
     .vacature-list {
+      .vacature-counter {
+        display: inline-block;
+
+        float: right;
+        line-height: 41px;
+      }
+
       .vacature-item {
         border-bottom: 1px solid #cccccc;
-        padding-bottom: 3rem;
-        padding-top: 3rem;
+        padding-bottom: 5rem;
+        padding-top: 5rem;
 
         .title {
           margin-bottom: .5rem;
+          a {
+            color: $primary-color;
+          }
           span {
             font-size: 1rem;
           }
@@ -34,6 +41,19 @@
           li {
             font-size: .9rem;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  #vacature-archive {
+    .main-content {
+      .vacature-list {
+        .vacature-counter {
+          display: block;
+          float: none;
         }
       }
     }

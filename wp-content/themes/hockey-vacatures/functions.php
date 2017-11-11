@@ -46,10 +46,10 @@ function hv_register_widget_areas(){
         'name' 			=> __('Footer', TEXTDOMAIN),
         'id' 			=> 'footer',
         'description' 	=> __('Footer', TEXTDOMAIN),
-        'before_widget' => '<div id="%1$s" class="%2$s widget footer-widget col-md-3">',
+        'before_widget' => '<div id="%1$s" class="%2$s widget footer-widget col-12 col-md-6 col-lg-3">',
         'after_widget' 	=> '</div>',
         'before_title' 	=> '<h5 class="widget-title">',
-        'after_title' 	=> '</h5>',
+        'after_title' 	=> '</h5><div class="spacer"></div>',
     ));
 
     // Sidebar
@@ -60,7 +60,7 @@ function hv_register_widget_areas(){
         'before_widget' => '<div id="%1$s" class="%2$s widget sidebar-widget">',
         'after_widget'  => '</div>',
         'before_title'  => '<h5 class="widget-title">',
-        'after_title'   => '</h5>',
+        'after_title'   => '</h5><div class="spacer"></div>',
     ));
 
     // Top Header

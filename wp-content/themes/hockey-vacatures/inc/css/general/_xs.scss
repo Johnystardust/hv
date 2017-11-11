@@ -19,14 +19,14 @@ a {
     color: $primary-color;
   }
 }
-/* ------------ Colors ------------ */
+/* --------------------------------------------------   COLORS  ----------------------------------------------------- */
 .text-blue {color: $text-blue;}
 .text-grey {color: $text-grey;}
 .text-white {color: #ffffff;}
 .background-grey {background-color: $background-grey;}
 
 
-/* ------------ Misc ------------ */
+/* --------------------------------------------------    MISC   ----------------------------------------------------- */
 #wpadminbar {
   z-index: 999999999;
 }
@@ -36,25 +36,52 @@ a {
 }
 
 .spacer {
-  margin-bottom: 18px;
-  width: 31px;
+  margin: 1rem auto 1rem 0;
+  width: 45px;
   border-top: 3px solid $primary-color;
-  margin-left: 0;
-  margin-right: auto;
+
+  &.small {
+    margin: 1rem auto 1rem 0;
+    width: 39px;
+  }
 }
 
-.lb-photo {
-  display: block;
+body {
   &:after {
     content: '';
+    position: fixed;
     display: block;
-    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 100000;
+    visibility: hidden;
+    opacity: 0;
     @include transition-ease-all;
   }
 }
 
+html.noscroll {
+  overflow: hidden;
+  body:after {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.wpb_content_element {
+  margin-bottom: 1rem !important;
+}
+
+/* ---------------------------------------------    BLOCK PADDING    ------------------------------------------------ */
 .big-block > .row {
-  padding: 10rem 0;
+  padding: 8rem 0;
+  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+    margin-bottom: 6rem;
+    &:last-child {margin-bottom: 0;}
+  }
 }
 .half-block > .row {
   padding: 5rem 0;
@@ -67,6 +94,63 @@ ul {
 }
 
 
+/* ---------------------------------------------    SMALL DEVICES (landscape phones, 576px and up)    --------------- */
+@media screen and (max-width: 576px){
+  .big-block > .row {
+    padding: 5rem 0;
+    .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+      margin-bottom: 3rem;
+      &:last-child {margin-bottom: 0;}
+    }
+  }
+  .half-block > .row {
+    padding: 3rem 0;
+  }
+}
+
+@media screen and (max-width: 768px){
+  //.big-block > .row {
+  //  padding: 8rem 0;
+  //}
+  //.half-block > .row {
+  //  padding: 5rem 0;
+  //}
+}
+
+/* ---------------------------------------------    MEDIUM DEVICES (tablets, 768px and up)    ----------------------- */
+@media screen and (min-width: 768px){
+  .spacer {
+    margin: 2rem auto 2rem 0;
+    border-width: 4px;
+    &.small {
+      margin: 1rem auto 1rem 0;
+    }
+  }
+
+  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+    margin-bottom: 1rem;
+    &:last-child {margin-bottom: 0;}
+  }
+
+  .wpb_content_element {
+    margin-bottom: 2rem !important;
+  }
+}
+
+/* ---------------------------------------------    LARGE DEVICES (desktops, 992px and up)    ----------------------- */
+@media screen and (min-width: 992px){
+  //.big-block > .row {
+  //  padding: 8rem 0;
+  //}
+  //.half-block > .row {
+  //  padding: 5rem 0;
+  //}
+}
+
+/* ---------------------------------------------    EXTRA LARGE DEVICES (large desktops, 1200px and up)   ----------- */
+@media screen and (min-width: 1200px){
+
+}
 
 
 
@@ -81,9 +165,15 @@ ul {
 
 
 
-
-#main {
-  margin-top: 113px;
+// TODO FIX ME !!!!
+.lb-photo {
+  display: block;
+  &:after {
+    content: '';
+    display: block;
+    background-color: transparent;
+    @include transition-ease-all;
+  }
 }
 
 // Form

@@ -24,12 +24,12 @@ get_header(); ?>
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
             <div class="row">
-                <div class="col-8 main-column">
+                <div class="col-12 col-md-8 main-column">
                     <?php while(have_posts()) : the_post(); ?>
-                        <h1 class="title"><?php echo get_the_title(); ?></h1>
-
+                        <h2 class="font-weight-bold"><?php echo get_the_title(); ?></h2>
+                        <div class="spacer"></div>
                         <div class="row mb-3">
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
                                 <ul class="vacature-info">
                                     <?php
                                     global $post;
@@ -74,7 +74,7 @@ get_header(); ?>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-md-6">
                                 <ul class="vacature-data">
                                     <li>
                                         <i class="fa fa-calendar"></i>
@@ -128,7 +128,7 @@ get_header(); ?>
 
                     <?php endwhile; ?>
                 </div>
-                <div class="col-3 push-1 px-0 sidebar-column">
+                <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">
                     <?php get_sidebar(); ?>
                 </div>
             </div>
@@ -136,48 +136,7 @@ get_header(); ?>
     </div>
 </div>
 
-<div id="maps" class="container-fluid px-0">
-    <div class="map-side">
-        <div class="map-side-inner">
-            <h3>Filters: </h3>
-            <ul>
-                <li><a href="#">Test Filter</a></li>
-                <li><a href="#">Functie</a></li>
-                <li><a href="#">Geslacht</a></li>
-            </ul>
-        </div>
-        <a href="#" class="open-map-side"><i class="fa fa-angle-right"></i></a>
-        <a href="#" class="map-exit"><i class="fa fa-times"></i></a>
-    </div>
-    <div id="map-canvas" class="h-100"></div>
-    <script>
-        var map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map-canvas'), {
-                center: {lat: 52.497215, lng: 4.996103},
-                zoom: 9
-            });
+<?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
 
-            var myLatLng = {lat: 52.127692, lng: 5.5596333};
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
-            });
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDegnKkyQR90JmYSF2sJ2kMNjfxbFg5EEs&callback=initMap" async defer></script>
-
-    <div class="overlay">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h3><?php echo __('Bekijk alle vacatures', TEXTDOMAIN); ?></h3>
-                    <i class="fa fa-angle-down"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php get_footer(); ?>

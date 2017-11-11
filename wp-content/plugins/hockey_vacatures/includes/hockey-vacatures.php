@@ -123,7 +123,6 @@ class Hockey_Vacatures {
 		$plugin_i18n = new Hockey_vacatures_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -137,37 +136,19 @@ class Hockey_Vacatures {
 
 		$plugin_admin = new Hockey_vacatures_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		// Menu item
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'edit_admin_menus', 999 );
-
-		// Toolbar item
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'add_toolbar_links', 999 );
-
-		// Limit user posts
 		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'limit_user_posts');
-
-		// Filter CPT Listing
 		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'filter_cpt_listing' );
-
-		// Edit WP Die Handler
 		$this->loader->add_action( 'wp_die_handler', $plugin_admin, 'edit_wp_die_handler' );
-
-		// Save options page
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
-
-		// Enqueue
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 		$this->loader->add_action( 'init', $plugin_admin, 'block_users_form_admin' );
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'remove_admin_bar' );
 
-
-		// Add Settings Link
 		$plugin_basename = plugin_basename(plugin_dir_path(__DIR__). $this->plugin_name .'.php' );
 		$this->loader->add_filter( 'plugin_action_links_'. $plugin_basename, $plugin_admin, 'add_action_links' );
-
-		// Redirect on login
 		$this->loader->add_filter( 'login_redirect', $plugin_admin, 'redirect_on_login', 10, 3 );
 
 	}
@@ -180,24 +161,15 @@ class Hockey_Vacatures {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
 		$plugin_public = new Hockey_vacatures_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-		// Templates
 		$this->loader->add_filter( 'single_template', $plugin_public, 'custom_post_type_single_template' );
 		$this->loader->add_filter( 'archive_template', $plugin_public, 'custom_post_type_archive_template' );
 		$this->loader->add_filter( 'page_template', $plugin_public, 'custom_page_templates' );
-
-		// Wp head
 		$this->loader->add_action( 'wp_head', $plugin_public, 'wp_head_templates' );
-
-		// Redirect
 		$this->loader->add_filter( 'registration_redirect', $plugin_public, 'registration_redirect' );
-
-		// Tiny mce buttons
 		$this->loader->add_filter( 'mce_buttons', $plugin_public, 'edit_mce_buttons' );
 	}
 
@@ -209,7 +181,6 @@ class Hockey_Vacatures {
 	 * @access	private
 	 */
 	private function define_post_type_hooks(){
-
 		$plugin_post_type = new Hockey_vacatures_Post_Type( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_post_type, 'create_custom_post_type' );
@@ -224,7 +195,6 @@ class Hockey_Vacatures {
 	 * @access 	private
 	 */
 	private function define_widget_hooks(){
-
 		$plugin_widgets = new Hockey_Vacatures_Widgets( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'widgets_init', $plugin_widgets, 'load_widgets');
@@ -237,7 +207,6 @@ class Hockey_Vacatures {
 	 * @access 	private
 	 */
 	private function define_shortcode_hooks(){
-
 		$plugin_shortcode = new Hockey_Vacatures_Shortcodes( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_shortcode, 'register_shortcodes' );

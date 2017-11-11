@@ -11,6 +11,10 @@
 
 // Header
 @import "header/xs";
+@import "header/sm";
+@import "header/md";
+@import "header/lg";
+@import "header/xl";
 
 // General
 @import "general/xs";
@@ -19,6 +23,7 @@
 
 // Footer
 @import "footer/xs";
+@import "footer/lg";
 
 // Buttons
 @import "buttons/xs";
@@ -26,7 +31,12 @@
 // Widgets
 @import "widgets/xs";
 
+// Banner
 @import "banner/xs";
+@import "banner/sm";
+@import "banner/md";
+@import "banner/lg";
+@import "banner/xl";
 
 @import "typography";
 @import "vc-elements/xs";

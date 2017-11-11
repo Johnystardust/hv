@@ -1,0 +1,11 @@
+@media screen and (min-width: 768px){
+  $slider_height: 450px;
+  #page-slider, #page-slider .slide, #page-slider-spacer {
+    height: $slider_height;
+  }
+
+  $banner_height: 200px;
+  #page-banner ,#page-banner-spacer {
+    height: $banner_height;
+  }
+}

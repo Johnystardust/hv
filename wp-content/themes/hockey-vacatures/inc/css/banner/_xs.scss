@@ -1,6 +1,10 @@
 /* ------------ Page Banner ------------ */
+$banner_height: 150px;
+
 #page-banner {
-  height: 370px;
+  position: fixed;
+  width: 100%;
+  height: $banner_height;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -15,6 +19,67 @@
     text-transform: uppercase;
   }
 }
+#page-banner-spacer {
+  height: $banner_height;
+  width: 100%;
+  position: relative;
+}
+
+
+/* ------------ Page Slider ------------ */
+$slider_height: 250px;
+
+#page-slider {
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+  height: $slider_height;
+  .slick-container {
+    height: 100%;
+  }
+  .slide {
+    height: $slider_height;
+    width: 100%;
+    float: left;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .slick-dots {
+    z-index: 1000;
+  }
+}
+#page-slider-spacer {
+  z-index: 0;
+  height: $slider_height;
+  width: 100%;
+  position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TODO: FIX ME !!!
 
 /* ------------ Full Width Banner ------------ */
 .banner-full-width {
@@ -132,7 +197,7 @@ $slick-opacity-not-active: 0.25 !default;
         font-size: 35px;
         line-height: 20px;
         text-align: center;
-        color: black;
+        color: #ffffff;
       }
     }
     &.slick-active button:before {

@@ -17,10 +17,10 @@ echo $args['before_widget'];
 <ul>
     <?php if(is_user_logged_in()): ?>
         <li class="hv-profile-link"><a href="#"><i class="fa fa-user"></i> <span><?php echo __( 'Mijn Profiel', TEXTDOMAIN ); ?></span></a></li>
-        <li><a href="<?php echo wp_logout_url(  home_url() ); ?>"><i class="fa fa-sign-out"></i> <?php echo __( 'Uitloggen', TEXTDOMAIN ); ?></a></li>
+        <li><a href="<?php echo wp_logout_url(  home_url() ); ?>"><i class="fa fa-sign-out"></i> <span><?php echo __( 'Uitloggen', TEXTDOMAIN ); ?></span></a></li>
     <?php else: ?>
         <li class="hv-login-link">
-            <a href="#"><i class="fa fa-sign-in"></i> <?php echo __( 'Inloggen', TEXTDOMAIN ); ?></a>
+            <a href="#"><i class="fa fa-sign-in"></i> <span><?php echo __( 'Inloggen', TEXTDOMAIN ); ?></span></a>
             <div class="hv-register-widget-form animated bounceIn">
                 <?php
                 $form_args = array(
@@ -46,7 +46,7 @@ echo $args['before_widget'];
             </div>
         </li>
         <?php $register_page = get_page_by_path( 'registreren' ); ?>
-        <li><a href="<?php echo get_page_link($register_page->ID); ?>"><i class="fa fa-user-plus"></i> <?php echo __( 'Registreren', TEXTDOMAIN ); ?></a></li>
+        <li><a href="<?php echo get_page_link($register_page->ID); ?>"><i class="fa fa-user-plus"></i> <span><?php echo __( 'Registreren', TEXTDOMAIN ); ?></span></a></li>
     <?php endif; ?>
     <div class="clearfix"></div>
 </ul>

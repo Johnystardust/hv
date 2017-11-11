@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hockey Vacatures | Home</title>
+    <title><?php echo get_the_title(); ?> | Hockey Vacatures</title>
 
     <meta name="viewport" content="width=device-width">
 
@@ -24,8 +24,8 @@
     <div class="top-header">
         <div class="container">
             <div class="row">
-                <div class="col-6">
-                    <ul class="text-right">
+                <div class="col-8 col-md-6">
+                    <ul>
                         <?php if(get_theme_mod('header_social_facebook')): ?>
                             <li><a href="<?php echo get_theme_mod('header_social_facebook'); ?>"><i class="fa fa-facebook"></i></a></li>
                         <?php endif; ?>
@@ -41,11 +41,11 @@
                         <?php endif; ?>
                         <?php if(get_theme_mod('header_social_phone')): ?>
                             <?php // TODO: FIX: tel:phone-number ?>
-                            <li><a href="#"><i class="fa fa-phone"></i> <?php echo get_theme_mod('header_social_phone'); ?></a></li>
+                            <li><a href="#"><i class="fa fa-phone"></i> <span><?php echo get_theme_mod('header_social_phone'); ?></span></a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
-                <div class="col-6 pr-0">
+                <div class="col-4 col-md-6 pr-3 pr-lg-0">
                     <?php if(is_active_sidebar('header_top_bar')): ?>
                         <?php dynamic_sidebar('header_top_bar'); ?>
                     <?php endif; ?>
@@ -69,6 +69,11 @@
                         'menu_class'    => 'main-menu'
                     );
                     wp_nav_menu( $args ); ?>
+                    <div class="menu-toggle">
+                        <a href="#">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

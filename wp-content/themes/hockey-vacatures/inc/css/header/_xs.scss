@@ -13,14 +13,14 @@ body.admin-bar #header {
     height: 36px;
     @include transition-ease-all;
 
-    .col-6:first-child {
+    .col-md-6:first-child {
       ul li {
         float: left;
         text-align: left;
       }
     }
 
-    .col-6:last-child {
+    .col-md-6:last-child {
       ul li {
         text-align: right;
         float: right;
@@ -49,13 +49,27 @@ body.admin-bar #header {
   }
 
   .main-header {
-    padding: .5rem 3rem;
+    padding: .5rem 0;
     @include transition-ease-all;
 
     .logo {
       img {
         height: 49px;
         width: auto;
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+      a {
+        display: block;
+        float: right;
+        height: 49px;
+        width: 49px;
+        color: #ffffff;
+        line-height: 49px;
+        font-size: 1.4rem;
+        text-align: center;
       }
     }
 
@@ -86,7 +100,6 @@ body.admin-bar #header {
     }
     .main-header {
       background-color: rgba(23,23,23,1);
-      padding: 1rem 3rem;
     }
   }
 
@@ -96,8 +109,6 @@ body.admin-bar #header {
     }
     .main-header {
       background-color: rgba(23, 23, 23, 0.9);
-      padding: 1rem 3rem;
     }
   }
-
 }

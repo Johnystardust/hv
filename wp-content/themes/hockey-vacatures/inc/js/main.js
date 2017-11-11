@@ -7,6 +7,12 @@
  */
 $(document).ready(function(){
 
+    // Nav toggle
+    // ==========
+    $('.menu-toggle a').on('click', function(){
+        $('.menu-hoofdmenu-container').toggleClass('active');
+        $('html').toggleClass('noscroll');
+    });
 
     // Vacature Maps open
     // ==================
@@ -40,7 +46,18 @@ $(document).ready(function(){
         arrows: false
     });
 
-
+    $('#page-slider').find('.slick-container').slick({
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        infinite: true,
+        speed: 500,
+        //fade: true,
+        //cssEase: 'linear',
+        autoplay: true,
+        autoplaySpeed: 6000,
+    });
 
     $(window).scroll(function(){
         if ($(document).scrollTop() > 80) {

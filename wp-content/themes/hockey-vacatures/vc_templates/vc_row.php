@@ -24,6 +24,7 @@ $container_class = ($container == 'container-fluid') ? 'container-fluid' : 'cont
 $css_classes = array(
     $container_class,
     $padding_block,
+    $el_class,
 );
 
 $css_class = preg_replace( '/\s+/', ' ', apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, implode( ' ', array_filter( array_unique( $css_classes ) ) ), $this->settings['base'], $atts ) );

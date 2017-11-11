@@ -1,0 +1,30 @@
+@media screen and (max-width: 576px){
+  #vacature-archive {
+    .main-content {
+      .vacature-list {
+        .vacature-item {
+          .btn-set {
+            a {
+              display: block;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px){
+  .main-content {
+    background-color: #ffffff;
+    .main-column {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .sidebar-column {
+    display: none;
+  }
+}

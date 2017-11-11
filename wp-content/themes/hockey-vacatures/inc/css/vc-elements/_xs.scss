@@ -63,7 +63,28 @@
   }
 }
 
-/* ------------ GMaps ------------ */
+/* ------------ Vacature List ------------ */
+.hv-vc-vacature-list {
+  list-style: none;
+  li {
+    margin-bottom: .5rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: .5rem;
+    .post-views {
+      display: inline-block;
+      margin-right: 10px;
+      float: right;
+    }
+    a {
+      font-weight: 600;
+      color: #000;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
 
 /* ------------ Icon Box ------------ */
 .hv-icon-box {
