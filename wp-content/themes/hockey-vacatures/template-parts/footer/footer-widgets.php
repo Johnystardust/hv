@@ -8,9 +8,7 @@
  */
 
 if(is_active_sidebar('footer')): ?>
-    <aside class="widget-area">
-        <div class="row">
-            <?php dynamic_sidebar('footer'); ?>
-        </div>
-    </aside>
+    <div class="row">
+        <?php dynamic_sidebar('footer'); ?>
+    </div>
 <?php endif; ?>

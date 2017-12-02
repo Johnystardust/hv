@@ -61,6 +61,7 @@
                         <tr>
                             <th><?php echo __( 'Titel', TEXTDOMAIN ); ?></th>
                             <th><?php echo __( 'Datum', TEXTDOMAIN ); ?></th>
+                            <th><?php echo __( 'Bekeken', TEXTDOMAIN ); ?></th>
                             <th><?php echo __( 'Acties', TEXTDOMAIN ); ?></th>
                         </tr>
                         </thead>
@@ -70,6 +71,7 @@
                             <tr>
                                 <td><?php echo get_the_title(); ?></td>
                                 <td><?php echo get_the_date(); ?></td>
+                                <td><?php the_views(); ?></td>
                                 <td>
                                     <a class="hv-side-delete-post" href="<?php echo get_delete_post_link($post->ID); ?>"><?php echo __( 'Verwijderen', TEXTDOMAIN ); ?></a> -
                                     <a href="<?php echo get_the_permalink(); ?>"><?php echo __( 'Bekijken', TEXTDOMAIN ); ?></a>

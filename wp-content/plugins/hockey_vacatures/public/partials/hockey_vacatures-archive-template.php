@@ -51,7 +51,7 @@ get_header(); ?>
                             ?>
                             <div class="vacature-item col-12 px-0">
                                 <h4 class="title"><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title(); ?></a></h4>
-                                <h5 class="sub-line"><strong><?php echo get_the_author(); ?></strong><span> - <?php echo get_post_meta($post->ID, 'city', true); ?></span></h5>
+                                <h5 class="sub-line"><strong><?php echo get_the_author(); ?></strong><span> - <?php echo get_post_meta($post->ID, 'additional_data', false)[0]['city']; ?></span></h5>
                                 <div class="spacer small"></div>
                                 <?php if(function_exists('the_views')): ?>
                                     <h5 class="sub-line"><span><?php echo __('Aantal keer bekeken', TEXTDOMAIN); ?> - <?php the_views(); ?></span></h5>
@@ -111,7 +111,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
+    <?php echo do_shortcode('[hockey_vacatures_vacature_map lat="" lng=""]'); ?>
 
     <?php get_footer() ?>
 </div>

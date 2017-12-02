@@ -108,8 +108,10 @@ class Hockey_Vacatures_New_Vacature_Form extends Hockey_Vacatures_Forms {
             $data['province']   = $additional_data['province'];
             $data['mail']       = $user_info->user_email;
             $data['tel']        = $additional_data['tel'];
-            $data['web_url']    = $additional_data['web_url'];
             $data['latlng']     = $additional_data['coordinates'];
+
+            // TODO: FIX WEB URL ONLY FOR CLUB
+            $data['web_url']    = $additional_data['web_url'];
         }
 
         if(add_post_meta($post_id, 'additional_data', $data)){

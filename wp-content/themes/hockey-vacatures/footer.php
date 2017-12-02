@@ -10,8 +10,8 @@
 
 </div>
 
-<footer class="container-fluid py-5">
-    <div class="container">
+<footer>
+    <div class="container big-block">
         <?php get_template_part('template-parts/footer/footer', 'widgets'); ?>
     </div>
 </footer>

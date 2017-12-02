@@ -191,7 +191,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                             ),
                             'p_description' => array(
                                 'type'          => 'textarea',
-                                'label'         => __( 'Omschrijving', TEXTDOMAIN ),
+                                'label'         => __( 'Een stukje over uzelf.', TEXTDOMAIN ),
                                 'name'          => 'description',
                                 'placeholder'   => __( 'Uw bericht', TEXTDOMAIN ),
                                 'rows'          => '7',
@@ -493,7 +493,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                     echo '<div class="message-popup-inner">';
                         echo '<h3>' . __( 'Beste', TEXTDOMAIN ) . ' ' . $this->username . ' ' . __( 'Uw account is succesvol aangemaakt', TEXTDOMAIN ) . '</h3>';
                         echo '<p>' . __( 'Binnen enkele momenten ontvangt u een bevestigings mail waarmee u het account kunt activeren. Na 15 minuten nog geen mail ontvangen klik dan', TEXTDOMAIN ) . '<a href="' . get_page_link() . '">&nbsp;'. __( 'hier', TEXTDOMAIN ) .'</a> </p>';
-                        echo '<a class="btn btn-primary" href="' . home_url().'?reg_suc=true' . '">' . __( 'Doorgaan', TEXTDOMAIN ) . '</a>';
+                        echo '<a class="btn btn-primary" href="' . home_url() . '">' . __( 'Naar Homepagina', TEXTDOMAIN ) . '</a>';
                     echo '</div>';
                 echo '</div>';
             }

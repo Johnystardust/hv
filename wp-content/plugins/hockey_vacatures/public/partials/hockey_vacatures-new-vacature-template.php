@@ -14,7 +14,7 @@
 
 get_header(); ?>
 
-<div id="register-page" class="wrapper">
+<div id="register-page" class="page-<?php the_ID(); ?> page-normal">
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
     <?php // Top Bar ?>

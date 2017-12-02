@@ -10,15 +10,17 @@
  */
 class Hockey_Vacatures_Vacature_Map {
 
-    public function vacature_map(){
+    public function vacature_map($lat, $lng){
         ?>
         <div id="map-canvas" style="height: 300px;"></div>
         <script type="text/javascript">
             var map;
 
             function initMap(){
+                var myLatLng = {lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?>};
+
                 map = new google.maps.Map(document.getElementById('map-canvas'), {
-                    center: {lat: 51.9876536, lng: 5.9115403},
+                    center: myLatLng,
                     zoom: Number(14),
                     styles: [
                         {
@@ -102,9 +104,8 @@ class Hockey_Vacatures_Vacature_Map {
                     ]
                 });
 
-                var myLatLng = {lat: 51.9876536, lng: 5.9115403};
                 var image = {
-                    url: '../wp-content/themes/hockey-vacatures/inc/img/hv-maps-marker.png',
+                    url: '<?php echo get_stylesheet_directory_uri(). '/inc/img/hv-maps-marker.png'; ?>',
                 };
                 var marker = new google.maps.Marker({
                     position: myLatLng,
@@ -118,7 +119,16 @@ class Hockey_Vacatures_Vacature_Map {
         <?php
     }
 
-    public function vacature_map_shortcode(){
-        $this->vacature_map();
+    public function vacature_map_shortcode($attributes){
+
+        $atts = shortcode_atts(
+            array(
+                'lat' => '',
+                'lng' => '',
+            ),
+            $attributes
+        );
+
+        $this->vacature_map($atts['lat'], $atts['lng']);
     }
 }

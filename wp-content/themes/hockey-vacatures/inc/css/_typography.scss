@@ -48,7 +48,14 @@ p {
 }
 
 // Small devices (landscape phones, 576px and up)
-@media screen and (min-width: 576px){
+@media screen and (max-width: 576px){
+  h1 {
+    font-size: 2.4rem;
+    line-height: 36px;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
 }
 
 // Medium devices (tablets, 768px and up)

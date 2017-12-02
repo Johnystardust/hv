@@ -78,7 +78,7 @@ html.noscroll {
 /* ---------------------------------------------    BLOCK PADDING    ------------------------------------------------ */
 .big-block > .row {
   padding: 8rem 0;
-  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 .footer-widget {
     margin-bottom: 6rem;
     &:last-child {margin-bottom: 0;}
   }
@@ -98,7 +98,7 @@ ul {
 @media screen and (max-width: 576px){
   .big-block > .row {
     padding: 5rem 0;
-    .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+    .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12, .footer-widget {
       margin-bottom: 3rem;
       &:last-child {margin-bottom: 0;}
     }
@@ -127,7 +127,7 @@ ul {
     }
   }
 
-  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 {
+  .vc_col-sm-4, .vc_col-sm-6, .vc_col-sm-8, .vc_col-sm-10, .vc_col-sm-12 .footer-widget {
     margin-bottom: 1rem;
     &:last-child {margin-bottom: 0;}
   }

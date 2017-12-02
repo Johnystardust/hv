@@ -15,7 +15,7 @@
 get_header(); ?>
 
 
-<div id="vacature-single" class="wrapper">
+<div id="vacature-single" class="page-normal">
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
     <?php // Top Bar ?>
@@ -34,9 +34,7 @@ get_header(); ?>
                                     <?php
                                     global $post;
                                     $additional_data = get_post_meta($post->ID, 'additional_data', true);
-
-                                    // TODO: FIX SINGLE VACATURE MAPS
-                                    // $additional_data['latlng'];
+                                    $latlng = explode(',', $additional_data['latlng']);
                                     ?>
 
                                     <li>
@@ -136,7 +134,7 @@ get_header(); ?>
     </div>
 </div>
 
-<?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
+<?php echo do_shortcode('[hockey_vacatures_vacature_map lat="'.$latlng[1].'" lng="'.$latlng[0].'"]'); ?>
 
 
 <?php get_footer(); ?>

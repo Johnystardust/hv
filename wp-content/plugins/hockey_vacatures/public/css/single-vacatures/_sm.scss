@@ -1,0 +1,20 @@
+@media screen and (max-width: 576px){
+  #vacature-single {
+    .main-content {
+      .main-column {
+        .social-share {
+          right: -15px;
+        }
+
+        .vacature-info {
+          margin-bottom: 0 !important;
+        }
+
+        .the-content {
+          padding-right: 0;
+        }
+      }
+
+    }
+  }
+}

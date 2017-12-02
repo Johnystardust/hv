@@ -199,6 +199,13 @@ body.hv-side-panel-open:after {
     #vacature-single .main-content .main-column .vacature-data li a:hover, #vacature-single .main-content .main-column .vacature-info li a:hover {
       color: #177FBF; }
 
+@media screen and (max-width: 576px) {
+  #vacature-single .main-content .main-column .social-share {
+    right: -15px; }
+  #vacature-single .main-content .main-column .vacature-info {
+    margin-bottom: 0 !important; }
+  #vacature-single .main-content .main-column .the-content {
+    padding-right: 0; } }
 #vacature-archive .main-content .archive-filter {
   height: 200px;
   background-color: #177FBF;

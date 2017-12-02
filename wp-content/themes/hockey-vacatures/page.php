@@ -10,7 +10,7 @@
 
 <?php get_header(); ?>
 
-<div id="page-<?php the_ID(); ?>" class="page-normal <?php post_class(); ?>">
+<div id="page-<?php the_ID(); ?>" <?php post_class('page-normal'); ?>>
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
 
