@@ -18,109 +18,111 @@
 
         // Register Form Validation
         // ========================
-        $regForm.validate({
-            rules: {
-                // General
-                username: {
-                    required: true,
-                    minlength: 4
-                },
-                role: {
-                    valueNotEquals: 'default'
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-                password_check: {
-                    equalTo: '#password'
-                },
-
-                // Club
-                c_name: {
-                    required: true,
-                    minlength: 2
-                },
-                c_place: {required: true},
-                c_cname: {required: true},
-                c_email: {
-                    required: true,
-                    email: true
-                },
-                c_web_url: {url: true},
-
-                // Player
-                p_fname: {
-                    required: true,
-                    minlength: 2
-                },
-                p_lname: {
-                    required: true,
-                    minlength: 2
-                },
-                p_place: {required: true},
-                p_email: {
-                    required: true,
-                    email: true
-                },
-                p_age: {
-                    required: true,
-                    number: true,
-                    min: 13,
-                    max: 130
-                },
-                p_gender: {valueNotEquals: 'default'}
-            },
-            messages: {
-                // General
-                username: {
-                    required: 'Gebruikersnaam is verplicht.',
-                    minlength: 'Tenmninste 4 letters.'
-                },
-                role: 'Kies een rol.',
-                hv_reg_email: 'Geef een geldig email adres op.',
-                password: {
-                    required: 'Geef een wachtwoord op.',
-                    minlength: 'Password moet tenminste 5 letters zijn.'
-                },
-                password_check: {
-                    equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
-                },
-
-                // Club
-                // Player
-                hv_reg_fname: 'Geef een naam op.',
-                hv_reg_lname: 'Geef een achternaam op.',
-                hv_reg_age: 'Geef een leeftijd op.',
-                hv_reg_gender: 'Kies een geslacht.',
-            }
-        });
+        //$regForm.validate({
+        //    rules: {
+        //        // General
+        //        username: {
+        //            required: true,
+        //            minlength: 4
+        //        },
+        //        role: {
+        //            valueNotEquals: 'default'
+        //        },
+        //        postal: {
+        //            required: true
+        //        },
+        //        street_number: {
+        //            required: true
+        //        },
+        //        password: {
+        //            required: true,
+        //            minlength: 5
+        //        },
+        //        password_check: {
+        //            required: true,
+        //            equalTo: '#password'
+        //        },
+        //
+        //        // Club
+        //        // ====
+        //        c_name: {
+        //            required: true,
+        //            minlength: 2
+        //        },
+        //        c_place: {required: true},
+        //        c_cname: {required: true},
+        //        c_email: {
+        //            required: true,
+        //            email: true
+        //        },
+        //        c_web_url: {url: true},
+        //
+        //        // Player
+        //        // ======
+        //        p_fname: {
+        //            required: true,
+        //            minlength: 2
+        //        },
+        //        p_lname: {
+        //            required: true,
+        //            minlength: 2
+        //        },
+        //        p_place: {required: true},
+        //        p_email: {
+        //            required: true,
+        //            email: true
+        //        },
+        //        p_age: {
+        //            required: true,
+        //            number: true,
+        //            min: 13,
+        //            max: 130
+        //        },
+        //        p_gender: {
+        //            valueNotEquals: 'default'
+        //        }
+        //    },
+        //    messages: {
+        //        // General
+        //        username: {
+        //            required: 'Gebruikersnaam is verplicht.',
+        //            minlength: 'Tenmninste 4 letters.'
+        //        },
+        //        role: 'Kies een rol.',
+        //        postal: {
+        //            required: 'Geef een geldige postcode op.',
+        //        },
+        //        street_number: {
+        //            required: 'Geef een geldig huisnummer op.',
+        //        },
+        //        password: {
+        //            required: 'Geef een wachtwoord op.',
+        //            minlength: 'Password moet tenminste 5 letters zijn.'
+        //        },
+        //        password_check: {
+        //            required: 'Geef een wachtwoord op.',
+        //            equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
+        //        },
+        //
+        //        // Club
+        //        c_name: 'Geef een naam op.',
+        //        c_cname: 'Geef een naam op.',
+        //        c_email: 'Geef een geldig email adres op.',
+        //
+        //        // Player
+        //        p_fname: 'Geef een naam op.',
+        //        p_lname: 'Geef een achternaam op.',
+        //        p_email: 'Geef een geldig email adres op.',
+        //        p_age: 'Geef een leeftijd op.',
+        //        p_gender: 'Kies een geslacht.',
+        //    }
+        //});
 
         // 2.0 Register Form Postcode API
         // =============================================================================================================
 
         // Register Form postcode API
         // ==========================
-        //function setLocationData(postal){
-        //	$.ajax({
-        //		url: "https://api.postcodeapi.nu/v2/addresses/?postcode="+postal+"&number="+street_number,
-        //		"method": "GET",
-        //		"headers": {
-        //			"x-api-key": "1vRaaykvlV3pcEmP6sGjG3wVMxYcgvMD6buKoVHg",
-        //			"accept": "application/hal+json"
-        //		},
-        //		"async": true,
-        //		"crossDomain": true,
-        //	}).done(function(response){
-        //		return response;
-        //	});
-        //}
-        //
-        //$regForm.find('#postal').on('keyup', function(){
-        //	var postal = $(this).val();
-        //	var data = setLocationData(postal);
-        //});
-
         $regForm.find('#street_number').on('keyup', function(){
             var street_number 	= $(this).val();
             var postal 			= $regForm.find('#postal').val();
@@ -145,10 +147,6 @@
                 ];
 
                 $regForm.find('#coordinates').val(coordinates);
-
-                // TODO: REMOVE !!!
-                console.log(response._embedded.addresses);
-                console.log(response._embedded.addresses[0].geo.center.wgs84.coordinates);
             });
         });
 
@@ -190,13 +188,13 @@
         // ===============
         $regForm.find('#manual_location').on('change', function(){
             if($(this).is(':checked')){
-                $regForm.find('#city').removeAttr('disabled');
-                $regForm.find('#province').removeAttr('disabled');
-                $regForm.find('#street').removeAttr('disabled');
+                $regForm.find('#city').removeAttr('readonly');
+                $regForm.find('#province').removeAttr('readonly');
+                $regForm.find('#street').removeAttr('readonly');
             } else {
-                $regForm.find('#city').attr('disabled', 'disabled');
-                $regForm.find('#province').attr('disabled', 'disabled');
-                $regForm.find('#street').attr('disabled', 'disabled');
+                $regForm.find('#city').attr('readonly', 'readonly');
+                $regForm.find('#province').attr('readonly', 'readonly');
+                $regForm.find('#street').attr('readonly', 'readonly');
             }
         });
 

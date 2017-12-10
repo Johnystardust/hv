@@ -31,7 +31,7 @@ class Hockey_Vacatures_Forms {
                             <?php endif; ?>
                         </label>
                         <input id="<?php echo $field['name']; ?>" class="form-control" type="<?php echo $field['type']; ?>" name="<?php echo $field['name']; ?>" placeholder="<?php echo $field['placeholder']; ?>"
-                               value="<?php if($field['name'] !== 'password_check'){ echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); } ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> >
+                               value="<?php if($field['name'] !== 'password_check'){ echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); } ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?> >
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>
@@ -39,8 +39,13 @@ class Hockey_Vacatures_Forms {
                     <?php break;
                 case('select'): ?>
                     <div class="form-group <?php echo $field['col_size']; ?>">
-                        <label for="<?php echo $field['name']; ?>"><?php echo $field['label'] ?></label>
-                        <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>>
+                        <label for="<?php echo $field['name']; ?>">
+                            <?php echo $field['label'] ?>
+                            <?php if(array_key_exists('required', $field) && $field['required']): ?>
+                                <span class="required">*</span>
+                            <?php endif; ?>
+                        </label>
+                        <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>>
                             <?php foreach( $field['options'] as $option => $value ): ?>
                                 <option <?php if(isset($_POST[$field['name']]) && $_POST[$field['name']] == $option){ echo 'selected'; }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
                             <?php endforeach; ?>
@@ -52,9 +57,14 @@ class Hockey_Vacatures_Forms {
                     <?php break;
                 case('textarea'): ?>
                     <div class="form-group <?php echo $field['col_size']; ?>">
-                        <label for="<?php echo $field['name']; ?>"><?php echo $field['label'] ?></label>
+                        <label for="<?php echo $field['name']; ?>">
+                            <?php echo $field['label'] ?>
+                            <?php if(array_key_exists('required', $field) && $field['required']): ?>
+                                <span class="required">*</span>
+                            <?php endif; ?>
+                        </label>
                         <textarea class="form-control" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" cols="<?php echo $field['cols']; ?>" rows="<?php echo $field['rows']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>
-                                  placeholder="<?php echo $field['placeholder']; ?>"><?php echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); ?></textarea>
+                                  placeholder="<?php echo $field['placeholder']; ?>" <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>><?php echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); ?></textarea>
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>
@@ -63,7 +73,7 @@ class Hockey_Vacatures_Forms {
                 case('checkbox'): ?>
                     <div class="form-group <?php echo $field['col_size']; ?>">
                         <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>">
+                            <input type="checkbox" class="custom-control-input" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>>
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description"><?php echo $field['label'] ?></span>
                         </label>

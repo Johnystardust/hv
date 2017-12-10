@@ -138,7 +138,7 @@ class Hockey_Vacatures {
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'edit_admin_menus', 999 );
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'add_toolbar_links', 999 );
-		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'limit_user_posts');
+//		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'limit_user_posts');
 		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'filter_cpt_listing' );
 		$this->loader->add_action( 'wp_die_handler', $plugin_admin, 'edit_wp_die_handler' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
@@ -165,10 +165,13 @@ class Hockey_Vacatures {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'wp_head_templates' );
+
+		$this->loader->add_action( 'wp_ajax_vacature_delete', $plugin_public, 'vacature_ajax_delete' );
+
 		$this->loader->add_filter( 'single_template', $plugin_public, 'custom_post_type_single_template' );
 		$this->loader->add_filter( 'archive_template', $plugin_public, 'custom_post_type_archive_template' );
 		$this->loader->add_filter( 'page_template', $plugin_public, 'custom_page_templates' );
-		$this->loader->add_action( 'wp_head', $plugin_public, 'wp_head_templates' );
 		$this->loader->add_filter( 'registration_redirect', $plugin_public, 'registration_redirect' );
 		$this->loader->add_filter( 'mce_buttons', $plugin_public, 'edit_mce_buttons' );
 	}

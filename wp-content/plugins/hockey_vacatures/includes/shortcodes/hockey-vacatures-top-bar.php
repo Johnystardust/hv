@@ -15,7 +15,7 @@ class Hockey_Vacatures_Top_Bar {
     public function top_bar(){
         global $post;
         ?>
-        <div class="top-bar container-fluid">
+        <div id="vacatures-top-bar" class="top-bar container-fluid">
             <div class="container">
                 <div class="row">
                     <?php if(is_post_type_archive('vacatures')): ?>
@@ -36,9 +36,11 @@ class Hockey_Vacatures_Top_Bar {
                             <div class="<?php echo $this->item_class; ?>">
                                 <a href="#" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
                             </div>
-                            <div class="<?php echo $this->item_class; ?>">
-                                <a id="delete-post" href="<?php echo get_delete_post_link(); ?>" class="icon-left"><i class="fa fa-trash"></i><?php echo __( 'Verwijderen', TEXTDOMAIN ); ?></a>
-                            </div>
+                            <?php if( current_user_can( 'delete_vacatures' ) ) : ?>
+                                <div class="<?php echo $this->item_class; ?>">
+                                    <a id="delete-post" href="<?php echo get_delete_post_link(); ?>" data-id="<?php the_ID() ?>" data-nonce="<?php echo wp_create_nonce('vacature_delete_nonce'); ?>" class="icon-left"><i class="fa fa-trash"></i><?php echo __( 'Verwijderen', TEXTDOMAIN ); ?></a>
+                                </div>
+                            <?php endif; ?>
                         <?php else: ?>
                             <div class="<?php echo $this->item_class; ?>">
                                 <a href="#" class="icon-right"><?php echo __( 'Bekijk op kaart', TEXTDOMAIN ); ?><i class="fa fa-map-signs"></i></a>
@@ -47,6 +49,10 @@ class Hockey_Vacatures_Top_Bar {
 
                         <div class="<?php echo $this->item_class; ?>">
                             <?php next_post_link( '%link', __( 'Volgende', TEXTDOMAIN ), false ); ?>
+                        </div>
+                    <?php elseif(is_page('registreren')): // TODO: FIX MET GLENN !!! ?>
+                        <div class="<?php echo $this->item_class; ?>">
+                            <a href="#" class="icon-left"><i class="fa fa-question"></i><?php echo __( 'Hulp nodig?', TEXTDOMAIN ); ?></a>
                         </div>
                     <?php else: ?>
                         <?php if(is_user_logged_in()): ?>

@@ -85,7 +85,7 @@
   }
 }
 
-// Register Page
+/* ---------------------------------------------    REGISTER PAGE    ------------------------------------------------ */
 #register-page {
 
   .registration-success, .registration-error {
@@ -111,13 +111,12 @@
 
   }
 
-
   form .disabled {
       display: none;
   }
 }
 
-// Form validation
+/* ---------------------------------------------    FORM VALIDATION  ------------------------------------------------ */
 .message-popup {
   margin-bottom: 6px;
   position: fixed;
@@ -137,6 +136,11 @@
     top: 50%;
     position: relative;
     transform: translate(0, -50%);
+
+    h5 {
+      font-size: 1.3rem;
+      line-height: 1.8rem;
+    }
   }
 
   // TODO CHANGE COLOR

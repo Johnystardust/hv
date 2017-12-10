@@ -42,7 +42,7 @@ class Hockey_vacatures_Post_Type {
             'show_in_nav_menus'  => true,
             'show_in_admin_bar'  => true,
             'query_var'          => true,
-            'rewrite'            => array( 'slug' => 'book' ),
+            'rewrite'            => array( 'slug' => 'vacatures' ),
             'capability_type'    => 'post',
             'has_archive'        => true,
             'hierarchical'       => false,
@@ -133,7 +133,6 @@ class Hockey_vacatures_Post_Type {
             if(isset($_POST['province']) && $_POST['province'] != ''){
                 update_post_meta( $post_id, 'province', $_POST['province']);
             }
-
         }
     }
 

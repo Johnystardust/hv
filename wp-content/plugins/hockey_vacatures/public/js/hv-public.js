@@ -31,9 +31,11 @@
 
 
     $(function(){
+        //var ajax_object = ajax_object;
 
         // 1.0	Side Panel
         // 2.0  Messages
+        // 3.0  Top Bar
 
 
         // 1.0 Side Panel
@@ -127,6 +129,48 @@
 
             $(this).parentsUntil('.message-popup').parent().fadeOut();
         });
+
+        // 3.0 Top Bar
+        // =============================================================================================================
+        var top_bar = $('#vacatures-top-bar');
+
+        console.log(ajax_object);
+
+        top_bar.find('#delete-post').on('click', function(){
+            var id = $(this).data('id');
+            var nonce = $(this).data('nonce');
+            //var post = $(this).parents('.post:first');
+
+            
+
+            $.ajax({
+                type: 'post',
+                url: ajax_object.ajax_url,
+                data: {
+                    action: 'vacature_delete',
+                    nonce: nonce,
+                    id: id
+                },
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+
+            return false;
+
+
+
+
+            window.confirm('Deze post zal verwijderd worden. Weet u zeker dat u wilt doorgaan.');
+            if(confirm){
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        });
+
 
     });
 

@@ -99,7 +99,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                                 'type'          => 'text',
                                 'label'         => __( 'Club website', TEXTDOMAIN ),
                                 'name'          => 'c_web_url',
-                                'placeholder'   => __( 'https://example.nl', TEXTDOMAIN ),
+                                'placeholder'   => __( 'https://www.google.nl', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6'
                             ),
                             // TODO: FIX VALIDATION FOR C_TEL
@@ -243,7 +243,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                                 'placeholder'   => __( 'Stad', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true,
-                                'disabled'      => false
+                                'readonly'      => true
                             ),
                             'province' => array(
                                 'type'          => 'text',
@@ -252,7 +252,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                                 'placeholder'   => __( 'Provincie', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true,
-                                'disabled'      => false
+                                'readonly'      => true
                             ),
                             'street' => array(
                                 'type'          => 'text',
@@ -261,7 +261,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                                 'placeholder'   => __( 'Straat', TEXTDOMAIN ),
                                 'col_size'      => 'col-12 col-md-6',
                                 'required'      => true,
-                                'disabled'      => false
+                                'readonly'      => true
                             ),
                             'blank' => array(
                                 'type'          => 'blank',
@@ -325,6 +325,11 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                 </div>
             </div>
 
+            <?php
+            // Nonce Field
+            wp_nonce_field('register_form_shortcode', 'register_form_nonce');
+            ?>
+
         </form>
         <?php
     }
@@ -345,45 +350,32 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
         // General
         // =======
         if(empty($this->username) || empty($this->password) || empty($this->email) || empty($this->role)) {
-            return new WP_Error('field', 'Required form field is missing');
+            return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
         }
         if(strlen($this->username) < 4) {
-            return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht');
+            return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht.');
         }
         if(strlen($this->password) < 5) {
-            return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten');
+            return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten.');
         }
         if($this->password !== $this->password_check) {
-            return new WP_Error('password', 'Wachtwoorden zijn niet gelijk');
+            return new WP_Error('password', 'Wachtwoorden zijn niet gelijk.');
         }
         if(!is_email($this->email)) {
-            return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres');
+            return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
         }
         if(username_exists($this->username)){
-            return new WP_Error('username', 'Gebruikersnaam is al in gebruik');
+            return new WP_Error('username', 'Gebruikersnaam is al in gebruik.');
         }
         if(email_exists($this->email)) {
-            return new WP_Error('email', 'Dit email adres ia al in gebruik!');
+            return new WP_Error('email', 'Dit email adres is al in gebruik.');
         }
 
-        // TODO: ROLE CAN ONLY BE CLUB OR PLAYER
-
-        // Club
-        // ====
+        // Role specific validation
+        // ========================
         if($this->role == 'club'){
             if(empty($this->club_name) || empty($this->contactperson)){
                 return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-            }
-
-            $details = array(
-                'Club Name' => $this->club_name,
-                'Contact Person' => $this->contactperson,
-            );
-
-            foreach($details as $field => $detail){
-                if(!validate_username($detail)){
-                    return new WP_Error('name_invalid', 'Sorry, the "' . $field . '" you entered is not valid');
-                }
             }
 
             if(!empty($this->web_url)){
@@ -393,7 +385,9 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
             }
         }
         elseif($this->role == 'player'){
-//            if(empty($this->first_name))
+            if(empty($this->first_name) || empty($this->last_name) || empty($this->age) || empty($this->gender)){
+                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+            }
         }
     }
 
@@ -429,8 +423,8 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
         if (is_wp_error($this->register_form_validation())) {
             echo '<div class="message-popup error">';
                 echo '<div class="message-popup-inner">';
-                    echo '<h3>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h3>';
-                    echo '<p>' . __( 'Het account kan niet worden aangemaakt door de volgende reden(en)', TEXTDOMAIN ) . '</p>';
+                    echo '<h5>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h5>';
+                    echo '<p>' . __( 'Het account kan niet worden aangemaakt door de volgende reden(en):', TEXTDOMAIN ) . '</p>';
                     echo '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $this->register_form_validation()->get_error_message() . '</strong>';
                     echo '<br><br><a href="#message-popup-close" class="btn btn-primary"> ' . __( 'Terug', TEXTDOMAIN ) . ' </a>';
                 echo '</div>';
@@ -452,13 +446,13 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
 
                 // Set 1st month free membership
                 // =============================
-                $date = new DateTime("+30 days");
-                add_user_meta( $register_user, 'membership_end_date', $date->format("d-m-Y"), false );
+//                $date = new DateTime("+30 days");
+//                add_user_meta( $register_user, 'membership_end_date', $date->format("d-m-Y"), false );
 
                 // Add Post Counter and Sale Counter to user
                 // =========================================
-                add_user_meta( $register_user, 'vacature_post_counter', 0, false );
-                add_user_meta( $register_user, 'vacature_s_count', 1, false );
+//                add_user_meta( $register_user, 'vacature_post_counter', 0, false );
+//                add_user_meta( $register_user, 'vacature_s_count', 1, false );
 
                 // Add the rest of the user info in the user meta data
                 // ===================================================
@@ -491,7 +485,7 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
                 // ==========================
                 echo '<div class="message-popup success">';
                     echo '<div class="message-popup-inner">';
-                        echo '<h3>' . __( 'Beste', TEXTDOMAIN ) . ' ' . $this->username . ' ' . __( 'Uw account is succesvol aangemaakt', TEXTDOMAIN ) . '</h3>';
+                        echo '<h5>' . __( 'Beste', TEXTDOMAIN ) . ' ' . $this->username . ' ' . __( 'Uw account is succesvol aangemaakt', TEXTDOMAIN ) . '</h5>';
                         echo '<p>' . __( 'Binnen enkele momenten ontvangt u een bevestigings mail waarmee u het account kunt activeren. Na 15 minuten nog geen mail ontvangen klik dan', TEXTDOMAIN ) . '<a href="' . get_page_link() . '">&nbsp;'. __( 'hier', TEXTDOMAIN ) .'</a> </p>';
                         echo '<a class="btn btn-primary" href="' . home_url() . '">' . __( 'Naar Homepagina', TEXTDOMAIN ) . '</a>';
                     echo '</div>';
@@ -500,9 +494,9 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
             else {
                 echo '<div class="message-popup error">';
                     echo '<div class="message-popup-inner">';
-                        echo '<h3>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h3>';
+                        echo '<h5>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h5>';
                         echo '<p>' . __( 'Het account kan niet worden aangemaakt door de volgende reden(en)', TEXTDOMAIN ) . '</p>';
-                        echo '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $this->register_form_validation()->get_error_message() . '</strong>';
+                        echo '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $register_user->get_error_message() . '</strong>';
                         echo '<br><br><a href="#message-popup-close" class="btn btn-primary"> ' . __( 'Terug', TEXTDOMAIN ) . ' </a>';
                     echo '</div>';
                 echo '</div>';
@@ -518,39 +512,49 @@ class Hockey_Vacatures_Register_Form extends Hockey_Vacatures_Forms {
     public function register_form_shortcode(){
         ob_start();
 
-        if(isset($_POST['hv_reg_submit'])){
+        if(!isset($_POST['register_form_nonce']) || !wp_verify_nonce($_POST['register_form_nonce'], 'register_form_shortcode')){
+            echo '<div class="message-popup error">';
+                echo '<div class="message-popup-inner">';
+                    echo '<h5>' . __( 'Foutje bedankt', TEXTDOMAIN ) . '</h5>';
+                    echo '<p>' . __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', TEXTDOMAIN ) . '</p>';
+                    echo '<a href="#message-popup-close" class="btn btn-primary"> ' . __( 'Terug', TEXTDOMAIN ) . ' </a>';
+                echo '</div>';
+            echo '</div>';
+        }
+        else {
+            if(isset($_POST['hv_reg_submit'])){
+                $this->username         = $_POST['username'];
+                $this->role             = $_POST['role'];
+                $this->description      = $_POST['description'];
+                $this->password         = $_POST['password'];
+                $this->password_check   = $_POST['password_check'];
+                $this->postal           = $_POST['postal'];
+                $this->street_number    = $_POST['street_number'];
+                $this->addition         = $_POST['addition'];
+                $this->city             = $_POST['city'];
+                $this->province         = $_POST['province'];
+                $this->street           = $_POST['street'];
+                $this->coordinates      = $_POST['coordinates'];
 
-            $this->username         = $_POST['username'];
-            $this->role             = $_POST['role'];
-            $this->description      = $_POST['description'];
-            $this->password         = $_POST['password'];
-            $this->password_check   = $_POST['password_check'];
-            $this->postal           = $_POST['postal'];
-            $this->street_number    = $_POST['street_number'];
-            $this->addition         = $_POST['addition'];
-            $this->city             = $_POST['city'];
-            $this->province         = $_POST['province'];
-            $this->street           = $_POST['street'];
-            $this->coordinates      = $_POST['coordinates'];
+                if($this->role == 'club'){
+                    $this->club_name        = $_POST['c_name'];
+                    $this->contactperson    = $_POST['c_cname'];
+                    $this->web_url          = $_POST['c_web_url'];
+                    $this->email            = $_POST['c_email'];
+                    $this->tel              = $_POST['c_tel'];
+                }
+                elseif($this->role == 'player'){
+                    $this->first_name       = $_POST['p_fname'];
+                    $this->last_name        = $_POST['p_lname'];
+                    $this->email            = $_POST['p_email'];
+                    $this->age              = $_POST['p_age'];
+                    $this->gender           = $_POST['p_gender'];
+                    $this->tel              = $_POST['p_tel'];
+                }
 
-            if($this->role == 'club'){
-                $this->club_name        = $_POST['c_name'];
-                $this->contactperson    = $_POST['c_cname'];
-                $this->web_url          = $_POST['c_web_url'];
-                $this->email            = $_POST['c_email'];
-                $this->tel              = $_POST['c_tel'];
+                $this->register_form_validation();
+                $this->register_form_registration();
             }
-            elseif($this->role == 'player'){
-                $this->first_name       = $_POST['p_fname'];
-                $this->last_name        = $_POST['p_lname'];
-                $this->email            = $_POST['p_email'];
-                $this->age              = $_POST['p_age'];
-                $this->gender           = $_POST['p_gender'];
-                $this->tel              = $_POST['p_tel'];
-            }
-
-            $this->register_form_validation();
-            $this->register_form_registration();
         }
 
         $this->register_form();

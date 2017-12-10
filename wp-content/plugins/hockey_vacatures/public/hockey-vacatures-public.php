@@ -57,9 +57,9 @@ class Hockey_vacatures_Public {
 	public function enqueue_scripts() {
 		// TODO: FIX: loading wrong version when using $this->version
 		// TODO: FIX: Dependency with theme js jquery-cdn file
-		wp_enqueue_script( 'hockey_vacatures_public', plugin_dir_url( __FILE__ ) . 'js/hockey_vacatures-public.js', array( 'jquery-cdn' ), null, true );
 
 		wp_enqueue_script( 'hv-public', plugin_dir_url( __FILE__ ) . 'js/hv-public.js', array( 'jquery-cdn' ), null, true );
+		wp_localize_script( 'hv-public', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'we_value' => 1234 ) );
 
 		if(is_page('registreren')){
 			wp_enqueue_script( 'hv-register', plugin_dir_url( __FILE__ ) . 'js/hv-register.js', array( 'jquery-cdn' ), null, true );
@@ -174,5 +174,23 @@ class Hockey_vacatures_Public {
 		}
 
 		return $buttons;
+	}
+
+	public function vacature_ajax_delete(){
+		$permission = check_ajax_referer( 'vacature_delete_nonce', 'nonce', false );
+		if($permission == false){
+			echo 'error';
+		}
+		else {
+			if($post = wp_delete_post($_REQUEST['id'])){
+				echo 'Success';
+				var_dump($post);
+			}
+			else {
+				echo 'The post was not deleted';
+			}
+		}
+
+		die();
 	}
 }
