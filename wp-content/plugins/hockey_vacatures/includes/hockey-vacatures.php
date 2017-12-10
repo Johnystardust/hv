@@ -183,8 +183,8 @@ class Hockey_Vacatures {
 	private function define_post_type_hooks(){
 		$plugin_post_type = new Hockey_vacatures_Post_Type( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'init', $plugin_post_type, 'create_custom_post_type' );
-		$this->loader->add_action( 'admin_init', $plugin_post_type, 'add_meta_boxes' );
+		$this->loader->add_action('init', $plugin_post_type, 'create_vacature_post_type');
+		$this->loader->add_action('admin_init', $plugin_post_type, 'add_vacature_meta_boxes');
 		$this->loader->add_action( 'save_post', $plugin_post_type, 'save_meta_boxes', 10, 2 );
 	}
 

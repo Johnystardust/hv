@@ -11,7 +11,6 @@
 class Hockey_vacatures_Post_Type {
     private $plugin_name;
     private $version;
-    private $post_types;
 
     /**
      * Initialize the class and set its properties.
@@ -19,106 +18,49 @@ class Hockey_vacatures_Post_Type {
      * @since    1.0.0
      * @param      string    $plugin_name   The name of this plugin.
      * @param      string    $version       The version of this plugin.
-     * @param      array     $post_types    The required post types
      */
     public function __construct( $plugin_name, $version ){
         $this->plugin_name  = $plugin_name;
         $this->version      = $version;
-        $this->post_types   = array('vacatures');
     }
 
     /**
      * Set the Labels for the custom post type
      *
      * @since   1.0.0
-     *
-     * @param $name
-     * @return array
      */
-    private function set_labels($name){
-        $name = ucfirst($name);
-        $singular = (substr($name, -1, 1) == 's') ? substr($name, 0, -1) : $name;
-
-        $labels = array(
-            'name'                  => _x( $name, 'Post Type General Name', $this->plugin_name ),
-            'singular_name'         => _x( $singular, 'Post Type Singular Name', $this->plugin_name ),
-            'menu_name'             => __( $name , $this->plugin_name ),
-            'parent_item_colon'     => __( 'Parent '.$singular, $this->plugin_name ),
-            'all_items'             => __( 'All '.$name,  $this->plugin_name ),
-            'view_item'             => __( 'View '.$singular,  $this->plugin_name ),
-            'add_new_item'          => __( 'Add New '.$singular,  $this->plugin_name ),
-            'add_new'               => __( 'Add New',  $this->plugin_name ),
-            'edit_item'             => __( 'Edit '.$singular, $this->plugin_name ),
-            'update_item'           => __( 'Update '.$singular, $this->plugin_name ),
-            'search_items'          => __( 'Search '.$singular, $this->plugin_name ),
-            'not_found'             => __( 'Not Found', $this->plugin_name ),
-            'not_found_in_trash'    => __( 'Not found in Trash',  $this->plugin_name ),
-        );
-
-        return $labels;
-    }
-
-    /**
-     * Set the Arguments for the custom post type
-     *
-     * @since   1.0.0
-     *
-     * @param $name
-     * @param $labels
-     * @return array
-     */
-    private function set_args($name, $labels){
+    public function create_vacature_post_type(){
+        $post_type = 'vacatures';
         $args = array(
-            'label'               => __( $name, $this->plugin_name ),
-            'description'         => __( 'Movie news and reviews', $this->plugin_name ),
-            'labels'              => $labels,
-            // Features this CPT supports in Post Editor
-            'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', ),
-            // You can associate this CPT with a taxonomy or custom taxonomy.
-            'taxonomies'          => array( 'category' ),
-            /* A hierarchical CPT is like Pages and can have
-            * Parent and child items. A non-hierarchical CPT
-            * is like Posts.
-            */
-            'hierarchical'        => false,
-            'public'              => true,
-            'show_ui'             => true,
-            'show_in_menu'        => true,
-            'show_in_nav_menus'   => true,
-            'show_in_admin_bar'   => true,
-            'menu_position'       => 5,
+            'label'              => __( ucfirst($post_type), $this->plugin_name ),
+            'labels'             => $this->set_labels($post_type),
+            'description'        => __( 'Post type for Vacatures.', $this->plugin_name ),
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'show_in_nav_menus'  => true,
+            'show_in_admin_bar'  => true,
+            'query_var'          => true,
+            'rewrite'            => array( 'slug' => 'book' ),
+            'capability_type'    => 'post',
+            'has_archive'        => true,
+            'hierarchical'       => false,
+            'menu_position'      => 5,
+            'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+            'taxonomies'         => array( 'category' ),
             'can_export'          => true,
-            'has_archive'         => true,
             'exclude_from_search' => false,
-            'publicly_queryable'  => true,
-            'capability_type'     => array('page', $name),
             'map_meta_cap'        => true,
         );
 
-        return $args;
+        register_post_type( $post_type, $args );
     }
 
     /**
-     * Creates the post types for the plugin
-     *
-     * @since   1.0.0
+     * Vacature add meta boxes
      */
-    public function create_custom_post_type(){
-
-        foreach($this->post_types as $post_type){
-            $labels = $this->set_labels( $post_type );
-            $args   = $this->set_args( $post_type, $labels );
-
-            register_post_type( $post_type, $args );
-        }
-    }
-
-    /**
-     * Add meta boxes to the custom post types
-     *
-     * @since   1.0.0
-     */
-    public function add_meta_boxes(){
+    public function add_vacature_meta_boxes(){
         add_meta_box('vacature_info', __('Vacature', $this->plugin_name), array($this, 'vacatures_info_meta_box'), 'vacatures', 'normal', 'high');
     }
 
@@ -193,5 +135,36 @@ class Hockey_vacatures_Post_Type {
             }
 
         }
+    }
+
+    /**
+     * Set the Labels for the custom post type
+     *
+     * @since   1.0.0
+     *
+     * @param $name
+     * @return array
+     */
+    private function set_labels($name){
+        $name = ucfirst($name);
+        $singular = (substr($name, -1, 1) == 's') ? substr($name, 0, -1) : $name;
+
+        $labels = array(
+            'name'                  => _x( $name, 'Post Type General Name', $this->plugin_name ),
+            'singular_name'         => _x( $singular, 'Post Type Singular Name', $this->plugin_name ),
+            'menu_name'             => __( $name , $this->plugin_name ),
+            'parent_item_colon'     => __( 'Parent '.$singular, $this->plugin_name ),
+            'all_items'             => __( 'All '.$name,  $this->plugin_name ),
+            'view_item'             => __( 'View '.$singular,  $this->plugin_name ),
+            'add_new_item'          => __( 'Add New '.$singular,  $this->plugin_name ),
+            'add_new'               => __( 'Add New',  $this->plugin_name ),
+            'edit_item'             => __( 'Edit '.$singular, $this->plugin_name ),
+            'update_item'           => __( 'Update '.$singular, $this->plugin_name ),
+            'search_items'          => __( 'Search '.$singular, $this->plugin_name ),
+            'not_found'             => __( 'Not Found', $this->plugin_name ),
+            'not_found_in_trash'    => __( 'Not found in Trash',  $this->plugin_name ),
+        );
+
+        return $labels;
     }
 }
