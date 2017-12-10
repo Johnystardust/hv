@@ -12,6 +12,17 @@
  * @subpackage Hockey_vacatures/public/partials
  */
 
+//<!-- TODO: FIX FILTERS !!!! -->
+//<!--                        <div class="active-filters">-->
+//<!--                            <span class="badge badge-default">Default Filter</span>-->
+//<!--                            <span class="badge badge-primary">Primary Filter</span>-->
+//<!--                            <span class="badge badge-success">Success Filter</span>-->
+//<!--                            <span class="badge badge-info">Info Filter</span>-->
+//<!--                            <span class="badge badge-warning">Warning Filter</span>-->
+//<!--                            <span class="badge badge-danger">Danger Filter</span>-->
+//<!--                        </div>-->
+
+
 get_header(); ?>
 
 <div id="vacature-archive" class="page-normal">
@@ -25,30 +36,21 @@ get_header(); ?>
             <div class="row">
                 <div class="col-12 col-md-8 main-column vacature-list">
                     <?php
+                    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
                         'post_type'         => 'vacatures',
+                        'posts_per_page'    => 3,
+                        'paged'             => $paged,
                     );
 
                     $the_query = new WP_Query( $args );
-                    $post_count = $the_query->post_count;
+                    $post_count = $the_query->found_posts;
+                    $post_page_count = $the_query->post_count;
 
-                    if($the_query->have_posts()):
-                    ?>
+                    if($the_query->have_posts()): ?>
                         <h2 class="font-weight-bold d-inline-block">Alle Vacatures</h2>
                         <span class="vacature-counter" style="font-size: 1rem;"><?php echo __('Aantal vacatures', TEXTDOMAIN); ?>: <?php echo $post_count ?></span>
-                        <!-- TODO: FIX FILTERS !!!! -->
-<!--                        <div class="active-filters">-->
-<!--                            <span class="badge badge-default">Default Filter</span>-->
-<!--                            <span class="badge badge-primary">Primary Filter</span>-->
-<!--                            <span class="badge badge-success">Success Filter</span>-->
-<!--                            <span class="badge badge-info">Info Filter</span>-->
-<!--                            <span class="badge badge-warning">Warning Filter</span>-->
-<!--                            <span class="badge badge-danger">Danger Filter</span>-->
-<!--                        </div>-->
-                    <?php
-                        while($the_query->have_posts()): $the_query->the_post();
-                            // TODO: FIX GET TEMPLATE PART
-                            ?>
+                        <?php while($the_query->have_posts()): $the_query->the_post(); ?>
                             <div class="vacature-item col-12 px-0">
                                 <h4 class="title"><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title(); ?></a></h4>
                                 <h5 class="sub-line"><strong><?php echo get_the_author(); ?></strong><span> - <?php echo get_post_meta($post->ID, 'additional_data', false)[0]['city']; ?></span></h5>
@@ -86,22 +88,31 @@ get_header(); ?>
                                     <a class="btn btn-border" href="mailto:info@timvanderslik.nl"><?php echo __( 'Solliciteer direct', TEXTDOMAIN ); ?></a>
                                 </div>
                             </div>
-                            <?php
-                        endwhile;
-                        wp_reset_postdata();
-                        $big = 999999999; // need an unlikely integer
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
 
-                        echo paginate_links( array(
-                            'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                            'format' => '?paged=%#%',
-                            'current' => max( 1, get_query_var('paged') ),
-                            'total' => $wp_query->max_num_pages,
-                        ) );
-
-                    else:
-                        echo 'test';
-                    endif;
-                    ?>
+                        <?php if($post_count > $post_page_count): ?>
+                            <div class="archive-pagination">
+                                <?php
+                                $big = 999999999; // need an unlikely integer
+                                echo paginate_links( array(
+                                    'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                                    'format'             => '?paged=%#%',
+                                    'total'              => $the_query->max_num_pages,
+                                    'current'            => max( 1, get_query_var('paged') ),
+                                    'prev_next'          => true,
+                                    'prev_text'          => __('Previous'),
+                                    'next_text'          => __('Next'),
+                                    'type'               => 'list',
+//                                    'add_args'           => array('page' => 'test')
+                                ));
+                                ?>
+                            </div>
+                        <?php endif ?>
+                    <?php else: ?>
+                        <!-- TODO: FIX ME !!!!!! -->
+                        <h1>test</h1>
+                    <?php endif; ?>
                 </div>
 
                 <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">
@@ -111,7 +122,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <?php echo do_shortcode('[hockey_vacatures_vacature_map lat="" lng=""]'); ?>
+    <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
 
     <?php get_footer() ?>
 </div>

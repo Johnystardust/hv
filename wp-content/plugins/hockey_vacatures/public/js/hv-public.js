@@ -54,7 +54,7 @@
 
         // Open side panel
         // ===============
-        $('.widget_hv_register_widget li.hv-profile-link, a[href="#open-side-panel"]').on('click', function(e){
+        $('.widget_hv_register_widget li.hv-profile-link, #open-side-panel').on('click', function(e){
             e.preventDefault();
 
             $('#hv-side-panel').toggleClass('active');

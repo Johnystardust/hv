@@ -10,8 +10,15 @@
 
 <?php get_header(); ?>
 
-<div id="page-404" class="page-sidebar <?php post_class(); ?>">
+<div id="page-404" <?php post_class('page-normal'); ?>>
     <?php get_template_part( 'template-parts/page/page', 'banner-404' ); ?>
+
+
+    <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
+
+    <?php while ( have_posts() ) : the_post();
+        get_template_part( 'template-parts/page/content', '404' );
+    endwhile; ?>
 
     <div class="container-fluid page-wrapper">
         <div class="container">

@@ -120,15 +120,13 @@ class Hockey_Vacatures_Vacature_Map {
     }
 
     public function vacature_map_shortcode($attributes){
+        $lat = $lng = '';
 
-        $atts = shortcode_atts(
-            array(
-                'lat' => '',
-                'lng' => '',
-            ),
-            $attributes
-        );
+        extract(shortcode_atts(array(
+            'lat' => '51.9772126',
+            'lng' => '5.9091291',
+        ), $attributes));
 
-        $this->vacature_map($atts['lat'], $atts['lng']);
+        $this->vacature_map($lat, $lng);
     }
 }

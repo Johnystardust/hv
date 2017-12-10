@@ -24,8 +24,7 @@ class Hockey_vacatures_Post_Type {
     public function __construct( $plugin_name, $version ){
         $this->plugin_name  = $plugin_name;
         $this->version      = $version;
-        $this->post_types   = array('vacatures', 'sollicitaties');
-
+        $this->post_types   = array('vacatures');
     }
 
     /**
@@ -76,7 +75,7 @@ class Hockey_vacatures_Post_Type {
             // Features this CPT supports in Post Editor
             'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', ),
             // You can associate this CPT with a taxonomy or custom taxonomy.
-            'taxonomies'          => array( 'genres' ),
+            'taxonomies'          => array( 'category' ),
             /* A hierarchical CPT is like Pages and can have
             * Parent and child items. A non-hierarchical CPT
             * is like Posts.

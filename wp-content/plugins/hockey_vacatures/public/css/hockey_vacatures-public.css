@@ -231,6 +231,39 @@ body.hv-side-panel-open:after {
   #vacature-archive .main-content .vacature-list .vacature-item .vacature-info li {
     font-size: .9rem; }
 
+.archive-pagination {
+  margin-top: 5rem;
+  text-align: left; }
+  .archive-pagination ul {
+    list-style: none;
+    text-align: left; }
+    .archive-pagination ul li {
+      display: inline-block;
+      margin-right: 1rem; }
+  .archive-pagination span {
+    font-size: 1.1rem;
+    padding: .8rem 1.6rem;
+    font-weight: 600;
+    border: 2px solid #177FBF;
+    border-radius: 0;
+    color: #177FBF; }
+  .archive-pagination a {
+    font-size: 1.1rem;
+    padding: .8rem 1.6rem;
+    font-weight: 600;
+    border: 2px solid #177FBF;
+    border-radius: 0;
+    background-color: #177FBF;
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out; }
+    .archive-pagination a:hover {
+      background-color: #0E4C72;
+      border-color: #01549b;
+      color: #ffffff; }
+
 @media screen and (max-width: 768px) {
   #vacature-archive .main-content .vacature-list .vacature-counter {
     display: block;

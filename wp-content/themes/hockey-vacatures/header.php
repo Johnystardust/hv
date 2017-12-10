@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo get_the_title(); ?> | Hockey Vacatures</title>
+    <title><?php echo get_title_meta(); ?> | Hockey Vacatures</title>
 
     <meta name="viewport" content="width=device-width">
 

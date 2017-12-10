@@ -80,3 +80,13 @@ function hv_register_menu() {
     register_nav_menu( 'primary', __( 'Hoofdmenu', TEXTDOMAIN ) );
 }
 add_action( 'after_setup_theme', 'hv_register_menu' );
+
+
+function get_title_meta(){
+    if(is_archive()){
+        return get_the_archive_title();
+    }
+    else {
+        return get_the_title();
+    }
+}
