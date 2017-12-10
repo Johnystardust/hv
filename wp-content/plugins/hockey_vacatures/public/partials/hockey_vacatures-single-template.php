@@ -89,11 +89,13 @@ get_header(); ?>
                                         <strong><?php echo __('Tel:', TEXTDOMAIN); ?></strong>
                                         <a href="tel:<?php echo $additional_data['tel']; ?>"><?php echo $additional_data['tel']; ?></a>
                                     </li>
-                                    <li>
-                                        <i class="fa fa-external-link"></i>
-                                        <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
-                                        <a target="_blank" href="<?php echo $additional_data['web_url']; ?>"><?php echo $additional_data['web_url']; ?></a>
-                                    </li>
+                                    <?php if(isset($additional_data['web_url'])): ?>
+                                        <li>
+                                            <i class="fa fa-external-link"></i>
+                                            <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
+                                            <a target="_blank" href="<?php echo $additional_data['web_url']; ?>"><?php echo $additional_data['web_url']; ?></a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </div>
@@ -113,15 +115,6 @@ get_header(); ?>
 
 
                             <a href="#"><?php echo __('Vacature niet oke? Laat het ons weten!', TEXTDOMAIN); ?></a>
-                        </div>
-
-                        <div class="social-share">
-                            <ul>
-                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i><span>share</span></a></li>
-                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li class="google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul>
                         </div>
 
                     <?php endwhile; ?>

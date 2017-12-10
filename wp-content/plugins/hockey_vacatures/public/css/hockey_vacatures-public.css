@@ -151,34 +151,6 @@ body.hv-side-panel-open:after {
   visibility: visible;
   opacity: 1; }
 
-#vacature-single .main-content .main-column .social-share {
-  position: absolute;
-  right: 0;
-  top: 50%; }
-  #vacature-single .main-content .main-column .social-share ul li {
-    display: block;
-    text-align: center;
-    width: 40px;
-    height: 40px; }
-    #vacature-single .main-content .main-column .social-share ul li a {
-      position: relative;
-      color: #ffffff;
-      display: block; }
-    #vacature-single .main-content .main-column .social-share ul li i {
-      position: relative;
-      top: 11px;
-      font-size: 1.2rem; }
-    #vacature-single .main-content .main-column .social-share ul li span {
-      display: none;
-      max-width: 0; }
-    #vacature-single .main-content .main-column .social-share ul li.facebook {
-      background-color: #3b5998; }
-    #vacature-single .main-content .main-column .social-share ul li.google {
-      background-color: #db4437; }
-    #vacature-single .main-content .main-column .social-share ul li.twitter {
-      background-color: #1da1f2; }
-    #vacature-single .main-content .main-column .social-share ul li.linkedin {
-      background-color: #0077b5; }
 #vacature-single .main-content .main-column .title {
   margin-bottom: 2rem; }
 #vacature-single .main-content .main-column .the-content {
@@ -205,8 +177,6 @@ body.hv-side-panel-open:after {
       color: #177FBF; }
 
 @media screen and (max-width: 576px) {
-  #vacature-single .main-content .main-column .social-share {
-    right: -15px; }
   #vacature-single .main-content .main-column .vacature-info {
     margin-bottom: 0 !important; }
   #vacature-single .main-content .main-column .the-content {

@@ -28,13 +28,18 @@ class Hockey_Vacatures_Top_Bar {
                             </div>
                         <?php endif; ?>
                     <?php elseif(is_singular('vacatures')): ?>
-                        <div class="<?php echo $this->item_class; ?>">
-                            <?php previous_post_link( '%link', __( 'Vorige', TEXTDOMAIN ), false ); ?>
-                        </div>
 
+                        <?php // Previous Post Link ?>
+                        <?php if(get_previous_post_link()): ?>
+                            <div class="<?php echo $this->item_class; ?>">
+                                <?php previous_post_link( '%link', __( 'Vorige', TEXTDOMAIN ), false ); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php // Bewerken/Verwijderen Link ?>
                         <?php if(get_current_user_id() == $post->post_author): ?>
                             <div class="<?php echo $this->item_class; ?>">
-                                <a href="#" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
+                                <a href="<?php echo get_edit_post_link(); ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
                             </div>
                             <?php if( current_user_can( 'delete_vacatures' ) ) : ?>
                                 <div class="<?php echo $this->item_class; ?>">
@@ -47,9 +52,13 @@ class Hockey_Vacatures_Top_Bar {
                             </div>
                         <?php endif; ?>
 
-                        <div class="<?php echo $this->item_class; ?>">
-                            <?php next_post_link( '%link', __( 'Volgende', TEXTDOMAIN ), false ); ?>
-                        </div>
+                        <?php // Next Post Link ?>
+                        <?php if(get_next_post_link()): ?>
+                            <div class="<?php echo $this->item_class; ?>">
+                                <?php next_post_link( '%link', __( 'Volgende', TEXTDOMAIN ), false ); ?>
+                            </div>
+                        <?php endif; ?>
+
                     <?php elseif(is_page('registreren')): // TODO: FIX MET GLENN !!! ?>
                         <div class="<?php echo $this->item_class; ?>">
                             <a href="#" class="icon-left"><i class="fa fa-question"></i><?php echo __( 'Hulp nodig?', TEXTDOMAIN ); ?></a>

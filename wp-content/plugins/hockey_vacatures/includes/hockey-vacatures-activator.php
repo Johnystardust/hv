@@ -192,4 +192,61 @@ class Hockey_Vacatures_Activator {
 			)
 		);
 	}
+
+	public static function register_categories(){
+		// User role categories
+		wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Speler', 'hockey_vacatures'),
+				'category_description'	=> __( 'Speler categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'speler',
+				'taxonomy' 				=> 'category'
+			)
+		);
+		wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Club', 'hockey_vacatures'),
+				'category_description'	=> __( 'Club categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'club',
+				'taxonomy' 				=> 'category'
+			)
+		);
+
+		// Vacature categories
+		$vacature_cat_id = wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Vacature', 'hockey_vacatures'),
+				'category_description'	=> __( 'Vacatures categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'vacature',
+				'taxonomy' 				=> 'category'
+			)
+		);
+		wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Trainer vacature', 'hockey_vacatures'),
+				'category_description'	=> __( 'Trainer vacature categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'trainer-vacature',
+				'taxonomy' 				=> 'category',
+				'category_parent' 		=> $vacature_cat_id,
+			)
+		);
+		wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Speler vacature', 'hockey_vacatures'),
+				'category_description'	=> __( 'Speler vacature categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'speler-vacature',
+				'taxonomy' 				=> 'category',
+				'category_parent' 		=> $vacature_cat_id,
+			)
+		);
+		wp_insert_category(
+			array(
+				'cat_name' 				=> __( 'Coach vacature', 'hockey_vacatures'),
+				'category_description'	=> __( 'Coach vacature categorie', 'hockey_vacatures'),
+				'category_nicename' 	=> 'coach-vacature',
+				'taxonomy' 				=> 'category',
+				'category_parent' 		=> $vacature_cat_id,
+			)
+		);
+	}
 }

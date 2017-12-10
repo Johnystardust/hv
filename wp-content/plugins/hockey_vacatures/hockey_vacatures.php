@@ -38,6 +38,7 @@ function activate_hockey_vacatures() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/hockey-vacatures-activator.php';
 	Hockey_Vacatures_Activator::register_pages();
 	Hockey_Vacatures_Activator::register_user_roles();
+	Hockey_Vacatures_Activator::register_categories();
 }
 
 /**
@@ -48,8 +49,6 @@ function deactivate_hockey_vacatures() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/hockey-vacatures-deactivator.php';
 	Hockey_Vacatures_Deactivator::deactivate();
 }
-
-//Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
 
 register_activation_hook( __FILE__, 'activate_hockey_vacatures' );
 register_deactivation_hook( __FILE__, 'deactivate_hockey_vacatures' );
