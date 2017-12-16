@@ -19,8 +19,6 @@ class Hockey_Vacatures_Shortcodes {
     private $new_vacature_form;
     private $vacature_maps;
 
-    // @TODO: FIX NEW SHORTCODE WAY IF POSSIBLE
-
     /**
      * Initialize the class and set its properties.
      *

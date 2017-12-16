@@ -8,29 +8,20 @@
  */
 ?>
 
+
 <?php get_header(); ?>
 
-<div id="page-404" <?php post_class('page-normal'); ?>>
+<div id="page-<?php the_ID(); ?>" <?php post_class('page-normal'); ?>>
     <?php get_template_part( 'template-parts/page/page', 'banner-404' ); ?>
 
-
-    <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
-
-    <?php while ( have_posts() ) : the_post();
-        get_template_part( 'template-parts/page/content', '404' );
-    endwhile; ?>
-
-    <div class="container-fluid page-wrapper">
-        <div class="container">
+    <div class="container-fluid main-content">
+        <div class="container main-content-inner">
             <div class="row">
-                <div class="col-8 main-column page-content">
-                    <h1><?php echo __( 'Sorry, we kunnen deze pagina niet meer vinden', TEXTDOMAIN ); ?></h1>
-                    <br>
-                    <p><?php echo __( 'We hebben ons best gedaan, maar het lijkt erop dat deze pagina niet (meer) bestaat of misschien verhuisd is. Je kunt natuurlijk altijd naar de homepage of de zoekfunctie gebruiken.', TEXTDOMAIN ); ?></p>
-
-                    <?php get_search_form(); ?>
+                <div class="col-12 col-md-8 main-column">
+                    <?php get_template_part( 'template-parts/page/content', '404' ); ?>
                 </div>
-                <div class="col-3 push-1 px-0 sidebar-column">
+
+                <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">
                     <?php get_sidebar(); ?>
                 </div>
             </div>
@@ -38,8 +29,8 @@
     </div>
 </div>
 
+<?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
+
 <?php get_footer(); ?>
-
-
 
 

@@ -43,7 +43,7 @@ $(document).ready(function(){
     // ============
     $('.banner-full-width').slick({
         dots: true,
-        arrows: false
+        arrows: false,
     });
 
     $('#page-slider').find('.slick-container').slick({
@@ -53,8 +53,8 @@ $(document).ready(function(){
         arrows: false,
         infinite: true,
         speed: 500,
-        //fade: true,
-        //cssEase: 'linear',
+        fade: true,
+        cssEase: 'linear',
         autoplay: true,
         autoplaySpeed: 6000,
     });

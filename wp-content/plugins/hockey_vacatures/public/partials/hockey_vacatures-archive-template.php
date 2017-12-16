@@ -12,17 +12,6 @@
  * @subpackage Hockey_vacatures/public/partials
  */
 
-//<!-- TODO: FIX FILTERS !!!! -->
-//<!--                        <div class="active-filters">-->
-//<!--                            <span class="badge badge-default">Default Filter</span>-->
-//<!--                            <span class="badge badge-primary">Primary Filter</span>-->
-//<!--                            <span class="badge badge-success">Success Filter</span>-->
-//<!--                            <span class="badge badge-info">Info Filter</span>-->
-//<!--                            <span class="badge badge-warning">Warning Filter</span>-->
-//<!--                            <span class="badge badge-danger">Danger Filter</span>-->
-//<!--                        </div>-->
-
-
 get_header(); ?>
 
 <div id="vacature-archive" class="page-normal">
@@ -31,9 +20,34 @@ get_header(); ?>
     <?php // Top Bar ?>
     <?php echo do_shortcode('[hockey_vacatures_top_bar]'); ?>
 
+
+
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
             <div class="row">
+                <div class="col-12 col-md-6 filter">
+                    <div class="filter-inner">
+                        <form action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" id="vacature-filter" method="post">
+                            <div class="form-group">
+                                <label for="search"><?php echo __('Zoeken', TEXTDOMAIN); ?></label>
+                                <input type="text" name="search" id="search" class="form-control" placeholder="Zoeken..." value="<?php echo (isset($_POST['search'])) ? $_POST['search'] : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <?php $categories = get_categories(array('parent' => 17)); ?>
+                                <label for="cat"><?php echo __('Functie', TEXTDOMAIN); ?></label>
+                                <select name="cat" id="cat" class="custom-select form-control">
+                                    <option value=""><?php echo __('Alle vacatures', TEXTDOMAIN); ?></option>
+                                    <?php foreach($categories as $category): ?>
+                                        <option value="<?php echo $category->term_id; ?>"><?php echo $category->name; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Zoeken</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="col-12 col-md-8 main-column vacature-list">
                     <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -43,12 +57,23 @@ get_header(); ?>
                         'paged'             => $paged,
                     );
 
+
+
+                    // Filters
+                    // =======
+                    if(!empty($_POST['search'])){
+                        $args['s'] = $_POST['search'];
+                    }
+                    if(!empty($_POST['cat'])){
+                        $args['cat'] = array($_POST['cat']);
+                    }
+
                     $the_query = new WP_Query( $args );
                     $post_count = $the_query->found_posts;
                     $post_page_count = $the_query->post_count;
 
                     if($the_query->have_posts()): ?>
-                        <h2 class="font-weight-bold d-inline-block">Alle Vacatures</h2>
+                        <h2 class="font-weight-bold d-inline-block"><?php echo __('Alle Vacatures'); ?></h2>
                         <span class="vacature-counter" style="font-size: 1rem;"><?php echo __('Aantal vacatures', TEXTDOMAIN); ?>: <?php echo $post_count ?></span>
                         <?php while($the_query->have_posts()): $the_query->the_post(); ?>
                             <div class="vacature-item col-12 px-0">
@@ -110,8 +135,9 @@ get_header(); ?>
                             </div>
                         <?php endif ?>
                     <?php else: ?>
-                        <!-- TODO: FIX ME !!!!!! -->
-                        <h1>test</h1>
+                        <!-- TODO: FIX NO POSTS FOUND MESSAGE !!!!!! -->
+                        <h2 class="font-weight-bold d-inline-block"><?php echo __('Geen Vacatures'); ?></h2>
+                        <p><?php echo __('Helaas er zijn geen zoekresultaten gevonden.'); ?></p>
                     <?php endif; ?>
                 </div>
 

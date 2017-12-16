@@ -110,76 +110,70 @@ class Hockey_vacatures_Admin {
 	/**
 	 * Limit the number of posts a user can use
 	 *
-	 * TODO: FIX: Spelers Role
-	 *
 	 * @since	1.0.0
 	 */
-	public function limit_user_posts(){
-		if(is_admin()){
-			return;
-		}
-
-		$user 				= wp_get_current_user();
-		$user_id 			= get_current_user_id();
-
-		$user_post_count 	= get_user_meta( $user_id, 'vacature_post_counter', true );
-		$user_s_count		= get_user_meta( $user_id, 'vacature_s_counter', true ) ? '' : 1;
-
-		if($user_post_count >= $user_s_count){
-			header( 'Location: ' .get_admin_url() . 'edit.php' );
-		} else {
-			update_user_meta( $user_id, 'vacature_post_counter', $user_post_count + 1 );
-		}
-	}
+//	public function limit_user_posts(){
+//		if(is_admin()){
+//			return;
+//		}
+//
+//		$user 				= wp_get_current_user();
+//		$user_id 			= get_current_user_id();
+//
+//		$user_post_count 	= get_user_meta( $user_id, 'vacature_post_counter', true );
+//		$user_s_count		= get_user_meta( $user_id, 'vacature_s_counter', true ) ? '' : 1;
+//
+//		if($user_post_count >= $user_s_count){
+//			header( 'Location: ' .get_admin_url() . 'edit.php' );
+//		} else {
+//			update_user_meta( $user_id, 'vacature_post_counter', $user_post_count + 1 );
+//		}
+//	}
 
 	/**
 	 * Edit the Wordpress Die Handler
-	 *
-	 * TODO: FIX: Spelers Role
 	 *
 	 * @since	1.0.0
 	 *
 	 * @return Closure
 	 */
-	public function edit_wp_die_handler(){
-		$user = wp_get_current_user();
-
-		if(in_array( 'club', $user->roles )){
-			// If the employer has tried to save more than the allowed number of posts
-			if(false !== strpos($_SERVER['SCRIPT_NAME'], 'edit.php')){
-				return function() {
-					_default_wp_die_handler(
-						$message 	= __( 'Met het gratis account kun je maximaal 1 vacature plaatsen. Wil je meer dan 1 vacature plaatsen, upgrade dan nu je account.', $this->plugin_name ),
-						$title		= __( 'Geen Toegang', $this->plugin_name ),
-						$args		= array(
-							'back_link'	=> get_admin_url() . 'edit.php?post_type=vacatures',
-							'back_text'	=> 'Terug',
-						)
-					);
-				};
-			}
-		}
-		return '_default_wp_die_handler';
-	}
+//	public function edit_wp_die_handler(){
+//		$user = wp_get_current_user();
+//
+//		if(in_array( 'club', $user->roles )){
+//			// If the employer has tried to save more than the allowed number of posts
+//			if(false !== strpos($_SERVER['SCRIPT_NAME'], 'edit.php')){
+//				return function() {
+//					_default_wp_die_handler(
+//						$message 	= __( 'Met het gratis account kun je maximaal 1 vacature plaatsen. Wil je meer dan 1 vacature plaatsen, upgrade dan nu je account.', $this->plugin_name ),
+//						$title		= __( 'Geen Toegang', $this->plugin_name ),
+//						$args		= array(
+//							'back_link'	=> get_admin_url() . 'edit.php?post_type=vacatures',
+//							'back_text'	=> 'Terug',
+//						)
+//					);
+//				};
+//			}
+//		}
+//		return '_default_wp_die_handler';
+//	}
 
 	/**
 	 * Filter the posts in the admin menu to show only the users own posts
-	 *
-	 * TODO: FIX Posts Counter
 	 *
 	 * @since	1.0.0
 	 *
 	 * @param $wp_query_obj
 	 */
-	public function filter_cpt_listing($wp_query_obj){
-		$user = wp_get_current_user();
-
-		if(is_admin()){
-			if(in_array( 'employer_basic', $user->roles ) || in_array( 'employer_normal', $user->roles ) || in_array( 'employer_premium', $user->roles )){
-				$wp_query_obj->set( 'author', $user->ID );
-			}
-		}
-	}
+//	public function filter_cpt_listing($wp_query_obj){
+//		$user = wp_get_current_user();
+//
+//		if(is_admin()){
+//			if(in_array( 'employer_basic', $user->roles ) || in_array( 'employer_normal', $user->roles ) || in_array( 'employer_premium', $user->roles )){
+//				$wp_query_obj->set( 'author', $user->ID );
+//			}
+//		}
+//	}
 
 	/**
 	 * Redirects users on login to the home page instead of the admin screen.

@@ -52,6 +52,9 @@ class Hockey_vacatures_Post_Type {
             'can_export'          => true,
             'exclude_from_search' => false,
             'map_meta_cap'        => true,
+
+            // TODO: Set if user is deleted delete his posts !!
+//            'delete_with_user'    => true,
         );
 
         register_post_type( $post_type, $args );

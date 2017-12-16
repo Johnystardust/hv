@@ -81,9 +81,8 @@
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <?php // TODO: FIX: PLACE VACATURE LINK ?>
                     <hr>
-                    <p><?php echo __( 'U heeft nog geen vacatures geplaatst.', TEXTDOMAIN ); ?>&nbsp;<a href="#"><?php echo __( 'Klik hier', TEXTDOMAIN ); ?></a>&nbsp;<?php echo __( 'om een vacature te plaatsen', TEXTDOMAIN ); ?></p>
+                    <p><?php echo __( 'U heeft nog geen vacatures geplaatst.', TEXTDOMAIN ); ?>&nbsp;<a href="<?php echo get_page_link($new_vacature->ID); ?>"><?php echo __( 'Klik hier', TEXTDOMAIN ); ?></a>&nbsp;<?php echo __( 'om een vacature te plaatsen', TEXTDOMAIN ); ?></p>
                 <?php endif; wp_reset_postdata(); ?>
             </div>
 

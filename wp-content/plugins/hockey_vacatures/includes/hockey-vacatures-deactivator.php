@@ -31,7 +31,7 @@ class Hockey_Vacatures_Deactivator {
 	 */
 	public static function deactivate() {
 
-		// TODO: FIX ME!!!!!
+		// TODO: DEACTIVATE OPTIONS!!!!!
 	}
 
 }

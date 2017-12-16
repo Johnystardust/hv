@@ -94,14 +94,13 @@ class Hockey_vacatures_Loader {
 	/**
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
-	 * @TODO: FIX NEW SHORTCODE WAY IF POSSIBLE
-	 *
-	 *
 	 * @param $tag
 	 * @param $component
 	 * @param $callback
 	 * @param int $priority
 	 * @param int $accepted_args
+	 *
+	 * @deprecated
 	 */
 	public function add_shortcode( $tag, $component, $callback, $priority = 10, $accepted_args = 2 ){
 		$this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback, $priority, $accepted_args );

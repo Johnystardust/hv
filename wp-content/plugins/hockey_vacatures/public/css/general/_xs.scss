@@ -1,46 +1,6 @@
 .icon-left i {margin-right: 1rem;}
 .icon-right i {margin-left: 1rem;}
 
-// Top Bar
-.top-bar {
-  height: 60px;
-  background-color: $primary-color;
-
-  .top-bar-item {
-    text-align: center;
-    border-right: 1px solid #cccccc;
-    &:first-child {
-      border-left: 1px solid #cccccc;
-    }
-    a {
-      height: 60px;
-      line-height: 60px;
-      display: block;
-      color: #fff;
-      text-transform: uppercase;
-      font-weight: 600;
-      &:hover {
-        text-decoration: none;
-      }
-
-      &[rel='prev']:before {
-        content: "\f104";
-        margin-right: 1rem;
-        font: normal normal normal 14px/1 FontAwesome;
-      }
-      &[rel='next']:after {
-        content: "\f105";
-        margin-left: 1rem;
-        font: normal normal normal 14px/1 FontAwesome;
-      }
-    }
-
-    &:hover {
-      background-color: $primary-hover-color;
-      @include transition-ease-all;
-    }
-  }
-}
 
 // Main content
 .main-content {
@@ -143,7 +103,6 @@
     }
   }
 
-  // TODO CHANGE COLOR
   &.error {
     .message-popup-inner {
       border-bottom: 2px solid red;
@@ -153,6 +112,46 @@
   &.success {
     .message-popup-inner {
       border-bottom: 2px solid green;
+    }
+  }
+}
+
+/* ---------------------------------------------    TOP BAR  -------------------------------------------------------- */
+.top-bar {
+  height: 60px;
+  background-color: $primary-color;
+
+  .top-bar-item {
+    padding: 0;
+    text-align: center;
+    border-right: 1px solid #cccccc;
+    &:first-child {
+      border-left: 1px solid #cccccc;
+    }
+    a {
+      height: 60px;
+      line-height: 60px;
+      display: block;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      @include transition-ease-all;
+
+      &:hover, &:focus, &:active {
+        text-decoration: none;
+        background-color: $primary-hover-color;
+      }
+
+      &[rel='prev']:before {
+        content: "\f104";
+        margin-right: 1rem;
+        font: normal normal normal 14px/1 FontAwesome;
+      }
+      &[rel='next']:after {
+        content: "\f105";
+        margin-left: 1rem;
+        font: normal normal normal 14px/1 FontAwesome;
+      }
     }
   }
 }

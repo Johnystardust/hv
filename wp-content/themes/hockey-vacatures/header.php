@@ -35,14 +35,14 @@
                         <?php if(get_theme_mod('header_social_linkedin')): ?>
                             <li><a href="<?php echo get_theme_mod('header_social_linkedin'); ?>"><i class="fa fa-linkedin"></i></a></li>
                         <?php endif; ?>
-                        <?php if(get_theme_mod('header_social_whatsapp')): ?>
-                            <?php // TODO: FIX: whatsapp-open-chat-link ?>
-                            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
-                        <?php endif; ?>
                         <?php if(get_theme_mod('header_social_phone')): ?>
-                            <?php // TODO: FIX: tel:phone-number ?>
-                            <li><a href="#"><i class="fa fa-phone"></i> <span><?php echo get_theme_mod('header_social_phone'); ?></span></a></li>
+                            <li><a href="tel:<?php echo get_theme_mod('header_social_phone'); ?>"><i class="fa fa-phone"></i> <span><?php echo get_theme_mod('header_social_phone'); ?></span></a></li>
                         <?php endif; ?>
+
+                        <?php // TODO: FIX: whatsapp-open-chat-link ?>
+<!--                        --><?php //if(get_theme_mod('header_social_whatsapp')): ?>
+<!--                            <li><a href="--><?php //echo get_theme_mod('header_social_whatsapp'); ?><!--"><i class="fa fa-whatsapp"></i></a></li>-->
+<!--                        --><?php //endif; ?>
                     </ul>
                 </div>
                 <div class="col-4 col-md-6 pr-3 pr-lg-0">

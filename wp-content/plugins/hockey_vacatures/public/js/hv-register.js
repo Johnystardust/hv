@@ -18,105 +18,105 @@
 
         // Register Form Validation
         // ========================
-        //$regForm.validate({
-        //    rules: {
-        //        // General
-        //        username: {
-        //            required: true,
-        //            minlength: 4
-        //        },
-        //        role: {
-        //            valueNotEquals: 'default'
-        //        },
-        //        postal: {
-        //            required: true
-        //        },
-        //        street_number: {
-        //            required: true
-        //        },
-        //        password: {
-        //            required: true,
-        //            minlength: 5
-        //        },
-        //        password_check: {
-        //            required: true,
-        //            equalTo: '#password'
-        //        },
-        //
-        //        // Club
-        //        // ====
-        //        c_name: {
-        //            required: true,
-        //            minlength: 2
-        //        },
-        //        c_place: {required: true},
-        //        c_cname: {required: true},
-        //        c_email: {
-        //            required: true,
-        //            email: true
-        //        },
-        //        c_web_url: {url: true},
-        //
-        //        // Player
-        //        // ======
-        //        p_fname: {
-        //            required: true,
-        //            minlength: 2
-        //        },
-        //        p_lname: {
-        //            required: true,
-        //            minlength: 2
-        //        },
-        //        p_place: {required: true},
-        //        p_email: {
-        //            required: true,
-        //            email: true
-        //        },
-        //        p_age: {
-        //            required: true,
-        //            number: true,
-        //            min: 13,
-        //            max: 130
-        //        },
-        //        p_gender: {
-        //            valueNotEquals: 'default'
-        //        }
-        //    },
-        //    messages: {
-        //        // General
-        //        username: {
-        //            required: 'Gebruikersnaam is verplicht.',
-        //            minlength: 'Tenmninste 4 letters.'
-        //        },
-        //        role: 'Kies een rol.',
-        //        postal: {
-        //            required: 'Geef een geldige postcode op.',
-        //        },
-        //        street_number: {
-        //            required: 'Geef een geldig huisnummer op.',
-        //        },
-        //        password: {
-        //            required: 'Geef een wachtwoord op.',
-        //            minlength: 'Password moet tenminste 5 letters zijn.'
-        //        },
-        //        password_check: {
-        //            required: 'Geef een wachtwoord op.',
-        //            equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
-        //        },
-        //
-        //        // Club
-        //        c_name: 'Geef een naam op.',
-        //        c_cname: 'Geef een naam op.',
-        //        c_email: 'Geef een geldig email adres op.',
-        //
-        //        // Player
-        //        p_fname: 'Geef een naam op.',
-        //        p_lname: 'Geef een achternaam op.',
-        //        p_email: 'Geef een geldig email adres op.',
-        //        p_age: 'Geef een leeftijd op.',
-        //        p_gender: 'Kies een geslacht.',
-        //    }
-        //});
+        $regForm.validate({
+            rules: {
+                // General
+                username: {
+                    required: true,
+                    minlength: 4
+                },
+                role: {
+                    valueNotEquals: 'default'
+                },
+                postal: {
+                    required: true
+                },
+                street_number: {
+                    required: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                password_check: {
+                    required: true,
+                    equalTo: '#password'
+                },
+
+                // Club
+                // ====
+                c_name: {
+                    required: true,
+                    minlength: 2
+                },
+                c_place: {required: true},
+                c_cname: {required: true},
+                c_email: {
+                    required: true,
+                    email: true
+                },
+                c_web_url: {url: true},
+
+                // Player
+                // ======
+                p_fname: {
+                    required: true,
+                    minlength: 2
+                },
+                p_lname: {
+                    required: true,
+                    minlength: 2
+                },
+                p_place: {required: true},
+                p_email: {
+                    required: true,
+                    email: true
+                },
+                p_age: {
+                    required: true,
+                    number: true,
+                    min: 13,
+                    max: 130
+                },
+                p_gender: {
+                    valueNotEquals: 'default'
+                }
+            },
+            messages: {
+                // General
+                username: {
+                    required: 'Gebruikersnaam is verplicht.',
+                    minlength: 'Tenmninste 4 letters.'
+                },
+                role: 'Kies een rol.',
+                postal: {
+                    required: 'Geef een geldige postcode op.',
+                },
+                street_number: {
+                    required: 'Geef een geldig huisnummer op.',
+                },
+                password: {
+                    required: 'Geef een wachtwoord op.',
+                    minlength: 'Password moet tenminste 5 letters zijn.'
+                },
+                password_check: {
+                    required: 'Geef een wachtwoord op.',
+                    equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
+                },
+
+                // Club
+                c_name: 'Geef een naam op.',
+                c_cname: 'Geef een naam op.',
+                c_email: 'Geef een geldig email adres op.',
+
+                // Player
+                p_fname: 'Geef een naam op.',
+                p_lname: 'Geef een achternaam op.',
+                p_email: 'Geef een geldig email adres op.',
+                p_age: 'Geef een leeftijd op.',
+                p_gender: 'Kies een geslacht.',
+            }
+        });
 
         // 2.0 Register Form Postcode API
         // =============================================================================================================

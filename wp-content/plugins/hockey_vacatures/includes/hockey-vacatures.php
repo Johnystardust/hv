@@ -139,8 +139,8 @@ class Hockey_Vacatures {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'edit_admin_menus', 999 );
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'add_toolbar_links', 999 );
 //		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'limit_user_posts');
-		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'filter_cpt_listing' );
-		$this->loader->add_action( 'wp_die_handler', $plugin_admin, 'edit_wp_die_handler' );
+//		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'filter_cpt_listing' );
+//		$this->loader->add_action( 'wp_die_handler', $plugin_admin, 'edit_wp_die_handler' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

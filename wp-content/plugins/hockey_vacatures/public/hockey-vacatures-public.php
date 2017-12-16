@@ -119,21 +119,30 @@ class Hockey_vacatures_Public {
 	 * @since	1.0.0
 	 */
 	public function custom_page_templates($template){
-		// TODO: FIX TEMPLATE IN THEME OVERRIDE SUPPORT
-		$theme_files = array('page-register.php');
-		$exists_in_theme = locate_template($theme_files, false);
+		$register = array('page-register.php');
+		$register_exists_in_theme = locate_template($register, false);
 
 		if(is_page('registreren')){
-			if($exists_in_theme == ''){
-				$template = plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-register-template.php';
+			if($register_exists_in_theme == ''){
+				return plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-register-template.php';
+			}
+			else {
+				return $register_exists_in_theme;
 			}
 		}
-		elseif(is_page('tegoed')){
-			$template = plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-sale-template.php';
+
+		$new_vacature = array('page-register.php');
+		$new_vacature_exists_in_theme = locate_template($new_vacature, false);
+
+		if(is_page('nieuwe-vacature')){
+			if($register_exists_in_theme == ''){
+				return plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-new-vacature-template.php';
+			}
+			else {
+				return $new_vacature_exists_in_theme;
+			}
 		}
-		elseif(is_page('nieuwe-vacature')){
-			$template = plugin_dir_path( __FILE__ ) . 'partials/hockey_vacatures-new-vacature-template.php';
-		}
+
 		return $template;
 	}
 
@@ -176,13 +185,14 @@ class Hockey_vacatures_Public {
 		return $buttons;
 	}
 
+	// TODO: FIX THISS
 	public function vacature_ajax_delete(){
 		$permission = check_ajax_referer( 'vacature_delete_nonce', 'nonce', false );
 		if($permission == false){
 			echo 'error';
 		}
 		else {
-			if($post = wp_delete_post($_REQUEST['id'])){
+			if($post = wp_trash_post($_REQUEST['id'])){
 				echo 'Success';
 				var_dump($post);
 			}

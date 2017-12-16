@@ -37,13 +37,11 @@
         // 2.0  Messages
         // 3.0  Top Bar
 
-
         // 1.0 Side Panel
         // =============================================================================================================
         var side_panel = $('#hv-side-panel');
 
-
-        // Open login form
+        // -- Open login form
         // ===============
         $('.widget_hv_register_widget li.hv-login-link').on('click', function(e){
             e.preventDefault();
@@ -54,8 +52,7 @@
             e.stopPropagation();
         });
 
-        // Open side panel
-        // ===============
+        // -- Open side panel
         $('.widget_hv_register_widget li.hv-profile-link, #open-side-panel').on('click', function(e){
             e.preventDefault();
 
@@ -74,56 +71,10 @@
             $('header').removeClass('fixed');
         });
 
-        // TODO: FIX SALE FORM VALIDATION JS
-        // Sale form validation
-        // ====================
-        $('#hv_sale_num').on('change', function(event){
-            var num 	= $(this).val();
-            var other 	= $('#hv_sale_num_other');
-            var vacatures;
-            var total;
-            var staffel;
-            var discount;
-
-            // If the value is other show the number field
-            if(num == 'other'){
-                other.removeClass('hidden').focus();
-                $(this).addClass('hidden');
-            } else {
-                staffel = Math.floor(num / 5);
-                discount = staffel * 5;
-                vacatures = (num * 10);
-                total = vacatures - discount;
-
-                console.log(discount);
-                if(discount > 0){
-                    $('.total-sale').text(discount+',-');
-                    $('.totals-sale').show();
-                }
-                $('.total-vacatures').text(vacatures+',-');
-                $('.total').text(total+',-')
-            }
-        });
-
-        //$('#hv_sale_form').validate({
-        //    rules: {
-        //        hv_sale_num: {
-        //            required: true
-        //        }
-        //
-        //    },
-        //    messages: {
-        //        hv_sale_num: 'Vul een aantal vacatures in.'
-        //
-        //    }
-        //});
-
-
         // 2.0 Messages
         // =============================================================================================================
 
-        // Message popup close
-        // ===================
+        // -- Message popup close
         $('.message-popup a[href="#message-popup-close"]').on('click', function(event){
             event.preventDefault();
 
@@ -158,9 +109,6 @@
 
             return false;
 
-
-
-
             window.confirm('Deze post zal verwijderd worden. Weet u zeker dat u wilt doorgaan.');
             if(confirm){
                 return true;
@@ -170,6 +118,56 @@
             }
 
         });
+
+        // General
+        // =============================================================================================================
+
+        // -- Archive open filter
+        $('#archive-add-filter').on('click', function(e){
+            e.preventDefault();
+            $('.main-content .filter').toggleClass('active');
+        });
+
+        // -- Open on maps
+        $('#view-on-map').on('click', function(e){
+            e.preventDefault();
+            var offset = $('#map-canvas').offset().top;
+            $('html, body').animate({scrollTop: (offset - 120)}, 500);
+        });
+
+        // DEPRECATED
+        // =============================================================================================================
+
+        // Sale form validation
+        // ====================
+        //$('#hv_sale_num').on('change', function(event){
+        //    var num 	= $(this).val();
+        //    var other 	= $('#hv_sale_num_other');
+        //    var vacatures;
+        //    var total;
+        //    var staffel;
+        //    var discount;
+        //
+        //    // If the value is other show the number field
+        //    if(num == 'other'){
+        //        other.removeClass('hidden').focus();
+        //        $(this).addClass('hidden');
+        //    } else {
+        //        staffel = Math.floor(num / 5);
+        //        discount = staffel * 5;
+        //        vacatures = (num * 10);
+        //        total = vacatures - discount;
+        //
+        //        console.log(discount);
+        //        if(discount > 0){
+        //            $('.total-sale').text(discount+',-');
+        //            $('.totals-sale').show();
+        //        }
+        //        $('.total-vacatures').text(vacatures+',-');
+        //        $('.total').text(total+',-')
+        //    }
+        //});
+
 
 
     });

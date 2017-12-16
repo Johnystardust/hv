@@ -12,6 +12,10 @@ class Hockey_Vacatures_Top_Bar {
 
     protected $item_class = 'top-bar-item col-3';
 
+    public function top_bar_shortcode(){
+        $this->top_bar();
+    }
+
     public function top_bar(){
         global $post;
         ?>
@@ -26,6 +30,9 @@ class Hockey_Vacatures_Top_Bar {
                             <div class="<?php echo $this->item_class; ?>">
                                 <a id="open-side-panel" href="#" class="icon-left"><i class="fa fa-user"></i><?php echo __( 'Mijn Profiel', TEXTDOMAIN ); ?></a>
                             </div>
+                            <div class="<?php echo $this->item_class; ?>">
+                                <a id="new-vacature" href="<?php echo get_permalink( get_page_by_path( 'nieuwe-vacature' ) ); ?>" class="icon-left"><i class="fa fa-pencil-square-o"></i><?php echo __( 'Vacature plaatsen', TEXTDOMAIN ); ?></a>
+                            </div>
                         <?php endif; ?>
                     <?php elseif(is_singular('vacatures')): ?>
 
@@ -38,17 +45,24 @@ class Hockey_Vacatures_Top_Bar {
 
                         <?php // Bewerken/Verwijderen Link ?>
                         <?php if(get_current_user_id() == $post->post_author): ?>
-                            <div class="<?php echo $this->item_class; ?>">
-                                <a href="<?php echo get_edit_post_link(); ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
-                            </div>
+                            <?php if( current_user_can( 'edit_vacatures' ) ) : ?>
+                                <div class="<?php echo $this->item_class; ?>">
+                                    <a href="<?php echo get_edit_post_link(); ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
+                                </div>
+                            <?php endif; ?>
                             <?php if( current_user_can( 'delete_vacatures' ) ) : ?>
                                 <div class="<?php echo $this->item_class; ?>">
+                                    <?php var_dump(get_delete_post_link()); ?>
                                     <a id="delete-post" href="<?php echo get_delete_post_link(); ?>" data-id="<?php the_ID() ?>" data-nonce="<?php echo wp_create_nonce('vacature_delete_nonce'); ?>" class="icon-left"><i class="fa fa-trash"></i><?php echo __( 'Verwijderen', TEXTDOMAIN ); ?></a>
                                 </div>
                             <?php endif; ?>
                         <?php else: ?>
                             <div class="<?php echo $this->item_class; ?>">
-                                <a href="#" class="icon-right"><?php echo __( 'Bekijk op kaart', TEXTDOMAIN ); ?><i class="fa fa-map-signs"></i></a>
+                                <a id="view-on-map" href="#" class="icon-right"><?php echo __( 'Bekijk op kaart', TEXTDOMAIN ); ?><i class="fa fa-map-signs"></i></a>
+                            </div>
+
+                            <div class="<?php echo $this->item_class; ?>">
+                                <a id="new-vacature" href="<?php echo get_post_type_archive_link( 'vacatures' );; ?>" class="icon-left"><i class="fa fa-pencil-square-o"></i><?php echo __( 'Alle Vacatures', TEXTDOMAIN ); ?></a>
                             </div>
                         <?php endif; ?>
 
@@ -58,7 +72,6 @@ class Hockey_Vacatures_Top_Bar {
                                 <?php next_post_link( '%link', __( 'Volgende', TEXTDOMAIN ), false ); ?>
                             </div>
                         <?php endif; ?>
-
                     <?php elseif(is_page('registreren')): // TODO: FIX MET GLENN !!! ?>
                         <div class="<?php echo $this->item_class; ?>">
                             <a href="#" class="icon-left"><i class="fa fa-question"></i><?php echo __( 'Hulp nodig?', TEXTDOMAIN ); ?></a>
@@ -76,8 +89,6 @@ class Hockey_Vacatures_Top_Bar {
         <?php
     }
 
-    public function top_bar_shortcode(){
-        $this->top_bar();
-    }
+
 
 }
