@@ -53,7 +53,7 @@ class HV_Post_Types {
                 'capability_type'    => 'post',
                 'has_archive'        => true,
                 'hierarchical'       => false,
-                'menu_position'      => 5,
+                'menu_position'      => 50,
                 'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
                 'taxonomies'         => array( 'category' ),
                 'can_export'          => true,

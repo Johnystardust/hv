@@ -22,7 +22,7 @@ class Hockey_Vacatures {
         $this->includes();
         $this->init_hooks();
 
-        do_action( 'woocommerce_loaded' );
+        do_action( 'hockey_vacatures_loaded' );
     }
 
     private function init_hooks(){
@@ -79,7 +79,7 @@ class Hockey_Vacatures {
      * Include required frontend files.
      */
     public function frontend_includes() {
-
+        include_once( HV_ABSPATH . 'includes/class-hv-template-loader.php' );
     }
 
     /**
@@ -111,6 +111,15 @@ class Hockey_Vacatures {
         if ( ! defined( $name ) ) {
             define( $name, $value );
         }
+    }
+
+    /**
+     * Get the plugin path.
+     *
+     * @return string
+     */
+    public function plugin_path() {
+        return untrailingslashit( plugin_dir_path( HV_PLUGIN_FILE ) );
     }
 
 }
