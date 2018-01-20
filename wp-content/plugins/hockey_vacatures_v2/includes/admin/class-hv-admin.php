@@ -11,6 +11,9 @@ class HV_Admin {
     }
 
     public function includes(){
+        include_once( dirname( __FILE__ ) . '/class-hv-admin-menus.php' );
 
     }
 }
+
+return new HV_Admin();

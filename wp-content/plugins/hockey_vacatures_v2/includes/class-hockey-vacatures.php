@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-class Hockey_Vacatueres {
+class Hockey_Vacatures {
 
     public $version = '1.0.0';
 
@@ -20,7 +20,7 @@ class Hockey_Vacatueres {
     public function __construct() {
         $this->define_constants();
         $this->includes();
-        $this->init_hooks();
+//        $this->init_hooks();
 
         do_action( 'woocommerce_loaded' );
     }
@@ -42,12 +42,18 @@ class Hockey_Vacatueres {
 //        include_once( WC_ABSPATH . 'includes/class-wc-autoloader.php' );
 
         // Include the classes
-        include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );
+        // =============================================================================================================
 
+        // Core Classes
+        include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );
+        include_once( HV_ABSPATH . 'includes/class-hv-install.php' );
+
+        // Include Classes by request
+        // =============================================================================================================
 
         // Include the admin class
         if ( $this->is_request( 'admin' ) ) {
-            include_once( HV_ABSPATH . 'includes/admin/class-wc-admin.php' );
+            include_once( HV_ABSPATH . 'includes/admin/class-hv-admin.php' );
         }
 
         // Include the frontend classes
@@ -60,8 +66,8 @@ class Hockey_Vacatueres {
 //            include_once( HV_ABSPATH . 'includes/class-wc-session-handler.php' );
 //        }
 
-        $this->query = new WC_Query();
-        $this->api   = new WC_API();
+//        $this->query = new WC_Query();
+//        $this->api   = new WC_API();
     }
 
     /**

@@ -37,6 +37,8 @@ if ( ! class_exists( 'Hockey_Vacatures' ) ) {
  * @since  1.0.0
  * @return WooCommerce
  */
-function wc() {
+function hv() {
     return Hockey_Vacatures::instance();
 }
+
+hv();
