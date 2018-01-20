@@ -24,8 +24,6 @@ class HV_Post_Types {
             $delete_with_user = true;
         }
 
-
-        
         register_post_type( 'vacature',
             array(
                 'labels' => array(

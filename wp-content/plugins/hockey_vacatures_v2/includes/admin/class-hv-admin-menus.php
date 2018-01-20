@@ -12,12 +12,10 @@ class HV_Admin_Menus {
 
     public function admin_menu(){
         global $menu;
-
         if(current_user_can('manage_hockey_vacatures')){
-            $menu[] = array( '', 'read', 'separator-hockey-vacatures', '', 'wp-menu-separator hockey-vacatures' );
+            $menu[49] = array( '', 'read', 'separator-hockey-vacatures', '', 'wp-menu-separator hockey-vacatures' );
         }
-
-        add_menu_page( __( 'Hockey Vacatures', 'hockey_vacatures' ), __( 'Hockey Vacatures', 'hockey_vacatures' ), '', 'hockey_vacatures', null, null, 60 );
+        add_menu_page( __( 'Hockey Vacatures', 'hockey_vacatures' ), __( 'Hockey Vacatures', 'hockey_vacatures' ), 'manage_hockey_vacatures', 'hockey_vacatures', null, null, '49.5');
     }
 }
 

@@ -20,9 +20,13 @@ class Hockey_Vacatures {
     public function __construct() {
         $this->define_constants();
         $this->includes();
-//        $this->init_hooks();
+        $this->init_hooks();
 
         do_action( 'woocommerce_loaded' );
+    }
+
+    private function init_hooks(){
+        register_activation_hook( HV_PLUGIN_FILE, array( 'HV_Install', 'install' ) );
     }
 
     /**
@@ -45,6 +49,7 @@ class Hockey_Vacatures {
         // =============================================================================================================
 
         // Core Classes
+        include_once( HV_ABSPATH . 'includes/hv-core-functions.php' );
         include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );
         include_once( HV_ABSPATH . 'includes/class-hv-install.php' );
 
