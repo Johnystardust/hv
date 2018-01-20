@@ -10,10 +10,15 @@ class HV_Admin {
         add_action( 'init', array( $this, 'includes' ) );
     }
 
+    /**
+     * Include the admin classes.
+     */
     public function includes(){
         include_once( dirname( __FILE__ ) . '/class-hv-admin-menus.php' );
-
+        include_once( dirname( __FILE__ ) . '/class-hv-admin-post-types.php' );
     }
+
+
 }
 
 return new HV_Admin();
