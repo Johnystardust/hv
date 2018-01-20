@@ -1,0 +1,47 @@
+#vacature-single {
+  .main-content {
+    .main-column {
+
+      .title {
+        margin-bottom: 2rem;
+      }
+
+      .the-content {
+        padding-right: 8rem;
+      }
+
+      .send-notification {
+        margin: 2rem 0 1rem 0;
+        a {
+          color: #cccccc;
+          font-size: .8rem;
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+
+      .vacature-data, .vacature-info {
+        li {
+          font-size: .9rem;
+          margin-bottom: .3rem;
+          strong {
+            min-width: 65px;
+            display: inline-block;
+          }
+          i {
+            min-width: 20px;
+            color: $primary-color;
+          }
+          a {
+            color: #000;
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

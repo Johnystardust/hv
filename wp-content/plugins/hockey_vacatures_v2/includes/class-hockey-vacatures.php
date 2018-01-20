@@ -80,6 +80,7 @@ class Hockey_Vacatures {
      */
     public function frontend_includes() {
         include_once( HV_ABSPATH . 'includes/class-hv-template-loader.php' );
+        include_once( HV_ABSPATH . 'includes/class-hv-frontend-scripts.php' );
     }
 
     /**

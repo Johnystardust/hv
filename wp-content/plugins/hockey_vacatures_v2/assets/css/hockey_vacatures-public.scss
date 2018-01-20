@@ -1,0 +1,18 @@
+@import "vars";
+
+// General
+@import "general/_xs";
+@import "general/_sm";
+
+// Side Panel
+@import "side-panel/_xs";
+
+// Single Vacatures
+@import "single-vacatures/_xs";
+@import "single-vacatures/_sm";
+
+// Archive Vacatures
+@import "archive-vacatures/_xs";
+
+// Widgets
+@import "widgets/register-widget";

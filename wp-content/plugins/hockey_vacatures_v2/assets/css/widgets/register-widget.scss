@@ -1,0 +1,62 @@
+
+.widget_hv_register_widget {
+  ul {
+    li {
+      a {text-decoration: none;}
+
+      &.active {
+        a {background-color: $primary-hover-color;}
+      }
+    }
+
+    li.hv-login-link {
+      .hv-register-widget-form {
+        display: none;
+        position: absolute;
+        border-top: 1px solid #ffffff;
+        background-color: $primary-color;
+        padding: 1rem;
+        top: 100%;
+        right: 0;
+        z-index: 1000;
+
+        label {
+          text-align: left;
+          color: #ffffff;
+          font-size: .8rem;
+          margin-bottom: .3rem;
+          text-transform: uppercase;
+          display: block;
+        }
+
+        .login-submit {
+          margin-bottom: 0;
+          #wp-submit {
+            background: none;
+            border: 1px solid #ffffff;
+            padding: .5rem 1rem;
+            border-radius: 0;
+            color: #ffffff;
+            display: block;
+            cursor: pointer;
+            width: 100%;
+            @include transition-ease-all;
+
+            &:hover {
+              background-color: #ffffff;
+              color: $primary-color;
+            }
+          }
+        }
+      }
+
+      &.active {
+        .hv-register-widget-form {
+          display: block;
+        }
+      }
+    }
+  }
+
+
+}
