@@ -37,14 +37,18 @@ body.admin-bar #header {
           background-color: #0E4C72;
           text-decoration: none; }
   #header .main-header {
+    height: 63px;
     padding: .5rem 0;
     transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out; }
-    #header .main-header .logo img {
-      height: 49px;
-      width: auto; }
+    #header .main-header .logo {
+      height: 49px; }
+      #header .main-header .logo img {
+        padding: 5px 0;
+        height: 100%;
+        width: auto; }
     #header .main-header .menu-toggle {
       display: none; }
       #header .main-header .menu-toggle a {

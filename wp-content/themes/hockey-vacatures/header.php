@@ -59,7 +59,7 @@
                 <div class="col-6">
                     <div class="logo">
                         <a href="<?php echo get_home_url() ?>">
-                            <img class="img-fluid" src="<?php echo get_stylesheet_directory_uri().'/inc/img/hockey-vacatures-logo.png'; ?>" alt="">
+                            <img src="<?php echo get_stylesheet_directory_uri().'/inc/img/hockey-vacatures-logo.png'; ?>" alt="">
                         </a>
                     </div>
                 </div>
