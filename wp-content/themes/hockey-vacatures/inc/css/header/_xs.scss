@@ -49,12 +49,15 @@ body.admin-bar #header {
   }
 
   .main-header {
+    height: 63px;
     padding: .5rem 0;
     @include transition-ease-all;
 
     .logo {
+      height: 49px;
       img {
-        height: 49px;
+        padding: 5px 0;
+        height: 100%;
         width: auto;
       }
     }

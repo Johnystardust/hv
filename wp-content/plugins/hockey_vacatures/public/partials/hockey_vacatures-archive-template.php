@@ -38,7 +38,7 @@ get_header(); ?>
                                 <select name="cat" id="cat" class="custom-select form-control">
                                     <option value=""><?php echo __('Alle vacatures', TEXTDOMAIN); ?></option>
                                     <?php foreach($categories as $category): ?>
-                                        <option value="<?php echo $category->term_id; ?>"><?php echo $category->name; ?></option>
+                                        <option <?php echo (isset($_POST['cat']) && $_POST['cat'] == $category->term_id) ? 'selected="selected"' : ''; ?> value="<?php echo $category->term_id; ?>"><?php echo $category->name; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
