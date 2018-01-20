@@ -6,6 +6,7 @@ wp-content/uploads
 # PLUGINS
 wp-content/plugins/*
 !wp-content/plugins/hockey_vacatures
+!wp-content/plugins/hockey_vacatures_v2
 
 # THEMES
 wp-content/themes/*
