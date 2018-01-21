@@ -35,13 +35,13 @@ class HV_Post_Types {
                     'singular_name'         => _x( 'Vacature', 'Post Type Singular Name', 'hockey_vacatures' ),
                     'menu_name'             => __( 'Vacatures' , 'hockey_vacatures' ),
                     'parent_item_colon'     => __( 'Parent Vacature', 'hockey_vacatures' ),
-                    'all_items'             => __( 'Alle Vacatures',  'hockey_vacatures' ),
+                    'all_items'             => __( 'Alle vacatures',  'hockey_vacatures' ),
                     'view_item'             => __( 'View Vacature ',  'hockey_vacatures' ),
-                    'add_new_item'          => __( 'Add New Vacature',  'hockey_vacatures' ),
-                    'add_new'               => __( 'Add New',  'hockey_vacatures' ),
-                    'edit_item'             => __( 'Edit Vacature', 'hockey_vacatures' ),
-                    'update_item'           => __( 'Update Vacature', 'hockey_vacatures' ),
-                    'search_items'          => __( 'Search Vacature', 'hockey_vacatures' ),
+                    'add_new_item'          => __( 'Nieuwe vacature toevoegen',  'hockey_vacatures' ),
+                    'add_new'               => __( 'Nieuwe vacature',  'hockey_vacatures' ),
+                    'edit_item'             => __( 'Vacature bewerken', 'hockey_vacatures' ),
+                    'update_item'           => __( 'Update vacature', 'hockey_vacatures' ),
+                    'search_items'          => __( 'Zoek Vacature', 'hockey_vacatures' ),
                     'not_found'             => __( 'Not Found', 'hockey_vacatures' ),
                     'not_found_in_trash'    => __( 'Not found in Trash',  'hockey_vacatures' ),
                 ),
@@ -64,6 +64,49 @@ class HV_Post_Types {
                 'exclude_from_search' => false,
                 'map_meta_cap'        => true,
                 'delete_with_user'   => $delete_with_user,
+                'menu_icon'          => 'dashicons-id-alt',
+            )
+        );
+
+        // Practice Match Post Type
+        // =============================================================================================================
+        register_post_type( 'practice_match',
+            array(
+                'labels' => array(
+                    'name'                  => _x( 'Oefenwedstrijd', 'Post Type General Name', 'hockey_vacatures' ),
+                    'singular_name'         => _x( 'Oefenwedstrijd', 'Post Type Singular Name', 'hockey_vacatures' ),
+                    'menu_name'             => __( 'Oefenwedstrijden' , 'hockey_vacatures' ),
+                    'parent_item_colon'     => __( 'Parent Oefenwedstrijd', 'hockey_vacatures' ),
+                    'all_items'             => __( 'Alle Oefenwedstrijden',  'hockey_vacatures' ),
+                    'view_item'             => __( 'Bekijk Oefenwedstrijd ',  'hockey_vacatures' ),
+                    'add_new_item'          => __( 'Nieuwe oefenwedstrijd toevoegen',  'hockey_vacatures' ),
+                    'add_new'               => __( 'Nieuwe oefenwedstrijd',  'hockey_vacatures' ),
+                    'edit_item'             => __( 'Oefenwedstrijd bewerken', 'hockey_vacatures' ),
+                    'update_item'           => __( 'Update oefenwedstrijd', 'hockey_vacatures' ),
+                    'search_items'          => __( 'Zoek oefenwedstrijd', 'hockey_vacatures' ),
+                    'not_found'             => __( 'Not Found', 'hockey_vacatures' ),
+                    'not_found_in_trash'    => __( 'Not found in Trash',  'hockey_vacatures' ),
+                ),
+                'description'        => __( 'Post type for oefenwedstrijden.', 'hockey_vacatures' ),
+                'public'             => true,
+                'publicly_queryable' => true,
+                'show_ui'            => true,
+                'show_in_menu'       => true,
+                'show_in_nav_menus'  => true,
+                'show_in_admin_bar'  => true,
+                'query_var'          => true,
+                'rewrite'            => array( 'slug' => 'oefenwedstrijden' ),
+                'capability_type'    => 'post',
+                'has_archive'        => true,
+                'hierarchical'       => false,
+                'menu_position'      => 50,
+                'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+                'taxonomies'         => array( 'category' ),
+                'can_export'          => true,
+                'exclude_from_search' => false,
+                'map_meta_cap'        => true,
+                'delete_with_user'   => $delete_with_user,
+                'menu_icon'          => 'dashicons-awards',
             )
         );
 
@@ -104,6 +147,7 @@ class HV_Post_Types {
                 'exclude_from_search' => false,
                 'map_meta_cap'        => true,
                 'delete_with_user'   => false,
+                'menu_icon'          => 'dashicons-location-alt',
             )
         );
     }

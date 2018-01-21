@@ -42,11 +42,12 @@ class Hockey_Vacatures {
      * Include required core files used in admin and on the frontend.
      */
     public function includes() {
-        // TODO: ??? AUTOLOADER ???
-//        include_once( WC_ABSPATH . 'includes/class-wc-autoloader.php' );
 
         // Include the classes
         // =============================================================================================================
+
+        // Autoload
+        include_once( HV_ABSPATH . 'includes/class-hv-autoloader.php' );
 
         // Core Classes
         include_once( HV_ABSPATH . 'includes/hv-core-functions.php' );

@@ -17,12 +17,11 @@ class HV_Admin_Menus {
             $menu[49] = array( '', 'read', 'separator-hockey-vacatures', '', 'wp-menu-separator hockey-vacatures' );
         }
 
-        add_menu_page( __( 'Hockey Vacatures', 'hockey_vacatures' ), __( 'Hockey Vacatures', 'hockey_vacatures' ), 'manage_hockey_vacatures', 'hockey_vacatures', null, null, '49.5');
+        add_menu_page( __( 'Hockey Vacatures', 'hockey_vacatures' ), __( 'Hockey Vacatures', 'hockey_vacatures' ), 'manage_hockey_vacatures', 'hockey_vacatures', null, 'dashicons-location-alt', '49.5');
     }
 
     public function settings_menu(){
-        $settings_page = add_submenu_page( 'hockey_vacatures', __( 'Hockey Vacatures Settings', 'hockey_vacatures' ), __( 'Settings', 'hockey_vacatures' ), 'manage_hockey_vacatures', 'hv_settings', array( $this, 'settings_page' ) );
-//        add_action( 'load-' .$settings_page, array( $this, 'settings_page_init' ) );
+        add_submenu_page( 'hockey_vacatures', __( 'Hockey Vacatures Settings', 'hockey_vacatures' ), __( 'Settings', 'hockey_vacatures' ), 'manage_hockey_vacatures', 'hv_settings', array( $this, 'settings_page' ) );
     }
 
     /**
