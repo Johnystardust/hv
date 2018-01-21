@@ -32,10 +32,10 @@ class HV_Autoloader {
 		$path = '';
 
 		// Map the different plugin sections.
-		if( 0 === strpos( $class, 'HV_Admin' ) ){
-
+		if( 0 === strpos( $class, 'HV_Shortcode' ) ) {
+			$path = $this->include_path . 'shortcodes/';
 		}
-		elseif( 0 === strpos( $class, 'HV_Meta_Box' ) ){
+		elseif( 0 === strpos( $class, 'HV_Meta_Box' ) ) {
 			$path = $this->include_path . 'admin/meta-boxes/';
 		}
 
