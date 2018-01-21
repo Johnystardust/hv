@@ -6,110 +6,96 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class HV_Shortcode_Register_Form {
 
-    private $username;
-
     /**
      * The main shortcode function.
      */
     public static function output(){
+        // If the form is submitted run the submit route
         if( isset( $_POST['hv_reg_submit'] ) ) {
-            
+
+            // If the nonce is not validated return
             if( !isset( $_POST['register_form_nonce'] ) || !wp_verify_nonce( $_POST['register_form_nonce'], 'register_form_shortcode' ) ) {
                 // Display failure message
                 die('failure message non nonce.');
             }
             else {
+                // Get all the data from the form and validate them
+                $form_data = self::get_form_data();
+                $validated = self::register_form_validation( $form_data );
 
+                if( is_wp_error( $validated ) ) {
+                    echo hv_render_popup_message( $validated->get_error_message() );
+                }
+                else {
+                    // Form is validated lets continue.
+                    if( $form_data['role'] === 'club' ){
+                        $new_user = new HV_User_Roles_Club( $form_data );
+                        if($new_user->register()){
+                            var_dump($new_user->get_id());
+                            die('dood');
+                        }
+
+                    }
+
+
+
+                    var_dump($form_data);
+//                    die;
+                }
+
+
+                // the userdata available for wp_insert_user
                 $data = array(
-                    'general' => self::get_general_form_data(),
-                    'role' => self::get_role_data( $_POST[ 'role' ] )
+                    'username'      => '',
+                    'email'         => '',
+                    'password'      => '',
+                    'description'   => '',
+                    'role'          => '',
                 );
 
-                try {
-                    $data = self::register_form_validation( $data );
-                }
-                catch ( Exception $e ){
-                    return new WP_Error('field', 'message');
-                    die;
-                }
+                // User location data
+                $data = array(
+                    'postal'        => '',
+                    'street_number' => '',
+                    'addition'      => '',
+                    'city'          => '',
+                    'province'      => '',
+                    'street'        => '',
+                    'coordinates'   => ''
+                );
 
+                // Role data
+                $role = array(
+                    'c_name'        => '',
+                    'c_cname'       => '',
+                    'c_web_url'     => '',
+                    'c_email'       => '',
+                    'c_tel'         => ''
+                );
+
+                // Role data
+                $role = array(
+                    'p_fname'       => '',
+                    'p_lname'       => '',
+                    'p_email'       => '',
+                    'p_age'         => '',
+                    'p_gender'      => '',
+                    'p_tel'         => '',
+                );
             }
-            
         }
 
         self::register_form();
     }
-    
-    
-    public static function register_form_validation( $data ) {
-
-//        var_dump($data);
-        unset($data['general']['username']);
-
-//        echo '<br>';
-//        var_dump($data);
-
-        if(empty($data['general']['username'])){
-            throw new Exception('Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-        }
-
-        // General
-        // =======
-        if(empty($data['general']['username']) || empty($data['general']['password']) || empty($data['general']['email']) || empty($data['general']['role'])) {
-            return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-        }
-        if(strlen($data['general']['username']) < 4) {
-            return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht.');
-        }
-        if(strlen($data['general']['password']) < 5) {
-            return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten.');
-        }
-        if($data['general']['password'] !== $data['general']['password_check']) {
-            return new WP_Error('password', 'Wachtwoorden zijn niet gelijk.');
-        }
-        if(!is_email($data['general']['email'])) {
-            return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
-        }
-        if(username_exists($data['general']['username'])){
-            return new WP_Error('username', 'Gebruikersnaam is al in gebruik.');
-        }
-        if(email_exists($data['general']['email'])) {
-            return new WP_Error('email', 'Dit email adres is al in gebruik.');
-        }
-
-        // Role specific validation
-        // ========================
-        if($data['general']['role'] === 'club'){
-            var_dump($data['general']['role']);
-
-            die;
-
-            if(empty($data['role']['club_name']) || empty($data['role']['contactperson'])){
-                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-            }
-
-            if(!empty($data['role']['web_url'])){
-                if(!filter_var($data['role']['web_url'], FILTER_VALIDATE_URL)){
-                    return new WP_Error('website', 'Website is not a valid URL');
-                }
-            }
-        }
-        elseif($data['general']['role'] === 'player'){
-
-            if(empty($data['role']['first_name']) || empty($data['role']['last_name']) || empty($data['role']['age']) || empty($data['role']['gender'])){
-                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-            }
-        }
-    }
 
     /**
-     * Get the general form data not including the user role data.
+     * Get all the form field names that are active based on role.
      *
      * @return array
      */
-    private static function get_general_form_data(){
-        $data = array();
-        $general_form_data = array(
+    private static function get_form_data(){
+        $form_data = array();
+        $form_field_names = array(
             'username',
             'role',
             'description',
@@ -123,58 +109,82 @@ class HV_Shortcode_Register_Form {
             'street',
             'coordinates'
         );
-
-        foreach( $general_form_data as $item ){
-            if ( array_key_exists( $item, $_POST ) && !empty( $_POST[ $item ] ) ){
-                $data[ $item ] = $_POST[ $item ];
-            }
+        
+        if( $_POST['role'] === 'club' ) {
+            $form_field_names[] = 'c_name';
+            $form_field_names[] = 'c_cname';
+            $form_field_names[] = 'c_web_url';
+            $form_field_names[] = 'c_email';
+            $form_field_names[] = 'c_tel';
+        }
+        elseif( $_POST['role'] === 'player' ){
+            $form_field_names[] = 'p_fname';
+            $form_field_names[] = 'p_lname';
+            $form_field_names[] = 'p_email';
+            $form_field_names[] = 'p_age';
+            $form_field_names[] = 'p_gender';
+            $form_field_names[] = 'p_tel';
         }
 
-        return $data;
+        foreach( $form_field_names as $field_name ){
+            if ( array_key_exists( $field_name, $_POST ) && !empty( $_POST[ $field_name ] ) ){
+                $form_data[ $field_name ] = $_POST[ $field_name ];
+            }
+        }
+        
+        return $form_data;
     }
 
-    /**
-     * Get the users data based on the role.
-     *
-     * @param $role
-     * @return array
-     */
-    private static function get_role_data( $role ){
-        $data = array();
 
-        if( $role === 'club' ){
-            $general_club_data = array(
-                'c_name',
-                'c_cname',
-                'c_web_url',
-                'c_email',
-                'c_tel'
-            );
+    public static function register_form_validation( $data ) {
 
-            foreach ( $general_club_data as $item ) {
-                if ( array_key_exists( $item, $_POST ) && !empty( $_POST[ $item ] ) ){
-                    $data[ $item ] = $_POST[ $item ];
-                }
-            }
+        // General
+        // =======
+        if(empty($data['username']) || empty($data['password']) || empty($data['role'])) {
+            return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden 2.');
         }
-        elseif( $role === 'player' ) {
-            $general_player_data = array(
-                'p_fname',
-                'p_lname',
-                'p_email',
-                'p_age',
-                'p_gender',
-                'p_tel'
-            );
-
-            foreach ( $general_player_data as $item ) {
-                if ( array_key_exists( $item, $_POST ) && !empty( $_POST[ $item ] ) ){
-                    $data[ $item ] = $_POST[ $item ];
-                }
-            }
+        if(strlen($data['username']) < 4) {
+            return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht.');
+        }
+        if(strlen($data['password']) < 5) {
+            return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten.');
+        }
+        if($data['password'] !== $data['password_check']) {
+            return new WP_Error('password', 'Wachtwoorden zijn niet gelijk.');
+        }
+        if(username_exists($data['username'])){
+            return new WP_Error('username', 'Gebruikersnaam is al in gebruik.');
         }
 
-        return $data;
+        // Role specific validation
+        // ========================
+        if($data['role'] === 'club'){
+            if(empty($data['c_name']) || empty($data['c_cname']) || empty($data['c_email'])){
+                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+            }
+            if(!empty($data['web_url'])){
+                if(!filter_var($data['web_url'], FILTER_VALIDATE_URL)){
+                    return new WP_Error('website', 'Website is not a valid URL');
+                }
+            }
+            if(email_exists($data['c_email'])) {
+                return new WP_Error('email', 'Dit email adres is al in gebruik.');
+            }
+            if(!is_email($data['c_email'])) {
+                return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
+            }
+        }
+        elseif($data['role'] === 'player'){
+            if(empty($data['first_name']) || empty($data['last_name']) || empty($data['p_email']) || empty($data['age']) || empty($data['gender'])){
+                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+            }
+            if(email_exists($data['p_email'])) {
+                return new WP_Error('email', 'Dit email adres is al in gebruik.');
+            }
+            if(!is_email($data['p_email'])) {
+                return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
+            }
+        }
     }
 
     /**

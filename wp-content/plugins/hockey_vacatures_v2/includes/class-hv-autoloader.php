@@ -38,6 +38,9 @@ class HV_Autoloader {
 		elseif( 0 === strpos( $class, 'HV_Meta_Box' ) ) {
 			$path = $this->include_path . 'admin/meta-boxes/';
 		}
+		elseif( 0 === strpos( $class, 'HV_User_Roles' ) ) {
+			$path = $this->include_path . 'user_roles/';
+		}
 
 		// Load the file.
 		if ( empty( $path ) || $this->load_file( $path . $file ) ) {

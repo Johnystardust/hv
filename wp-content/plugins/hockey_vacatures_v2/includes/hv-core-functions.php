@@ -59,6 +59,22 @@ add_action( 'init', 'hv_block_users_form_admin' );
 // Helper functions.
 // =====================================================================================================================
 
+function hv_render_popup_message( $message ){
+    $html = '';
+
+    $html .= '<div class="message-popup error">';
+        $html .= '<div class="message-popup-inner">';
+            $html .= '<h5>' . __( 'Foutje bedankt', 'hockey_vacatures' ) . '</h5>';
+            $html .= '<p>' . __( 'Het account kan niet worden aangemaakt door de volgende reden(en):', 'hockey_vacatures' ) . '</p>';
+            $html .= '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $message . '</strong>';
+            $html .= '<br><br><a href="#message-popup-close" class="btn btn-primary"> ' . __( 'Terug', 'hockey_vacatures' ) . ' </a>';
+        $html .= '</div>';
+    $html .= '</div>';
+
+    return $html;
+}
+
+
 /**
  * Form Builder
  *
