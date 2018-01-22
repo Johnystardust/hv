@@ -13,6 +13,7 @@ class HV_Install {
     public static function check_version(){
         if( get_option( 'hockey_vacatures_version' ) !== HV()->version ){
             self::install();
+            add_option( 'hockey_vacatures_version', HV()->version );
             do_action( 'hockey_vacatures_updated' );
         }
     }

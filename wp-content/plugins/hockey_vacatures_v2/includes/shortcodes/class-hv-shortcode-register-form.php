@@ -13,10 +13,12 @@ class HV_Shortcode_Register_Form {
         // If the form is submitted run the submit route
         if( isset( $_POST['hv_reg_submit'] ) ) {
 
-            // If the nonce is not validated return
+            // If the nonce is not validated display failure message
             if( !isset( $_POST['register_form_nonce'] ) || !wp_verify_nonce( $_POST['register_form_nonce'], 'register_form_shortcode' ) ) {
-                // Display failure message
-                die('failure message non nonce.');
+                echo hv_render_popup_message(
+                    __( 'Foutje bedankt', 'hockey_vacatures' ),
+                    __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' )
+                );
             }
             else {
                 // Get all the data from the form and validate them
@@ -24,64 +26,57 @@ class HV_Shortcode_Register_Form {
                 $validated = self::register_form_validation( $form_data );
 
                 if( is_wp_error( $validated ) ) {
-                    echo hv_render_popup_message( $validated->get_error_message() );
+                    echo hv_render_popup_message(
+                        __( 'Foutje bedankt', 'hockey_vacatures' ),
+                        __( 'Het account kan niet worden aangemaakt door de volgende reden(en):', 'hockey_vacatures' ),
+                        'error',
+                        $validated->get_error_message()
+                    );
                 }
                 else {
                     // Form is validated lets continue.
-                    if( $form_data['role'] === 'club' ){
-                        $new_user = new HV_User_Roles_Club( $form_data );
-                        if($new_user->register()){
-                            var_dump($new_user->get_id());
-                            die('dood');
-                        }
+                    $user_data  = self::get_user_data( $form_data );
+                    $user_info  = self::get_user_info( $form_data );
+                    $new_user   = wp_insert_user( $user_data );
 
+                    if( is_wp_error( $new_user ) ) {
+                        echo hv_render_popup_message(
+                            __( 'Foutje bedankt', 'hockey_vacatures' ),
+                            __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                            'error',
+                            $new_user->get_error_message()
+                        );
                     }
+                    else {
+                        // User is registered now complete the process
 
+                        // Register the role
+                        $user_obj = new WP_User( $new_user );
+                        $user_obj->set_role( $form_data['role'] );
 
+                        // Add the user info in the meta
+                        if( !empty( $user_info ) ) {
+                            // Set the account to active
+                            add_user_meta( $new_user, 'hv_account_active', true, false );
 
-                    var_dump($form_data);
-//                    die;
+                            // Add the user meta if this fails block the account and ask them to contact us
+                            if(add_user_meta( $new_user, 'hv_user_data', $user_info, false ) != false ){
+                                echo hv_render_popup_message(
+                                    __( 'Beste' . $user_info['first_name'], 'hockey_vacatures' ),
+                                    __( 'Uw account is geactiveerd, u kunt nu inloggen.', 'hockey_vacatures' ),
+                                    'success'
+                                );
+                            }
+                            else {
+                                echo hv_render_popup_message(
+                                    __( 'Foutje bedankt', 'hockey_vacatures' ),
+                                    __( 'Uw account is aangemaakt maar er is iets mis gegaan neemt a.u.b. contact op met ons.', 'hockey_vacatures' )
+                                );
+                                update_user_meta( $new_user, 'hv_account_active', false );
+                            }
+                        }
+                    }
                 }
-
-
-                // the userdata available for wp_insert_user
-                $data = array(
-                    'username'      => '',
-                    'email'         => '',
-                    'password'      => '',
-                    'description'   => '',
-                    'role'          => '',
-                );
-
-                // User location data
-                $data = array(
-                    'postal'        => '',
-                    'street_number' => '',
-                    'addition'      => '',
-                    'city'          => '',
-                    'province'      => '',
-                    'street'        => '',
-                    'coordinates'   => ''
-                );
-
-                // Role data
-                $role = array(
-                    'c_name'        => '',
-                    'c_cname'       => '',
-                    'c_web_url'     => '',
-                    'c_email'       => '',
-                    'c_tel'         => ''
-                );
-
-                // Role data
-                $role = array(
-                    'p_fname'       => '',
-                    'p_lname'       => '',
-                    'p_email'       => '',
-                    'p_age'         => '',
-                    'p_gender'      => '',
-                    'p_tel'         => '',
-                );
             }
         }
 
@@ -98,7 +93,6 @@ class HV_Shortcode_Register_Form {
         $form_field_names = array(
             'username',
             'role',
-            'description',
             'password',
             'password_check',
             'postal',
@@ -113,6 +107,7 @@ class HV_Shortcode_Register_Form {
         if( $_POST['role'] === 'club' ) {
             $form_field_names[] = 'c_name';
             $form_field_names[] = 'c_cname';
+            $form_field_names[] = 'c_description';
             $form_field_names[] = 'c_web_url';
             $form_field_names[] = 'c_email';
             $form_field_names[] = 'c_tel';
@@ -120,26 +115,104 @@ class HV_Shortcode_Register_Form {
         elseif( $_POST['role'] === 'player' ){
             $form_field_names[] = 'p_fname';
             $form_field_names[] = 'p_lname';
+            $form_field_names[] = 'p_description';
             $form_field_names[] = 'p_email';
             $form_field_names[] = 'p_age';
             $form_field_names[] = 'p_gender';
             $form_field_names[] = 'p_tel';
         }
 
+        // TODO: ??? MAYBE ADD SANITATION ???
         foreach( $form_field_names as $field_name ){
             if ( array_key_exists( $field_name, $_POST ) && !empty( $_POST[ $field_name ] ) ){
                 $form_data[ $field_name ] = $_POST[ $field_name ];
             }
         }
+
+        // If the user forgot password check make an exception
+        if( empty( $_POST['password_check'] ) ) {
+            $form_data['password_check'] = '';
+        }
         
         return $form_data;
     }
 
+    /**
+     * Returns the user_data array used for wp_insert_user() function
+     *
+     * @param $form_data
+     * @return array
+     */
+    private static function get_user_data( $form_data ) {
+        // Start the general userdata
+        $user_data = array(
+            'user_login' => $form_data['username'],
+            'user_pass'  => $form_data['password'],
+        );
 
+        // Complete general userdata
+        if( $form_data['role'] === 'club' ) {
+            $user_data['first_name']    = $form_data['c_name'];
+            $user_data['last_name']     = $form_data['city'];
+            $user_data['user_email']    = $form_data['c_email'];
+            $user_data['description']   = $form_data['c_description'];
+            $user_data['user_url']      = $form_data['c_web_url'];
+        }
+        elseif ( $form_data['role'] === 'player' ) {
+            $user_data['first_name']    = $form_data['p_fname'];
+            $user_data['last_name']     = $form_data['p_lname'];
+            $user_data['user_email']    = $form_data['p_email'];
+            $user_data['description']   = $form_data['p_description'];
+        }
+
+        return $user_data;
+    }
+
+    /**
+     * Returns the user_info for the user meta
+     *
+     * @param $form_data
+     * @return array
+     */
+    private static function get_user_info( $form_data ) {
+        // Start the general userinfo
+        $user_info = array(
+            'postal'        => $form_data['postal'],
+            'street_number' => $form_data['street_number'],
+            'addition'      => $form_data['addition'],
+            'city'          => $form_data['city'],
+            'province'      => $form_data['province'],
+            'street'        => $form_data['street'],
+            'coordinates'   => $form_data['coordinates'],
+        );
+
+        // Complete general userinfo
+        if( $form_data['role'] === 'club' ) {
+            $user_info['tel']            = $form_data['c_tel'];
+            $user_info['name']           = $form_data['c_name'];
+            $user_info['contactperson']  = $form_data['c_cname'];
+            $user_info['web_url']        = $form_data['c_web_url'];
+        }
+        elseif ( $form_data['role'] === 'player' ) {
+            $user_info['tel']           = $form_data['p_tel'];
+            $user_info['age']           = $form_data['p_tel'];
+            $user_info['gender']        = $form_data['p_gender'];
+        }
+
+        return $user_info;
+    }
+
+    /**
+     * The validation for the register form
+     *
+     * TODO: ??? MAYBE LIST ALL ERRORS AND REPORT THEM AT ONCE ???
+     *
+     * @param $data
+     * @return WP_Error
+     */
     public static function register_form_validation( $data ) {
 
         // General
-        // =======
         if(empty($data['username']) || empty($data['password']) || empty($data['role'])) {
             return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden 2.');
         }
@@ -157,7 +230,6 @@ class HV_Shortcode_Register_Form {
         }
 
         // Role specific validation
-        // ========================
         if($data['role'] === 'club'){
             if(empty($data['c_name']) || empty($data['c_cname']) || empty($data['c_email'])){
                 return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
@@ -175,7 +247,7 @@ class HV_Shortcode_Register_Form {
             }
         }
         elseif($data['role'] === 'player'){
-            if(empty($data['first_name']) || empty($data['last_name']) || empty($data['p_email']) || empty($data['age']) || empty($data['gender'])){
+            if(empty($data['p_fname']) || empty($data['p_lname']) || empty($data['p_email']) || empty($data['p_age']) || empty($data['p_gender'])){
                 return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
             }
             if(email_exists($data['p_email'])) {
@@ -184,6 +256,9 @@ class HV_Shortcode_Register_Form {
             if(!is_email($data['p_email'])) {
                 return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
             }
+        }
+        else {
+            return new WP_Error( 'error', 'Ongeldig gebruikersprofiel');
         }
     }
 
@@ -265,7 +340,7 @@ class HV_Shortcode_Register_Form {
                             'c_description' => array(
                                 'type'          => 'textarea',
                                 'label'         => __( 'Omschrijving', 'hockey_vacatures' ),
-                                'name'          => 'description',
+                                'name'          => 'c_description',
                                 'placeholder'   => __( 'Uw bericht', 'hockey_vacatures' ),
                                 'rows'          => '7',
                                 'cols'          => '30',
@@ -340,7 +415,7 @@ class HV_Shortcode_Register_Form {
                             'p_description' => array(
                                 'type'          => 'textarea',
                                 'label'         => __( 'Een stukje over uzelf.', 'hockey_vacatures' ),
-                                'name'          => 'description',
+                                'name'          => 'p_description',
                                 'placeholder'   => __( 'Uw bericht', 'hockey_vacatures' ),
                                 'rows'          => '7',
                                 'cols'          => '30',
@@ -481,5 +556,4 @@ class HV_Shortcode_Register_Form {
         </form>
         <?php
     }
-
 }
