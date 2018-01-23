@@ -28,7 +28,7 @@ get_header(); ?>
                         get_template_part( 'template-parts/page/content', 'page' );
                     endwhile; ?>
 
-                    <?php do_shortcode('[hockey_vacatures_vacature_form]'); ?>
+                    <?php echo do_shortcode('[hockey_vacatures_vacature_form]'); ?>
                 </div>
 
                 <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">

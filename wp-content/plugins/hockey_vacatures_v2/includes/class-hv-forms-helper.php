@@ -4,7 +4,79 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-class HV_Form_Builder {
+class HV_Forms_Helper {
+
+    /**
+     * Render a popup
+     *
+     * @param $title
+     * @param $message
+     * @param string $type
+     * @param null $errors
+     * @param null $button
+     * @return string
+     */
+    public function render_popup_message( $title, $message, $type = 'error', $errors = null, $button = null ){
+        $html = '';
+
+        $html .= '<div class="message-popup ' . $type . '">';
+        $html .= '<div class="message-popup-inner">';
+        $html .= '<h5>' . $title . '</h5>';
+        $html .= '<p>' . $message . '</p>';
+        if( !is_null( $errors ) ){
+            $html .= '<strong><i class="fa fa-exclamation-triangle text-danger mr-2"></i>' . $errors . '</strong>';
+        }
+        if( !is_null( $button ) ) {
+            $html .= '<br><br><a href="' . $button[0] . '" class="btn btn-primary"> ' . $button[1] . ' </a>';
+        }
+        $html .= '</div>';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
+     * Get the data from the form
+     *
+     * @param $form_field_names
+     * @return array
+     */
+    public function get_form_data($form_fields){
+        $form_data = array();
+
+        // TODO: ??? MAYBE ADD SANITATION ???
+        foreach( $form_fields as $field_name => $field_data ){
+            if ( array_key_exists( $field_name, $_POST ) && !empty( $_POST[ $field_name ] ) ){
+                $form_data[ $field_name ] = $_POST[ $field_name ];
+            }
+        }
+
+        return $form_data;
+    }
+
+    /**
+     * Validate the form data
+     *
+     * @param $form_data
+     * @param array $fields
+     * @return WP_Error
+     */
+    public function validate_form_data( $form_data, $fields = array() ) {
+        foreach( $form_data as $key => $value ){
+            // Validate required
+            if( $fields[$key]['required'] == true && empty( $value ) ){
+                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+            }
+
+            // TODO: !!! FIX ME !!!
+//            if(post_exists($data) != 0) {
+//                return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
+//            }
+        }
+
+        return $form_data;
+    }
+
     /**
      * Form Builder
      *
@@ -13,7 +85,7 @@ class HV_Form_Builder {
      * @param array $form_fields
      * @return string|void
      */
-    public static function build_form($form_fields = array()){
+    public function build_form($form_fields = array()){
         if(!is_array($form_fields)){
             return;
         }

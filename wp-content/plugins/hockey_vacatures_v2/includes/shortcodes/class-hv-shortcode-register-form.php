@@ -4,7 +4,137 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HV_Shortcode_Register_Form {
+class HV_Shortcode_Register_Form extends HV_Forms_Helper {
+
+    private $form_fields;
+    private $form_data;
+
+    public function __construct(){
+        $this->form_fields = array(
+            'username'          => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'role'              => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'password'          => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'password_check'    => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'postal'            => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'street_number'     => array(
+                'required'  => true,
+                'type'      => 'number'
+            ),
+            'addition'          => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'city'              => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'province'          => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'street'            => array(
+                'required'  => true,
+                'type'      => 'text'
+            ),
+            'coordinates'       => array(
+                'required'  => true,
+                'type'      => 'text'
+            )
+        );
+
+
+        if( $form_data['role'] === 'club' ) {
+            $this->form_fields['c_name'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['c_cname'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['c_description'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['c_web_url'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['c_email'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['c_tel'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+        }
+        elseif ( $form_data['role'] === 'player' ) {
+            $this->form_fields['p_fname'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_lname'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_description'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_email'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_age'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_gender'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+            $this->form_fields['p_tel'] = array(
+                'required'  => true,
+                'type'      => 'text'
+            );
+        }
+
+
+        var_dump($this->form_fields);
+        die;
+    }
+
+    public function output(){
+        $output = '';
+
+
+
+        return $output;
+
+    }
+
+}
+
+
+
+
+class HV_Shortcode_Register_Form99789 {
 
     /**
      * The main shortcode function.
@@ -15,9 +145,12 @@ class HV_Shortcode_Register_Form {
 
             // If the nonce is not validated display failure message
             if( !isset( $_POST['register_form_nonce'] ) || !wp_verify_nonce( $_POST['register_form_nonce'], 'register_form_shortcode' ) ) {
-                echo hv_render_popup_message(
+                echo HV_Forms_Helper::render_popup_message(
                     __( 'Foutje bedankt', 'hockey_vacatures' ),
-                    __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' )
+                    __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                    'error',
+                    null,
+                    array('#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
                 );
             }
             else {
@@ -26,11 +159,12 @@ class HV_Shortcode_Register_Form {
                 $validated = self::register_form_validation( $form_data );
 
                 if( is_wp_error( $validated ) ) {
-                    echo hv_render_popup_message(
+                    echo HV_Forms_Helper::render_popup_message(
                         __( 'Foutje bedankt', 'hockey_vacatures' ),
                         __( 'Het account kan niet worden aangemaakt door de volgende reden(en):', 'hockey_vacatures' ),
                         'error',
-                        $validated->get_error_message()
+                        $validated->get_error_message(),
+                        array('#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
                     );
                 }
                 else {
@@ -40,11 +174,12 @@ class HV_Shortcode_Register_Form {
                     $new_user   = wp_insert_user( $user_data );
 
                     if( is_wp_error( $new_user ) ) {
-                        echo hv_render_popup_message(
+                        echo HV_Forms_Helper::render_popup_message(
                             __( 'Foutje bedankt', 'hockey_vacatures' ),
                             __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
                             'error',
-                            $new_user->get_error_message()
+                            $new_user->get_error_message(),
+                            array('#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
                         );
                     }
                     else {
@@ -61,14 +196,14 @@ class HV_Shortcode_Register_Form {
 
                             // Add the user meta if this fails block the account and ask them to contact us
                             if(add_user_meta( $new_user, 'hv_user_data', $user_info, false ) != false ){
-                                echo hv_render_popup_message(
+                                echo HV_Forms_Helper::render_popup_message(
                                     __( 'Beste' . $user_info['first_name'], 'hockey_vacatures' ),
                                     __( 'Uw account is geactiveerd, u kunt nu inloggen.', 'hockey_vacatures' ),
                                     'success'
                                 );
                             }
                             else {
-                                echo hv_render_popup_message(
+                                echo HV_Forms_Helper::render_popup_message(
                                     __( 'Foutje bedankt', 'hockey_vacatures' ),
                                     __( 'Uw account is aangemaakt maar er is iets mis gegaan neemt a.u.b. contact op met ons.', 'hockey_vacatures' )
                                 );
@@ -349,7 +484,7 @@ class HV_Shortcode_Register_Form {
                                 'description'   => __( 'Vul hier een korte omschrijving over u zelf/club', 'hockey_vacatures' )
                             )
                         );
-                        hv_build_form($club_register);
+                        HV_Forms_Helper::build_form($club_register);
                         ?>
                     </div>
 
@@ -424,7 +559,7 @@ class HV_Shortcode_Register_Form {
                                 'description'   => __( 'Vul hier een korte omschrijving over u zelf/club', 'hockey_vacatures' )
                             )
                         );
-                        hv_build_form($player_register);
+                        HV_Forms_Helper::build_form($player_register);
                         ?>
                     </div>
 
@@ -502,8 +637,7 @@ class HV_Shortcode_Register_Form {
                                 'name'          => 'coordinates'
                             )
                         );
-
-                        hv_build_form($place_register);
+                        HV_Forms_Helper::build_form($place_register);
                         ?>
                     </div>
 
@@ -532,7 +666,7 @@ class HV_Shortcode_Register_Form {
                             ),
 
                         );
-                        hv_build_form($user_register);
+                        HV_Forms_Helper::build_form($user_register)
                         ?>
                     </div>
 

@@ -38,7 +38,7 @@ class HV_Template_Loader {
             $default_file = 'single-vacature.php';
         }
         elseif( is_page( 'nieuwe-vacature' ) ) {
-            $default_file = 'vacature-edit-page.php';
+            $default_file = 'vacature-form-page.php';
         }
         elseif( is_page( 'registreren' ) ) {
             $default_file = 'register-page.php';

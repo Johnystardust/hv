@@ -9,7 +9,8 @@ class HV_Shortcodes {
     public static function init(){
         $shortcodes = array(
             'hockey_vacatures_top_bar'          => __CLASS__ . '::top_bar',
-            'hockey_vacatures_register_form'    => __CLASS__ . '::register_form'
+            'hockey_vacatures_register_form'    => __CLASS__ . '::register_form',
+            'hockey_vacatures_vacature_form'    => __CLASS__ . '::vacature_form'
         );
 
         foreach ( $shortcodes as $shortcode => $function ) {
@@ -56,7 +57,18 @@ class HV_Shortcodes {
      * @return string
      */
     public static function register_form(){
-        return self::shortcode_wrapper( array( 'HV_Shortcode_Register_Form', 'output' ) );
+        $shortcode = new HV_Shortcode_Register_Form();
+        return $shortcode->output();
+    }
+
+    /**
+     * Vacature form shortcode
+     *
+     * @return string
+     */
+    public static function vacature_form(){
+        $shortcode = new HV_Shortcode_Vacature_Form();
+        return $shortcode->output();
     }
 }
 HV_Shortcodes::init();
