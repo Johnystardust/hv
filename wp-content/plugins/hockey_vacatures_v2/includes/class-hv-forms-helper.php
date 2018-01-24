@@ -38,7 +38,7 @@ class HV_Forms_Helper {
     /**
      * Get the data from the form
      *
-     * @param $form_field_names
+     * @param $form_fields
      * @return array
      */
     public function get_form_data($form_fields){
@@ -57,6 +57,8 @@ class HV_Forms_Helper {
     /**
      * Validate the form data
      *
+     * TODO: ??? MAYBE LIST ALL ERRORS AND REPORT THEM AT ONCE ???
+     *
      * @param $form_data
      * @param array $fields
      * @return WP_Error
@@ -68,9 +70,58 @@ class HV_Forms_Helper {
                 return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
             }
 
-            // TODO: !!! FIX ME !!!
+            // TODO: !!!!!!!!!! FIX ME !!!!!!!!!!!!!!!!!!!!!!!!
 //            if(post_exists($data) != 0) {
 //                return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
+//            }
+
+//            // General
+//            if(empty($data['username']) || empty($data['password']) || empty($data['role'])) {
+//                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden 2.');
+//            }
+//            if(strlen($data['username']) < 4) {
+//                return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht.');
+//            }
+//            if(strlen($data['password']) < 5) {
+//                return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten.');
+//            }
+//            if($data['password'] !== $data['password_check']) {
+//                return new WP_Error('password', 'Wachtwoorden zijn niet gelijk.');
+//            }
+//            if(username_exists($data['username'])){
+//                return new WP_Error('username', 'Gebruikersnaam is al in gebruik.');
+//            }
+//
+//            // Role specific validation
+//            if($data['role'] === 'club'){
+//                if(empty($data['c_name']) || empty($data['c_cname']) || empty($data['c_email'])){
+//                    return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+//                }
+//                if(!empty($data['web_url'])){
+//                    if(!filter_var($data['web_url'], FILTER_VALIDATE_URL)){
+//                        return new WP_Error('website', 'Website is not a valid URL');
+//                    }
+//                }
+//                if(email_exists($data['c_email'])) {
+//                    return new WP_Error('email', 'Dit email adres is al in gebruik.');
+//                }
+//                if(!is_email($data['c_email'])) {
+//                    return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
+//                }
+//            }
+//            elseif($data['role'] === 'player'){
+//                if(empty($data['p_fname']) || empty($data['p_lname']) || empty($data['p_email']) || empty($data['p_age']) || empty($data['p_gender'])){
+//                    return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+//                }
+//                if(email_exists($data['p_email'])) {
+//                    return new WP_Error('email', 'Dit email adres is al in gebruik.');
+//                }
+//                if(!is_email($data['p_email'])) {
+//                    return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
+//                }
+//            }
+//            else {
+//                return new WP_Error( 'error', 'Ongeldig gebruikersprofiel');
 //            }
         }
 

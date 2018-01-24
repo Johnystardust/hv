@@ -86,6 +86,8 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
                                 'error',
                                 $category_id->get_error_message()
                             );
+
+                            // TODO: FIX !!!!!!!!!! REMOVE IF POST EXISTS
                         }
                         else {
                             // Object terms are set, good to go. Adding post meta.
@@ -116,7 +118,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
         }
 
         // Add the template for the form
-        $output .= include_once( HV_ABSPATH . 'templates/shortcodes/vacature_form.php' );
+        include_once( HV_ABSPATH . 'templates/shortcodes/vacature-form.php' );
 
         return $output;
     }
@@ -127,7 +129,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
      * @param $form_data
      * @return array
      */
-    public function get_post_array( $form_data ) {
+    private function get_post_array( $form_data ) {
         $post_array = array(
             'post_title'    => wp_strip_all_tags( $form_data['title'] ),
             'post_content'  => $form_data['content'],
@@ -144,7 +146,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
      * @param $post_id
      * @return bool
      */
-    public function add_post_meta( $post_id ){
+    private function add_post_meta( $post_id ){
         $hv_user_data = get_post_meta( get_current_user_id(), 'hv_user_data', true );
         $user = get_userdata( get_current_user_id() );
 
