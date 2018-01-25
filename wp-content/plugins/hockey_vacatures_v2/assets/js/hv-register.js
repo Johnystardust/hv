@@ -18,6 +18,7 @@
 
         // Register Form Validation
         // ========================
+
         //$regForm.validate({
         //    rules: {
         //        // General

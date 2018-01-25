@@ -12,20 +12,21 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
     public function __construct(){
         $this->form_fields = array(
             'title'     => array(
-                'required'  => true,
-                'type'      => 'text'
+                'required'          => true,
+                'vacature_exists'   => true,
+                'type'              => 'text'
             ),
             'function'  => array(
-                'required'  => true,
-                'type'      => 'text'
+                'required'          => true,
+                'type'              => 'text'
             ),
             'gender'    => array(
-                'required'  => true,
-                'type'      => 'text'
+                'required'          => true,
+                'type'              => 'text'
             ),
             'content'   => array(
-                'required'  => true,
-                'type'      => 'text'
+                'required'          => true,
+                'type'              => 'text'
             )
         );
     }
@@ -105,11 +106,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper {
                                 // If the post meta is not set ask to contact us.
                                 $output .= $this->render_popup_message(
                                     __( 'Foutje bedankt', 'hockey_vacatures' ),
-                                    __( 'Uw account is aangemaakt maar er is iets mis gegaan neemt a.u.b. contact op met ons.', 'hockey_vacatures' ),
+                                    __( 'Uw vacature is aangemaakt maar er is iets mis gegaan neemt a.u.b. contact op met ons.', 'hockey_vacatures' ),
                                     'error',
                                     null,
                                     array( get_permalink( get_page_by_path( 'contact' ) ), __( 'Naar contact', 'hockey_vacatures' ) )
                                 );
+
+                                // TODO: SET THE VACATURE TO NOT VISIBLE
                             }
                         }
                     }

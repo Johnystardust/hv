@@ -8,6 +8,10 @@
   &:hover {
     cursor: pointer;
   }
+
+  &.disabled, &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .btn-primary {

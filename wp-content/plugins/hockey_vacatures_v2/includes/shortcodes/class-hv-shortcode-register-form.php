@@ -13,15 +13,17 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
         $this->form_fields = array(
             'username'          => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'text',
+                'min_length' => 4
             ),
             'role'              => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'role'
             ),
             'password'          => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'text',
+                'min_length' => 5
             ),
             'password_check'    => array(
                 'required'  => true,
@@ -69,11 +71,11 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
             ),
             'c_web_url'         => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'url'
             ),
             'c_email'           => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'email',
             ),
             'c_tel'             => array(
                 'required'  => true,
@@ -93,7 +95,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
             ),
             'p_email'           => array(
                 'required'  => true,
-                'type'      => 'text'
+                'type'      => 'email',
             ),
             'p_age'             => array(
                 'required'  => true,
@@ -120,7 +122,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
             if ( !isset( $_POST['register_form_nonce'] ) || !wp_verify_nonce( $_POST['register_form_nonce'], 'register_form_shortcode' ) ) {
                 $output .= $this->render_popup_message(
                     __( 'Foutje bedankt', 'hockey_vacatures' ),
-                    __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                    __( 'Het account kan niet worden aangemaakt door de volgende reden(en):', 'hockey_vacatures' ),
                     'error',
                     null,
                     array('#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
@@ -141,6 +143,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
                     );
                 }
                 else {
+
                     // Form is validated lets continue.
                     $user_array = $this->get_user_array( $this->form_data );
                     $new_user   = wp_insert_user( $user_array );

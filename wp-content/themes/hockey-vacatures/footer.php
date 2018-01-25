@@ -42,6 +42,10 @@
     </div>
 </div>
 
+<?php if( is_user_logged_in() ) : ?>
+    <?php echo do_shortcode('[hockey_vacatures_user_panel]'); ?>
+<?php endif; ?>
+
 </body>
 <?php wp_footer(); ?>
 </html>

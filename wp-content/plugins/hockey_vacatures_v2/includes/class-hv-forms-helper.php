@@ -47,11 +47,41 @@ class HV_Forms_Helper {
         // TODO: ??? MAYBE ADD SANITATION ???
         foreach( $form_fields as $field_name => $field_data ){
             if ( array_key_exists( $field_name, $_POST ) && !empty( $_POST[ $field_name ] ) ){
-                $form_data[ $field_name ] = $_POST[ $field_name ];
+                $form_data[ $field_name ] = $this->sanitize_form_data( $_POST[ $field_name ], $field_data );
             }
         }
 
         return $form_data;
+    }
+
+    /**
+     * Sanitize the form data
+     *
+     * @param $value
+     * @param $field_data
+     * @return mixed|string
+     */
+    private function sanitize_form_data( $value, $field_data ) {
+
+        $value = stripslashes( $value );
+        $value = strip_tags( $value );
+        $value = trim( $value );
+        $value = htmlspecialchars( $value );
+
+        if( $field_data['type'] === 'text' ) {
+            $value = filter_var( $value, FILTER_SANITIZE_STRING );
+        }
+        elseif ( $field_data['type'] == 'url' ) {
+            $value = filter_var( $value, FILTER_SANITIZE_URL );
+        }
+        elseif ( $field_data['type'] == 'email' ) {
+            $value = filter_var( $value, FILTER_SANITIZE_EMAIL );
+        }
+        elseif ( $field_data['type'] == '' ) {
+            $value = filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
+        }
+
+        return $value;
     }
 
     /**
@@ -64,64 +94,30 @@ class HV_Forms_Helper {
      * @return WP_Error
      */
     public function validate_form_data( $form_data, $fields = array() ) {
+
         foreach( $form_data as $key => $value ){
-            // Validate required
-            if( $fields[$key]['required'] == true && empty( $value ) ){
-                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
+
+            if( $fields[$key]['required'] == true && empty ( $value ) ) {
+                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.' );
+            }
+            elseif( $fields[$key]['type'] == 'role' ) {
+                if( !in_array( $value, array( 'club', 'player' ) ) ) {
+                    return new WP_Error( 'error', 'Ongeldig gebruikersprofiel' );
+                }
+            }
+            elseif ( isset( $fields[$key]['min_length'] ) && strlen( $value ) < $fields[$key]['min_length'] ) {
+                return new WP_Error( $key . '_length', ucfirst( $key ) . ' is te kort. Tenminste ' . $fields[$key]['min_length'] . ' karaters zijn verplicht.');
+            }
+            elseif ( $fields[$key]['type'] == 'url' && !filter_var( $value, FILTER_VALIDATE_URL ) ) {
+                return new WP_Error('website', 'Er is een niet geldige URL ingevuld. Controleer de velden.' );
+            }
+            elseif( $fields[$key]['type'] == 'email' && !is_email( $value ) ) {
+                return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
             }
 
-            // TODO: !!!!!!!!!! FIX ME !!!!!!!!!!!!!!!!!!!!!!!!
-//            if(post_exists($data) != 0) {
+            // TODO: FIX ME !!!!!!!!
+//            elseif( isset( $fields[$key]['vacature_exists'] ) == true && post_exists( $value ) ) {
 //                return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
-//            }
-
-//            // General
-//            if(empty($data['username']) || empty($data['password']) || empty($data['role'])) {
-//                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden 2.');
-//            }
-//            if(strlen($data['username']) < 4) {
-//                return new WP_Error('username_length', 'Gebruikersnaam is te kort. Tenminste 4 karaters zijn verplicht.');
-//            }
-//            if(strlen($data['password']) < 5) {
-//                return new WP_Error('password', 'Het password moet tenminste 5 karaters bevatten.');
-//            }
-//            if($data['password'] !== $data['password_check']) {
-//                return new WP_Error('password', 'Wachtwoorden zijn niet gelijk.');
-//            }
-//            if(username_exists($data['username'])){
-//                return new WP_Error('username', 'Gebruikersnaam is al in gebruik.');
-//            }
-//
-//            // Role specific validation
-//            if($data['role'] === 'club'){
-//                if(empty($data['c_name']) || empty($data['c_cname']) || empty($data['c_email'])){
-//                    return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-//                }
-//                if(!empty($data['web_url'])){
-//                    if(!filter_var($data['web_url'], FILTER_VALIDATE_URL)){
-//                        return new WP_Error('website', 'Website is not a valid URL');
-//                    }
-//                }
-//                if(email_exists($data['c_email'])) {
-//                    return new WP_Error('email', 'Dit email adres is al in gebruik.');
-//                }
-//                if(!is_email($data['c_email'])) {
-//                    return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
-//                }
-//            }
-//            elseif($data['role'] === 'player'){
-//                if(empty($data['p_fname']) || empty($data['p_lname']) || empty($data['p_email']) || empty($data['p_age']) || empty($data['p_gender'])){
-//                    return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.');
-//                }
-//                if(email_exists($data['p_email'])) {
-//                    return new WP_Error('email', 'Dit email adres is al in gebruik.');
-//                }
-//                if(!is_email($data['p_email'])) {
-//                    return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
-//                }
-//            }
-//            else {
-//                return new WP_Error( 'error', 'Ongeldig gebruikersprofiel');
 //            }
         }
 

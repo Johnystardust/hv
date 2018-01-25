@@ -32,7 +32,7 @@ if ( ! class_exists( 'Hockey_Vacatures' ) ) {
 /**
  * Main instance of Hockey Vacatures.
  *
- * Returns the main instance of WC to prevent the need to use globals.
+ * Returns the main instance of HV to prevent the need to use globals.
  *
  * @since  1.0.0
  * @return WooCommerce
