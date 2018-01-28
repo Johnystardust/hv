@@ -40,12 +40,16 @@ class HV_Template_Loader {
         elseif( is_page( 'nieuwe-vacature' ) ) {
             $default_file = 'vacature-form-page.php';
         }
+        elseif( is_page( 'bewerk-vacature' ) ) {
+            $default_file = 'vacature-form-page.php';
+        }
         elseif( is_page( 'registreren' ) ) {
             $default_file = 'register-page.php';
         }
         elseif( is_post_type_archive( 'vacature' ) ) {
             $default_file = 'archive-vacature.php';
         }
+
         else {
             $default_file = '';
         }

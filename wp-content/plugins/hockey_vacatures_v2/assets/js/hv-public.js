@@ -42,7 +42,6 @@
         var side_panel = $('#hv-side-panel');
 
         // -- Open login form
-        // ===============
         $('.widget_hv_register_widget li.hv-login-link').on('click', function(e){
             e.preventDefault();
             $(this).toggleClass('active');
@@ -63,6 +62,7 @@
             $('header').toggleClass('fixed');
         });
 
+        // -- Close side panel
         $('a[href="#close-side-panel"]').on('click', function(){
             $('#hv-side-panel').removeClass('active');
             $(this).removeClass('active');
@@ -70,6 +70,52 @@
             $('body').removeClass('hv-side-panel-open');
             $('header').removeClass('fixed');
         });
+
+        // -- Side panel get template with ajax
+        $(document).on('click', 'a.hv-side-panel-tab', function( e ){
+            e.preventDefault();
+
+            var href = $(this).attr('href');
+            var data = $(this).data();
+
+            $.ajax({
+                type: 'GET',
+                url: ajax_object.ajax_url,
+                data: {
+                    action: 'hv_side_panel_get_template',
+                    name: href,
+                    data: data
+                },
+                success: function ( result ) {
+                    console.log(result);
+                    side_panel.find('.ajax-contents').empty().append( result );
+                },
+                error: function ( error ) {
+                    console.log( error );
+                }
+            } );
+        } );
+
+        // -- Side panel save/update vacature
+        //$(document).on('click', 'a.vacature-update-side-panel', function ( e ) {
+        //    e.preventDefault();
+        //
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: ajax_object.ajax_url,
+        //        data: {
+        //            action: 'save_vacature'
+        //        },
+        //        success: function ( result ) {
+        //            console.log( result );
+        //        }
+        //    })
+        //} );
+
+
+
+
+
 
         // 2.0 Messages
         // =============================================================================================================
@@ -91,8 +137,6 @@
             var id = $(this).data('id');
             var nonce = $(this).data('nonce');
             //var post = $(this).parents('.post:first');
-
-            
 
             $.ajax({
                 type: 'post',
@@ -134,6 +178,14 @@
             var offset = $('#map-canvas').offset().top;
             $('html, body').animate({scrollTop: (offset - 120)}, 500);
         });
+
+
+
+
+
+
+
+
 
         // DEPRECATED
         // =============================================================================================================

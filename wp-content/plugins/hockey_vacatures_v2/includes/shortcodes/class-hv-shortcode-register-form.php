@@ -168,7 +168,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper {
                                 __( 'Uw account is geactiveerd, u kunt nu inloggen.', 'hockey_vacatures' ),
                                 'success',
                                 null,
-                                array( home_url(), __( 'Naar home', 'hockey_vacatures' ) )
+                                array( home_url().'?register=true', __( 'Naar home', 'hockey_vacatures' ) )
                             );
                         }
                         else {

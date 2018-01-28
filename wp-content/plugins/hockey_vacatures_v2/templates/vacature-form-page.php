@@ -28,7 +28,8 @@ get_header(); ?>
                         get_template_part( 'template-parts/page/content', 'page' );
                     endwhile; ?>
 
-                    <?php echo do_shortcode('[hockey_vacatures_vacature_form]'); ?>
+                    <?php $edit_id = isset($_GET['id']) ? $_GET['id'] : null; ?>
+                    <?php echo do_shortcode('[hockey_vacatures_vacature_form edit_id="'.$edit_id.'"]'); ?>
                 </div>
 
                 <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">
@@ -38,7 +39,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
+    <?php echo do_shortcode('[hockey_vacatures_vacature_map2]'); ?>
 
     <?php get_footer() ?>
 </div>

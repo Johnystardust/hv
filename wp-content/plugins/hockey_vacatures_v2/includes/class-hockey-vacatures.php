@@ -49,6 +49,9 @@ class Hockey_Vacatures {
         // Autoload
         include_once( HV_ABSPATH . 'includes/class-hv-autoloader.php' );
 
+        // Abstracts
+        include_once( HV_ABSPATH . 'includes/abstracts/abstract-hv-data.php' );
+
         // Core Classes
         include_once( HV_ABSPATH . 'includes/hv-core-functions.php' );
         include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );

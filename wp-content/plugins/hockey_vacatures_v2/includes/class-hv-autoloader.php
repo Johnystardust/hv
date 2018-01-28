@@ -41,6 +41,9 @@ class HV_Autoloader {
 		elseif( 0 === strpos( $class, 'HV_User_Roles' ) ) {
 			$path = $this->include_path . 'user_roles/';
 		}
+		elseif( 0 === strpos( $class, 'HV_Vacature' ) ) {
+			$path = $this->include_path . 'vacature/';
+		}
 
 		// Load the file.
 		if ( empty( $path ) || $this->load_file( $path . $file ) ) {

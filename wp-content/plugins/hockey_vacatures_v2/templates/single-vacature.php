@@ -30,73 +30,74 @@ get_header(); ?>
                         <div class="spacer"></div>
                         <div class="row mb-3">
                             <div class="col-12 col-md-6">
-                                <ul class="vacature-info">
-                                    <?php
-                                    global $post;
-                                    $additional_data = get_post_meta($post->ID, 'additional_data', true);
-                                    $latlng = explode(',', $additional_data['latlng']);
-                                    ?>
-
-                                    <li>
-                                        <i class="fa fa-user"></i>
-                                        <strong><?php echo __('Functie:', TEXTDOMAIN); ?></strong>
-                                        <?php echo ucfirst($additional_data['function']); ?>
-                                    </li>
-                                    <?php if($gender = $additional_data['gender']): ?>
-                                        <li>
-                                            <?php if($gender == 'male'): ?>
-                                                <i class="fa fa-mars"></i>
-                                                <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
-                                                <?php echo __('Man', TEXTDOMAIN); ?>
-                                            <?php elseif($gender == 'female'): ?>
-                                                <i class="fa fa-venus"></i>
-                                                <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
-                                                <?php echo __('Vrouw', TEXTDOMAIN); ?>
-                                            <?php elseif($gender == 'either'): ?>
-                                                <i class="fa fa-venus-mars"></i>
-                                                <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
-                                                <?php echo __('Geen voorkeur', TEXTDOMAIN); ?>
-                                            <?php endif; ?>
-                                        </li>
-                                    <?php endif; ?>
-                                    <li>
-                                        <i class="fa fa-map-marker"></i>
-                                        <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
-                                        <?php echo $additional_data['city']; ?>
-
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-globe"></i>
-                                        <strong><?php echo __('Provincie:', TEXTDOMAIN); ?></strong>
-                                        <?php echo $additional_data['province']; ?>
-                                    </li>
-                                </ul>
+<!--                                <ul class="vacature-info">-->
+<!--                                    --><?php
+//                                    global $post;
+//                                    $additional_data = get_post_meta($post->ID, 'hv_vacature_data', true);
+//                                    var_dump($additional_data);
+//                                    $latlng = explode(',', $additional_data['coordinates']);
+//                                    ?>
+<!---->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-user"></i>-->
+<!--                                        <strong>--><?php //echo __('Functie:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        --><?php //echo ucfirst($additional_data['function']); ?>
+<!--                                    </li>-->
+<!--                                    --><?php //if($gender = $additional_data['gender']): ?>
+<!--                                        <li>-->
+<!--                                            --><?php //if($gender == 'male'): ?>
+<!--                                                <i class="fa fa-mars"></i>-->
+<!--                                                <strong>--><?php //echo __('Geslacht:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                                --><?php //echo __('Man', TEXTDOMAIN); ?>
+<!--                                            --><?php //elseif($gender == 'female'): ?>
+<!--                                                <i class="fa fa-venus"></i>-->
+<!--                                                <strong>--><?php //echo __('Geslacht:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                                --><?php //echo __('Vrouw', TEXTDOMAIN); ?>
+<!--                                            --><?php //elseif($gender == 'either'): ?>
+<!--                                                <i class="fa fa-venus-mars"></i>-->
+<!--                                                <strong>--><?php //echo __('Geslacht:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                                --><?php //echo __('Geen voorkeur', TEXTDOMAIN); ?>
+<!--                                            --><?php //endif; ?>
+<!--                                        </li>-->
+<!--                                    --><?php //endif; ?>
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-map-marker"></i>-->
+<!--                                        <strong>--><?php //echo __('Plaats:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        --><?php //echo $additional_data['city']; ?>
+<!---->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-globe"></i>-->
+<!--                                        <strong>--><?php //echo __('Provincie:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        --><?php //echo $additional_data['province']; ?>
+<!--                                    </li>-->
+<!--                                </ul>-->
                             </div>
                             <div class="col-12 col-md-6">
-                                <ul class="vacature-data">
-                                    <li>
-                                        <i class="fa fa-calendar"></i>
-                                        <strong><?php echo __('Datum:', TEXTDOMAIN); ?></strong>
-                                        <?php echo get_the_date('d-m-Y'); ?>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-envelope-o"></i>
-                                        <strong><?php echo __('Mail:', TEXTDOMAIN); ?></strong>
-                                        <a href="mailto:<?php echo $additional_data['mail']; ?>"><?php echo $additional_data['mail']; ?></a>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-phone"></i>
-                                        <strong><?php echo __('Tel:', TEXTDOMAIN); ?></strong>
-                                        <a href="tel:<?php echo $additional_data['tel']; ?>"><?php echo $additional_data['tel']; ?></a>
-                                    </li>
-                                    <?php if(isset($additional_data['web_url'])): ?>
-                                        <li>
-                                            <i class="fa fa-external-link"></i>
-                                            <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
-                                            <a target="_blank" href="<?php echo $additional_data['web_url']; ?>"><?php echo $additional_data['web_url']; ?></a>
-                                        </li>
-                                    <?php endif; ?>
-                                </ul>
+<!--                                <ul class="vacature-data">-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-calendar"></i>-->
+<!--                                        <strong>--><?php //echo __('Datum:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        --><?php //echo get_the_date('d-m-Y'); ?>
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-envelope-o"></i>-->
+<!--                                        <strong>--><?php //echo __('Mail:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        <a href="mailto:--><?php //echo $additional_data['mail']; ?><!--">--><?php //echo $additional_data['mail']; ?><!--</a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <i class="fa fa-phone"></i>-->
+<!--                                        <strong>--><?php //echo __('Tel:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                        <a href="tel:--><?php //echo $additional_data['tel']; ?><!--">--><?php //echo $additional_data['tel']; ?><!--</a>-->
+<!--                                    </li>-->
+<!--                                    --><?php //if(isset($additional_data['web_url'])): ?>
+<!--                                        <li>-->
+<!--                                            <i class="fa fa-external-link"></i>-->
+<!--                                            <strong>--><?php //echo __('Website:', TEXTDOMAIN); ?><!--</strong>-->
+<!--                                            <a target="_blank" href="--><?php //echo $additional_data['web_url']; ?><!--">--><?php //echo $additional_data['web_url']; ?><!--</a>-->
+<!--                                        </li>-->
+<!--                                    --><?php //endif; ?>
+<!--                                </ul>-->
                             </div>
                         </div>
 

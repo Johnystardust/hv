@@ -303,6 +303,25 @@ class HV_Install {
             deactivate_plugins( plugin_basename( 'hockey_vacatures' ) );
             wp_die( __('Nieuwe Vacature pagina bestaat al. Los het probleem op en activeer de plugin opnieuw', 'hockey_vacatures') );
         }
+
+        // Vacature Update Page
+        $vacature_update_page_title = 'Bewerk Vacature';
+        $vacature_update_page_check = get_page_by_title($vacature_update_page_title);
+        $vacature_update_page       = array(
+            'post_type' 	=> 'page',
+            'post_title' 	=> $vacature_update_page_title,
+            'post_status'	=> 'publish',
+            'post_author'	=> 1,
+        );
+
+        $vacature_update_page_slug = get_page_by_path( 'bewerk_vacature', OBJECT );
+        if(!isset( $vacature_update_page_slug ) && !isset( $vacature_update_page_check->ID ) ) {
+            $vacature_update_page_id = wp_insert_post( $vacature_update_page );
+        } else {
+            wp_delete_post($vacature_create_page_id);
+            deactivate_plugins( plugin_basename( 'hockey_vacatures' ) );
+            wp_die( __('Bewerk Vacature pagina bestaat al. Los het probleem op en activeer de plugin opnieuw', 'hockey_vacatures') );
+        }
     }
 
 }

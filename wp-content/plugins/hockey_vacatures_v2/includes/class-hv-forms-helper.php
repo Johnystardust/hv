@@ -44,9 +44,8 @@ class HV_Forms_Helper {
     public function get_form_data($form_fields){
         $form_data = array();
 
-        // TODO: ??? MAYBE ADD SANITATION ???
-        foreach( $form_fields as $field_name => $field_data ){
-            if ( array_key_exists( $field_name, $_POST ) && !empty( $_POST[ $field_name ] ) ){
+        foreach( $form_fields as $field_name => $field_data ) {
+            if ( array_key_exists( $field_name, $_POST ) ) {
                 $form_data[ $field_name ] = $this->sanitize_form_data( $_POST[ $field_name ], $field_data );
             }
         }
@@ -61,14 +60,14 @@ class HV_Forms_Helper {
      * @param $field_data
      * @return mixed|string
      */
-    private function sanitize_form_data( $value, $field_data ) {
+    public function sanitize_form_data( $value, $field_data ) {
 
         $value = stripslashes( $value );
-        $value = strip_tags( $value );
         $value = trim( $value );
         $value = htmlspecialchars( $value );
+        //        $value = strip_tags( $value );
 
-        if( $field_data['type'] === 'text' ) {
+        if( $field_data['type'] === 'text' || $field_data['type'] === 'select' ) {
             $value = filter_var( $value, FILTER_SANITIZE_STRING );
         }
         elseif ( $field_data['type'] == 'url' ) {
@@ -77,7 +76,7 @@ class HV_Forms_Helper {
         elseif ( $field_data['type'] == 'email' ) {
             $value = filter_var( $value, FILTER_SANITIZE_EMAIL );
         }
-        elseif ( $field_data['type'] == '' ) {
+        elseif ( $field_data['type'] == 'number' ) {
             $value = filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
         }
 
@@ -94,34 +93,82 @@ class HV_Forms_Helper {
      * @return WP_Error
      */
     public function validate_form_data( $form_data, $fields = array() ) {
-
         foreach( $form_data as $key => $value ){
 
-            if( $fields[$key]['required'] == true && empty ( $value ) ) {
-                return new WP_Error('field', 'Een verplicht veld is niet ingevuld. Controleer alle ingevulde velden.' );
+            if( $fields[$key]['validation']['required'] == true && empty ( $value ) ) {
+                return new WP_Error('field', 'Een verplicht veld "'. $fields[$key]['label'] .'" is niet ingevuld. Controleer alle ingevulde velden.' );
             }
-            elseif( $fields[$key]['type'] == 'role' ) {
+            elseif( $fields[$key]['validation']['type'] == 'role' ) {
                 if( !in_array( $value, array( 'club', 'player' ) ) ) {
                     return new WP_Error( 'error', 'Ongeldig gebruikersprofiel' );
                 }
             }
-            elseif ( isset( $fields[$key]['min_length'] ) && strlen( $value ) < $fields[$key]['min_length'] ) {
-                return new WP_Error( $key . '_length', ucfirst( $key ) . ' is te kort. Tenminste ' . $fields[$key]['min_length'] . ' karaters zijn verplicht.');
+            elseif( $fields[$key]['validation']['type'] == 'gender' ) {
+                if( !in_array( $value, array( 'male', 'female', 'either' ) ) ) {
+                    return new WP_Error( 'error', 'Ongeldig geslacht' );
+                }
             }
-            elseif ( $fields[$key]['type'] == 'url' && !filter_var( $value, FILTER_VALIDATE_URL ) ) {
+            elseif( $fields[$key]['validation']['type'] == 'function' ) {
+                if( !in_array( $value, array( 'coach', 'player', 'trainer' ) ) ) {
+                    return new WP_Error( 'error', 'Ongeldig geslacht' );
+                }
+            }
+            elseif ( isset( $fields[$key]['validation']['min_length'] ) && strlen( $value ) < $fields[$key]['validation']['min_length'] ) {
+                return new WP_Error( $key . '_length', ucfirst( $key ) . ' is te kort. Tenminste ' . $fields[$key]['validation']['min_length'] . ' karaters zijn verplicht.');
+            }
+            elseif ( $fields[$key]['validation']['type'] == 'url' && !filter_var( $value, FILTER_VALIDATE_URL ) ) {
                 return new WP_Error('website', 'Er is een niet geldige URL ingevuld. Controleer de velden.' );
             }
-            elseif( $fields[$key]['type'] == 'email' && !is_email( $value ) ) {
+            elseif( $fields[$key]['validation']['type'] == 'email' && !is_email( $value ) ) {
                 return new WP_Error('email_invalid', 'Het email addres is geen geldig email adres.');
             }
-
-            // TODO: FIX ME !!!!!!!!
-//            elseif( isset( $fields[$key]['vacature_exists'] ) == true && post_exists( $value ) ) {
-//                return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
-//            }
+            elseif( isset( $fields[$key]['validation']['vacature_exists'] ) == true && $this->vacature_exists( $value ) !== 0 ) {
+                return new WP_Error('post_exists', 'Deze vacature bestaat al. Kies een andere titel.');
+            }
         }
 
         return $form_data;
+    }
+
+    /**
+     * Check if the post exists
+     * Copied straight from the wp-admin/wp-includes/post.php
+     *
+     * @param        $title
+     * @param string $content
+     * @param string $date
+     *
+     * @return int
+     */
+    private function vacature_exists($title, $content = '', $date = '') {
+        global $wpdb;
+
+        $post_title = wp_unslash( sanitize_post_field( 'post_title', $title, 0, 'db' ) );
+        $post_content = wp_unslash( sanitize_post_field( 'post_content', $content, 0, 'db' ) );
+        $post_date = wp_unslash( sanitize_post_field( 'post_date', $date, 0, 'db' ) );
+
+        $query = "SELECT ID FROM $wpdb->posts WHERE 1=1";
+        $args = array();
+
+        if ( !empty ( $date ) ) {
+            $query .= ' AND post_date = %s';
+            $args[] = $post_date;
+        }
+
+        if ( !empty ( $title ) ) {
+            $query .= ' AND post_title = %s';
+            $args[] = $post_title;
+        }
+
+        if ( !empty ( $content ) ) {
+            $query .= ' AND post_content = %s';
+            $args[] = $post_content;
+        }
+
+        if ( !empty ( $args ) )
+            return (int) $wpdb->get_var( $wpdb->prepare($query, $args) );
+
+        return 0;
     }
 
     /**
@@ -152,8 +199,20 @@ class HV_Forms_Helper {
                                 <span class="required">*</span>
                             <?php endif; ?>
                         </label>
-                        <input id="<?php echo $field['name']; ?>" class="form-control" type="<?php echo $field['type']; ?>" name="<?php echo $field['name']; ?>" placeholder="<?php echo $field['placeholder']; ?>"
-                               value="<?php if($field['name'] !== 'password_check'){ echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); } ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?> >
+                        <input id="<?php echo $field['name']; ?>"
+                               class="form-control"
+                               type="<?php echo $field['type']; ?>"
+                               name="<?php echo $field['name']; ?>"
+                               placeholder="<?php echo $field['placeholder']; ?>"
+                               value="<?php if($field['name'] !== 'password_check'){
+                                   if( isset( $_POST[$field['name']] ) ) {
+                                       echo $_POST[$field['name']];
+                                   }elseif( isset($field['value'])){
+                                       echo $field['value'];
+                                   }
+                               } ?>"
+                                <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>
+                                <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?> >
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>
@@ -169,7 +228,7 @@ class HV_Forms_Helper {
                         </label>
                         <select class="form-control custom-select" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>>
                             <?php foreach( $field['options'] as $option => $value ): ?>
-                                <option <?php if(isset($_POST[$field['name']]) && $_POST[$field['name']] == $option){ echo 'selected'; }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
+                                <option <?php if(isset($_POST[$field['name']]) && $_POST[$field['name']] == $option){ echo 'selected'; } elseif(isset($field['value']) && $field['value'] == $option){ echo 'selected'; }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php if(array_key_exists('description', $field)): ?>
@@ -186,7 +245,7 @@ class HV_Forms_Helper {
                             <?php endif; ?>
                         </label>
                         <textarea class="form-control" name="<?php echo $field['name']; ?>" id="<?php echo $field['name']; ?>" cols="<?php echo $field['cols']; ?>" rows="<?php echo $field['rows']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?>
-                                  placeholder="<?php echo $field['placeholder']; ?>" <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>><?php echo(isset($_POST[$field['name']]) ? $_POST[$field['name']] : null); ?></textarea>
+                                  placeholder="<?php echo $field['placeholder']; ?>" <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>><?php if(isset($_POST[$field['name']])){ echo $_POST[$field['name']]; } elseif(isset($field['value'])){ echo $field['value']; } ?></textarea>
                         <?php if(array_key_exists('description', $field)): ?>
                             <span class="description"><?php echo $field['description'] ?></span>
                         <?php endif; ?>

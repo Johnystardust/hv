@@ -67,8 +67,8 @@ class HV_Shortcodes {
      *
      * @return string
      */
-    public static function vacature_form(){
-        $shortcode = new HV_Shortcode_Vacature_Form();
+    public static function vacature_form( $atts = array() ){
+        $shortcode = new HV_Shortcode_Vacature_Form( $atts );
         return $shortcode->output();
     }
 

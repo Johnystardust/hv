@@ -52,12 +52,10 @@ get_header(); ?>
                     <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
-                        'post_type'         => 'vacatures',
+                        'post_type'         => 'vacature',
                         'posts_per_page'    => 3,
                         'paged'             => $paged,
                     );
-
-
 
                     // Filters
                     // =======

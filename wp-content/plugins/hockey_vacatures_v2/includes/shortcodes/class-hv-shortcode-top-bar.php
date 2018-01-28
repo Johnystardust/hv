@@ -79,6 +79,16 @@ class HV_Shortcode_Top_Bar {
                             </div>
                         <?php endif; ?>
                     <?php endif; ?>
+
+
+<!--                    TODO: REMOVE !!!! -->
+                    <div class="top-bar-item col-3">
+                        <a id="new-vacature" href="<?php echo get_permalink( get_page_by_path( 'nieuwe-vacature' ) ); ?>" class="icon-left"><i class="fa fa-pencil-square-o"></i><?php echo __( 'Vacature plaatsen', TEXTDOMAIN ); ?></a>
+                    </div>
+                    <div class="top-bar-item col-3">
+                        <a href="<?php echo get_permalink( get_page_by_path( 'bewerk-vacature' ) ) . '?id='.$post->ID; ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
+                    </div>
+
                 </div>
             </div>
         </div>

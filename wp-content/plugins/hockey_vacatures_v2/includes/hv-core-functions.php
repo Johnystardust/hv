@@ -45,8 +45,6 @@ add_action( 'after_setup_theme', 'hv_remove_admin_bar' );
 
 /**
  * Block the /wp-admin for all users except admins.
- *
- * @since	1.0.0
  */
 function hv_block_users_form_admin(){
     if( is_admin() && !current_user_can( 'administrator' ) && !(defined( 'DOING_AJAX' ) && DOING_AJAX ) ){
@@ -55,6 +53,18 @@ function hv_block_users_form_admin(){
     }
 }
 add_action( 'init', 'hv_block_users_form_admin' );
+
+/**
+ * Add to the body class
+ */
+function hv_add_body_class(){
+    if( isset( $_GET['login'] ) == true ){
+        add_filter( 'body_class', function( $classes ) {
+            return array_merge( $classes, array( 'hv-side-panel-open' ) );
+        } );
+    }
+}
+add_action( 'init', 'hv_add_body_class' );
 
 // Helper functions.
 // =====================================================================================================================
@@ -70,3 +80,24 @@ function hv_maybe_define_constant( $name, $value ) {
         define( $name, $value );
     }
 }
+
+
+// Ajax functions.
+// =====================================================================================================================
+
+/**
+ * Side panel get template
+ */
+function hv_side_panel_get_template( ) {
+
+    if( $_GET['name'] == '#user_vacatures' ) {
+        include_once( HV_ABSPATH . 'templates/shortcodes/user-panel/user-vacatures.php' );
+    }
+    elseif( $_GET['name'] == '#edit_vacature' ) {
+        include_once( HV_ABSPATH . 'templates/shortcodes/user-panel/user-edit-vacature.php' );
+    }
+
+    die;
+}
+add_action( 'wp_ajax_nopriv_hv_side_panel_get_template', 'hv_side_panel_get_template' );
+add_action( 'wp_ajax_hv_side_panel_get_template', 'hv_side_panel_get_template' );
