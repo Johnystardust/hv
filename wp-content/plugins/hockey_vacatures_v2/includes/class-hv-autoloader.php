@@ -44,12 +44,16 @@ class HV_Autoloader {
 		elseif( 0 === strpos( $class, 'HV_Vacature' ) ) {
 			$path = $this->include_path . 'vacature/';
 		}
+		elseif( 0 === strpos($class, 'HV_User')){
+			$path = $this->include_path . 'user/';
+		}
 
 		// Load the file.
 		if ( empty( $path ) || $this->load_file( $path . $file ) ) {
-			$this->load_file( $this->include_path . $file );
+			$this->load_file( strtolower($this->include_path . $file ));
 		}
 	}
+
 
 	/**
 	 * Makes the filename from the class.
@@ -58,7 +62,7 @@ class HV_Autoloader {
 	 * @return string
 	 */
 	private function get_file_name_from_class( $class ){
-		return 'class-' . str_replace( '_', '-', $class ) . '.php';
+		return 'class-' . str_replace( '_', '-', strtolower($class) ) . '.php';
 	}
 
 	/**

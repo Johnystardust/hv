@@ -4,12 +4,10 @@
             <div class="row">
                 <?php $this->build_form($this->form_fields); ?>
 
-<!--                <div class="form-group col-12">-->
-<!--                    --><?php //wp_editor( $this->vacature->content, 'content', $settings = array() ); ?>
-<!--                </div>-->
-
                 <div class="form-group col-12">
-                    <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo __( 'Vacature Plaatsen', TEXTDOMAIN ); ?></button>
+
+
+                    <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo (isset($_GET['id'])) ? __( 'Vacature Bewerken', TEXTDOMAIN ) : __( 'Vacature Plaatsen', TEXTDOMAIN ); ?></button>
                 </div>
             </div>
         </div>

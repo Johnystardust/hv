@@ -46,6 +46,9 @@ class HV_Template_Loader {
         elseif( is_page( 'registreren' ) ) {
             $default_file = 'register-page.php';
         }
+        elseif( is_page( 'profiel-bewerken' ) ) {
+            $default_file = 'register-page.php';
+        }
         elseif( is_post_type_archive( 'vacature' ) ) {
             $default_file = 'archive-vacature.php';
         }

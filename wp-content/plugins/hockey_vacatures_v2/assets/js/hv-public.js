@@ -72,7 +72,7 @@
         });
 
         // -- Side panel get template with ajax
-        $(document).on('click', 'a.hv-side-panel-tab', function( e ){
+        $(document).on('click', 'a.hv-side-panel-tab.user-vacatures', function( e ){
             e.preventDefault();
 
             var href = $(this).attr('href');

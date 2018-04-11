@@ -135,7 +135,7 @@
   #hv-side-panel .hv-side-panel-inner {
     position: absolute;
     background: #ffffff;
-    width: 50%;
+    width: 25%;
     height: 100%;
     right: -100%;
     z-index: 2;

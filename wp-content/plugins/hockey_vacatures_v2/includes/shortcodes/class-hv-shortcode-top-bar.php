@@ -86,7 +86,7 @@ class HV_Shortcode_Top_Bar {
                         <a id="new-vacature" href="<?php echo get_permalink( get_page_by_path( 'nieuwe-vacature' ) ); ?>" class="icon-left"><i class="fa fa-pencil-square-o"></i><?php echo __( 'Vacature plaatsen', TEXTDOMAIN ); ?></a>
                     </div>
                     <div class="top-bar-item col-3">
-                        <a href="<?php echo get_permalink( get_page_by_path( 'bewerk-vacature' ) ) . '?id='.$post->ID; ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
+                        <a href="<?php echo add_query_arg( 'id', $post->ID, get_permalink( get_page_by_path( 'bewerk-vacature' ) ) ); ?>" class="icon-left"><i class="fa fa-pencil"></i><?php echo __( 'Bewerken', TEXTDOMAIN ); ?></a>
                     </div>
 
                 </div>

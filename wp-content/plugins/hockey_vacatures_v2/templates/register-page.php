@@ -18,19 +18,29 @@ get_header(); ?>
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
     <?php // Top Bar ?>
-    <?php echo do_shortcode('[hockey_vacatures_top_bar]'); ?>
+    <?php echo do_shortcode( '[hockey_vacatures_top_bar]' ); ?>
 
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
             <div class="row">
                 <div class="col-12 col-md-8 main-column vacature-list">
-                    <?php while ( have_posts() ) : the_post();
+                    <?php
+
+                    // Get the content and title and display them
+                    while( have_posts() ) : the_post();
                         get_template_part( 'template-parts/page/content', 'page' );
-                    endwhile; ?>
+                    endwhile;
 
-                    <?php echo do_shortcode('[hockey_vacatures_register_form]'); ?>
+                    // If user is admin don't show the form
+                    if( is_user_logged_in() && hv_is_user_admin( wp_get_current_user() ) ) {
+                        echo 'Form not available for administrators';
+                    } else {
+                        $edit_id = isset( $_GET['id'] ) ? $_GET['id'] : null;
+                        echo do_shortcode( '[hockey_vacatures_register_form edit_id="' . $edit_id . '"]' );
+                    }
+
+                    ?>
                 </div>
-
                 <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">
                     <?php get_sidebar(); ?>
                 </div>
@@ -38,7 +48,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
+    <?php echo do_shortcode( '[hockey_vacatures_vacature_map]' ); ?>
 
     <?php get_footer() ?>
 </div>

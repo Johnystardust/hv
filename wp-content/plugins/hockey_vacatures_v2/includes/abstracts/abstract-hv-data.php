@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WP_Model
+ * HV_Data
  *
  * A simple class for creating active
  * record, eloquent-esque models of WordPress Posts.
@@ -10,58 +10,57 @@
  */
 Abstract Class HV_Data implements JsonSerializable
 {
-    protected $tax_data = [ ];
-    protected $data = [ ];
-    public $id;
-    public $post;
-    public $where;
+    protected $tax_data = [];
+    protected $data     = [];
+    public $ID;
+    public $_post;
+    public $_where;
 
-    public $attributes = [ ];
+    public $attributes = [];
     public $prefix = '';
 
-    public $taxonomies = [ ];
-    public $default = [ ];
-    public $virtual = [ ];
-    public $filter = [ ];
+    public $taxonomies = [];
+    public $default = [];
+    public $virtual = [];
+    public $filter = [];
 
-    public $new = true;
-    public $dirty = false;
-    public $booted = false;
+    public $new    = TRUE;
+    public $dirty  = FALSE;
+    public $booted = FALSE;
 
 
     /**
      * Create a new instace with data
      *
      * @param array $insert
-     *
      * @return void
      */
-    public function __construct( Array $insert = [ ] )
+    public function __construct(Array $insert = [])
     {
-        if( !empty( $this->default ) ) {
-            foreach( $this->default as $attribute => $value ) {
-                $this->data[ $attribute ] = $value;
+        if(!empty($this->default)){
+            foreach($this->default as $attribute => $value){
+                $this->data[$attribute] = $value;
             }
         }
 
-        foreach( $insert as $attribute => $value ) {
-            if( in_array( $attribute, $this->attributes ) ) {
-                $this->set( $attribute, $value );
+        foreach($insert as $attribute => $value){
+            if(in_array($attribute, $this->attributes)){
+                $this->set($attribute, $value);
             }
 
-            if( !empty( $this->taxonomies ) ) {
-                if( in_array( $attribute, $this->taxonomies ) ) {
-                    if( is_array( $value ) ) {
-                        $this->addTaxonomies( $attribute, $value );
-                    } else {
-                        $this->addTaxonomy( $attribute, $value );
+            if(!empty($this->taxonomies)){
+                if(in_array($attribute, $this->taxonomies)){
+                    if(is_array($value)){
+                        $this->addTaxonomies($attribute, $value);
+                    }else{
+                        $this->addTaxonomy($attribute, $value);
                     }
                 }
             }
         }
 
-        $this->set( 'title', isset( $insert['title'] ) ? $insert['title'] : '' );
-        $this->set( 'content', isset( $insert['content'] ) ? $insert['content'] : '' );
+        $this->set('title', isset($insert['title'])? $insert['title'] : '');
+        $this->set('content', isset($insert['content'])? $insert['content'] : '');
         $this->boot();
     }
 
@@ -72,55 +71,54 @@ Abstract Class HV_Data implements JsonSerializable
      */
     protected function boot()
     {
-        $this->triggerEvent( 'booting' );
+        $this->triggerEvent('booting');
 
-        if( !empty( $this->id ) ) {
-            $this->new = false;
-            $this->post = get_post( $this->id );
-            $this->set( 'title', $this->post->post_title );
-            $this->set( 'content', $this->post->post_content );
+        if(!empty($this->ID)){
+            $this->new = FALSE;
+            $this->_post = get_post($this->ID);
+            $this->set('title', $this->_post->post_title);
+            $this->set('content', $this->_post->post_content);
 
-            foreach( $this->attributes as $attribute ) {
-                $meta = $this->getMeta( $attribute );
-                if( empty( $meta ) && isset( $this->default[ $attribute ] ) ) {
-                    $this->set( $attribute, $this->default[ $attribute ] );
-                } else {
-                    $this->set( $attribute, $meta );
+            foreach($this->attributes as $attribute){
+                $meta = $this->getMeta($attribute);
+                if(empty($meta) && isset($this->default[$attribute])){
+                    $this->set($attribute, $this->default[$attribute]);
+                }else{
+                    $this->set($attribute, $meta);
                 }
             }
 
-            if( !empty( $this->taxonomies ) ) {
-                foreach( $this->taxonomies as $taxonomy ) {
-                    $this->tax_data[ $taxonomy ] = get_the_terms( $this->id, $taxonomy );
+            if(!empty($this->taxonomies)){
+                foreach($this->taxonomies as $taxonomy){
+                    $this->tax_data[$taxonomy] = get_the_terms($this->ID, $taxonomy);
 
-                    if( $this->tax_data[ $taxonomy ] === false ) {
-                        $this->tax_data[ $taxonomy ] = [ ];
+                    if($this->tax_data[$taxonomy] === FALSE){
+                        $this->tax_data[$taxonomy] = [];
                     }
                 }
             }
         }
 
-        $this->booted = true;
-        $this->triggerEvent( 'booted' );
+        $this->booted = TRUE;
+        $this->triggerEvent('booted');
     }
 
     /**
      * Register the post type using the propery $postType as the post type
      *
-     * @param  array $args see: register_post_type()
-     *
+     * @param  array  $args  see: register_post_type()
      * @return void
      */
-    public static function register( $args = [ ] )
+    public static function register($args = [])
     {
         $postType = Self::getPostType();
 
         $defaults = [
-            'public' => true,
-            'label'  => ucfirst( $postType )
+            'public' => TRUE,
+            'label' => ucfirst($postType)
         ];
 
-        register_post_type( $postType, array_merge( $defaults, $args ) );
+        register_post_type($postType, array_merge($defaults, $args));
 
         Self::addHooks();
     }
@@ -130,9 +128,9 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @param array $insert
      */
-    public static function insert( Array $insert = [ ] )
+    public static function insert(Array $insert = [])
     {
-        return Self::newInstance( $insert )->save();
+        return Self::newInstance($insert)->save();
     }
 
 
@@ -143,18 +141,16 @@ Abstract Class HV_Data implements JsonSerializable
      * Fire event if the event method exists
      *
      * @param  string $event event name
-     *
      * @return bool
      */
-    protected function triggerEvent( $event )
+    protected function triggerEvent($event)
     {
-        if( method_exists( $this, $event ) ) {
-            $this->$event( $this );
-
-            return true;
+        if(method_exists($this, $event)){
+            $this->$event($this);
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
 
@@ -168,7 +164,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public static function addHooks()
     {
-        add_action( 'save_post', [ get_called_class(), 'onSave' ], 9999999999 );
+        add_action('save_post', [get_called_class(), 'onSave'], 9999999999);
     }
 
     /**
@@ -178,7 +174,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public static function removeHooks()
     {
-        remove_action( 'save_post', [ get_called_class(), 'onSave' ], 9999999999 );
+        remove_action('save_post', [get_called_class(), 'onSave'], 9999999999);
     }
 
     /**
@@ -186,14 +182,13 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * Note: Self::exists() checks if the post is of the correct post type
      *
-     * @param int $id
-     *
+     * @param int $ID
      * @return void
      */
-    public static function onSave( $id )
+    public static function onSave($ID)
     {
-        if( Self::exists( $id ) ) {
-            $post = Self::find( $id );
+        if(Self::exists($ID)){
+            $post = Self::find($ID);
             $post->save();
         }
     }
@@ -210,32 +205,29 @@ Abstract Class HV_Data implements JsonSerializable
     protected static function newWithoutConstructor()
     {
         $class = get_called_class();
-        $reflection = new ReflectionClass( $class );
-
+        $reflection = new ReflectionClass($class);
         return $reflection->newInstanceWithoutConstructor();
     }
 
-    public function isArrayOfModels( $array )
-    {
-        if( !is_array( $array ) ) {
-            return false;
+    public function isArrayOfModels($array){
+        if(!is_array($array)){
+            return FALSE;
         }
 
-        $types = array_unique( array_map( 'gettype', $array ) );
-
-        return ( count( $types ) === 1 && $types[0] === "object" && $array[0] instanceof WP_Model );
+        $types = array_unique(array_map('gettype', $array));
+        return (count($types) === 1 && $types[0] === "object" && $array[0] instanceof HV_Data);
     }
 
-    public static function extract( $array, $column )
+    public static function extract($array, $column)
     {
-        $return = [ ];
+        $return = [];
 
-        if( is_array( $array ) ) {
-            foreach( $array as $value ) {
-                if( is_object( $value ) ) {
+        if(is_array($array)){
+            foreach($array as $value){
+                if(is_object($value)){
                     $return[] = @$value->$column;
-                } elseif( is_array( $value ) ) {
-                    $return[] = @$value[ $column ];
+                }elseif(is_array($value)){
+                    $return[] = @$value[$column];
                 }
             }
         }
@@ -245,7 +237,7 @@ Abstract Class HV_Data implements JsonSerializable
 
     private function getAttributes()
     {
-        return array_merge( $this->attributes, [ 'title', 'content', 'the_content' ] );
+        return array_merge($this->attributes, ['title', 'content', 'the_content']);
     }
 
     /**
@@ -259,13 +251,13 @@ Abstract Class HV_Data implements JsonSerializable
     {
         $model = Self::newWithoutConstructor();
 
-        if( isset( $model->post_type ) ) {
-            return $model->post_type;
-        } elseif( isset( $model->name ) ) {
+        if(isset($model->postType)){
+            return $model->postType;
+        }elseif(isset($model->name)){
             return $model->name;
         }
 
-        throw new Exception( '$postType not defined' );
+        throw new Exception('$postType not defined');
     }
 
     /**
@@ -273,11 +265,10 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @return object
      */
-    public static function newInstance( $insert = [ ] )
+    public static function newInstance($insert = [])
     {
         $class = get_called_class();
-
-        return new $class( $insert );
+        return new $class($insert);
     }
 
     /**
@@ -287,8 +278,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        $this->triggerEvent( 'serializing' );
-
+        $this->triggerEvent('serializing');
         return $this->toArray();
     }
 
@@ -297,26 +287,24 @@ Abstract Class HV_Data implements JsonSerializable
      * and has a corresponding vitaul property method
      *
      * @param  string $attribute
-     *
      * @return bool
      */
-    public function isVirtualProperty( $attribute )
+    public function isVirtualProperty($attribute)
     {
-        return ( isset( $this->virtual ) &&
-            in_array( $attribute, $this->virtual ) &&
-            method_exists( $this, ( '_get' . ucfirst( $attribute ) ) ) );
+        return (isset($this->virtual) &&
+            in_array($attribute, $this->virtual) &&
+            method_exists($this, ('_get'. ucfirst($attribute))));
     }
 
     /**
      * Calls virtual property method
      *
      * @param  string $attribute
-     *
      * @return mixed
      */
-    public function getVirtualProperty( $attribute )
+    public function getVirtualProperty($attribute)
     {
-        return call_user_func( [ $this, ( '_get' . ucfirst( $attribute ) ) ] );
+        return call_user_func([$this, ('_get'. ucfirst($attribute))]);
     }
 
     /**
@@ -328,35 +316,34 @@ Abstract Class HV_Data implements JsonSerializable
      * and the value corresponding to the key ($attribute) has is the name of an exiting function.
      *
      * @param  string $attribute
-     *
      * @return bool
      */
-    public function isFilterProperty( $attribute )
+    public function isFilterProperty($attribute)
     {
         return (
             (
-                isset( $this->filter ) &&
-                is_array( $this->filter ) &&
-                in_array( $attribute, $this->filter ) &&
-                method_exists( $this, ( '_filter' . ucfirst( $attribute ) ) )
+                isset($this->filter) &&
+                is_array($this->filter) &&
+                in_array($attribute, $this->filter) &&
+                method_exists($this, ('_filter'. ucfirst($attribute)))
             ) || (
-                isset( $this->filter ) &&
-                is_array( $this->filter ) &&
-                count( array_filter( array_keys( $this->filter ), 'is_string' ) ) > 0 &&
-                in_array( $attribute, array_keys( $this->filter ) ) &&
-                isset( $this->filter[ $attribute ] ) &&
+                isset($this->filter) &&
+                is_array($this->filter) &&
+                count(array_filter(array_keys($this->filter), 'is_string')) > 0 &&
+                in_array($attribute, array_keys($this->filter)) &&
+                isset($this->filter[$attribute]) &&
                 (
-                    function_exists( $this->filter[ $attribute ] ) ||
-                    $this->filter[ $attribute ] === 'the_content' ||
+                    function_exists($this->filter[$attribute]) ||
+                    $this->filter[$attribute] === 'the_content' ||
                     (
-                        class_exists( $this->filter[ $attribute ] ) &&
+                        class_exists($this->filter[$attribute]) &&
                         (
                             (
-                                is_object( $this->get( $attribute ) ) &&
-                                !$this->get( $attribute ) instanceof WP_Model
+                                is_object($this->get($attribute)) &&
+                                !$this->get($attribute) instanceof HV_Data
                             )
                             ||
-                            !Self::isArrayOfModels( $this->get( $attribute ) )
+                            !Self::isArrayOfModels($this->get($attribute))
                         )
                     )
                 )
@@ -368,51 +355,47 @@ Abstract Class HV_Data implements JsonSerializable
      * Calls filter property method
      *
      * @param  string $attribute
-     *
      * @return mixed
      */
-    public function getFilterProperty( $attribute )
+    public function getFilterProperty($attribute)
     {
-        if( count( array_filter( array_keys( $this->filter ), 'is_string' ) ) > 0 &&
-            isset( $this->filter[ $attribute ] )
-        ) {
+        if( count(array_filter(array_keys($this->filter), 'is_string')) > 0 &&
+            isset($this->filter[$attribute])){
 
-            if( $this->filter[ $attribute ] === 'the_content' ) {
-                return apply_filters( 'the_content', $this->get( $attribute ) );
-            } elseif( function_exists( $this->filter[ $attribute ] ) ) {
-                return ( $this->filter[$attribute]( $this->get( $attribute ) ) );
-            } elseif( class_exists( $this->filter[ $attribute ] ) ) {
+            if($this->filter[$attribute] === 'the_content'){
+                return apply_filters('the_content', $this->get($attribute));
+            }elseif(function_exists($this->filter[$attribute])){
+                return ($this->filter[$attribute]($this->get($attribute)));
+            }elseif(class_exists($this->filter[$attribute])){
 
-                $className = $this->filter[ $attribute ];
-                if( is_array( $this->get( $attribute ) ) ) {
-                    if( $this->isArrayOfModels( $this->get( $attribute ) ) ) {
-                        return $this->get( $attribute );
+                $className = $this->filter[$attribute];
+                if(is_array($this->get($attribute))){
+                    if($this->isArrayOfModels($this->get($attribute))){
+                        return $this->get($attribute);
                     }
 
-                    $return = [ ];
-                    foreach( $this->get( $attribute ) as $model ) {
-                        if( $className::exists( $model ) ) {
-                            $return[] = $className::find( $model );
+                    $return = [];
+                    foreach($this->get($attribute) as $model){
+                        if($className::exists($model)){
+                            $return[] = $className::find($model);
                         }
                     }
 
-                    $this->set( $attribute, $return );
-
+                    $this->set($attribute, $return);
                     return $return;
-                } else {
-                    if( is_object( $this->get( $attribute ) ) ) {
-                        return $this->get( $attribute );
+                }else{
+                    if(is_object($this->get($attribute))){
+                        return $this->get($attribute);
                     }
-                    $this->set( $attribute, $className::find( $this->get( $attribute ) ) );
-
-                    return $this->get( $attribute );
+                    $this->set($attribute, $className::find($this->get($attribute)));
+                    return $this->get($attribute);
                 }
             }
 
-            return null;
+            return NULL;
         }
 
-        return call_user_func_array( [ $this, ( '_filter' . ucfirst( $attribute ) ) ], [ $this->get( $attribute ) ] );
+        return call_user_func_array([$this, ('_filter'. ucfirst($attribute))], [$this->get($attribute)]);
     }
 
 
@@ -423,12 +406,11 @@ Abstract Class HV_Data implements JsonSerializable
      * Returns meta value for a meta key
      *
      * @param  string meta_key
-     *
      * @return string
      */
-    public function getMeta( $key )
+    public function getMeta($key)
     {
-        return get_post_meta( $this->id, ( $this->prefix . $key ), true );
+        return get_post_meta($this->ID, ($this->prefix.$key), TRUE);
     }
 
     /**
@@ -436,43 +418,41 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @param  string meta_key
      * @param  string meta_value
-     *
      * @return void
      */
-    public function setMeta( $key, $value )
+    public function setMeta($key, $value)
     {
-        if( is_object( $value ) && $value instanceof WP_Model ) {
-            if( $value->new || $value->dirty ) {
+        if(is_object($value) && $value instanceof HV_Data){
+            if($value->new || $value->dirty){
                 $value->save();
             }
 
-            $value = $value->id;
-        } elseif( $this->isArrayOfModels( $value ) ) {
-            $IDs = [ ];
-            foreach( $value as $model ) {
-                if( $model->new || $model->dirty ) {
+            $value = $value->ID;
+        }elseif($this->isArrayOfModels($value)){
+            $IDs = [];
+            foreach($value as $model){
+                if($model->new || $model->dirty){
                     $model->save();
                 }
 
-                $IDs[] = $model->id;
+                $IDs[] = $model->ID;
             }
 
             $value = $IDs;
         }
 
-        update_post_meta( $this->id, ( $this->prefix . $key ), $value );
+        update_post_meta($this->ID, ($this->prefix.$key), $value);
     }
 
     /**
      * Delete meta's meta
      *
      * @param  string meta_key
-     *
      * @return void
      */
-    public function deleteMeta( $key )
+    public function deleteMeta($key)
     {
-        delete_post_meta( $this->id, ( $this->prefix . $key ) );
+        delete_post_meta($this->ID, ($this->prefix.$key));
     }
 
 
@@ -484,22 +464,21 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @param  property $attribute [description]
      * @param  property $default
-     *
      * @return mixed
      *
      * @todo  investagte this method
      */
-    public function get( $attribute, $default = null )
+    public function get($attribute, $default = NULL)
     {
-        switch( $attribute ) {
+        switch($attribute){
             case 'the_content':
-                return apply_filters( 'the_content', $this->data['content'] );
+                return apply_filters('the_content', $this->data['content']);
                 break;
 
             default:
-                if( isset( $this->data[ $attribute ] ) ) {
-                    return $this->data[ $attribute ];
-                } else {
+                if(isset($this->data[$attribute])){
+                    return $this->data[$attribute];
+                }else{
                     return $default;
                 }
                 break;
@@ -511,13 +490,12 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @param string $attribute
      * @param string $value
-     *
      * @return void
      */
-    public function set( $attribute, $value )
+    public function set($attribute, $value)
     {
-        if( in_array( $attribute, $this->getAttributes() ) ) {
-            $this->data[ $attribute ] = $value;
+        if(in_array($attribute, $this->getAttributes())){
+            $this->data[$attribute] = $value;
         }
     }
 
@@ -527,37 +505,37 @@ Abstract Class HV_Data implements JsonSerializable
     /**
      * @return void
      */
-    public function __set( $attribute, $value )
+    public function __set($attribute, $value)
     {
-        if( $this->booted ) {
+        if($this->booted){
             $this->dirty = true;
         }
 
-        if( in_array( $attribute, $this->getAttributes() ) ) {
-            $this->set( $attribute, $value );
-        } else if( isset( $this->taxonomies ) && in_array( $attribute, $this->taxonomies ) ) {
-            $this->setTaxonomy( $attribute, $value );
+        if(in_array($attribute, $this->getAttributes())){
+            $this->set($attribute, $value);
+        }else if(isset($this->taxonomies) && in_array($attribute, $this->taxonomies)){
+            $this->setTaxonomy($attribute, $value);
         }
     }
 
     /**
      * @return void
      */
-    public function __get( $attribute )
+    public function __get($attribute)
     {
-        if( in_array( $attribute, $this->getAttributes() ) ) {
-            if( $this->isFilterProperty( $attribute ) ) {
-                return $this->getFilterProperty( $attribute );
+        if(in_array($attribute, $this->getAttributes())){
+            if($this->isFilterProperty($attribute)){
+                return $this->getFilterProperty($attribute);
             }
 
-            return $this->get( $attribute );
-        } else if( $this->isVirtualProperty( $attribute ) ) {
-            return $this->getVirtualProperty( $attribute );
-        } else if( isset( $this->taxonomies ) && in_array( $attribute, $this->taxonomies ) ) {
-            return $this->getTaxonomy( $attribute, 'name' );
-        } else if( $attribute === 'post_title' ) {
+            return $this->get($attribute);
+        }else if($this->isVirtualProperty($attribute)){
+            return $this->getVirtualProperty($attribute);
+        }else if(isset($this->taxonomies) && in_array($attribute, $this->taxonomies)){
+            return $this->getTaxonomy($attribute, 'name');
+        }else if($attribute === 'post_title'){
             return $this->title;
-        } else if( $attribute === 'post_content' ) {
+        }else if($attribute === 'post_content'){
             return $this->content;
         }
     }
@@ -569,133 +547,130 @@ Abstract Class HV_Data implements JsonSerializable
      *
      * @return void
      */
-    public function getTaxonomy( $attribute, $param = null )
+    public function getTaxonomy($attribute, $param = NULL)
     {
-        if( isset( $this->taxonomies ) && isset( $this->tax_data[ $attribute ] ) ) {
-            return array_map( function ( $tax ) use ( $param ) {
-                if( !is_null( $param ) ) {
+        if(isset($this->taxonomies) && isset($this->tax_data[$attribute])){
+            return array_map(function($tax) use ($param){
+                if(!is_null($param)){
                     return $tax->{$param};
                 }
 
                 return $tax;
-            }, $this->tax_data[ $attribute ] );
+            }, $this->tax_data[$attribute]);
         }
 
-        return [ ];
+        return [];
     }
 
     /**
      * @return void
      */
-    public function addTaxonomy( $taxonomy, $value )
+    public function addTaxonomy($taxonomy, $value)
     {
         $term;
-        if( is_int( $value ) ) {
-            $term = get_term_by( 'id', $value, $taxonomy );
-        } elseif( is_string( $value ) ) {
-            $term = get_term_by( 'slug', $value, $taxonomy );
+        if(is_int($value)){
+            $term = get_term_by('id', $value, $taxonomy);
+        }elseif(is_string($value)){
+            $term = get_term_by('slug', $value, $taxonomy);
         }
 
-        if( !empty( $term ) ) {
-            if( empty( $this->tax_data[ $taxonomy ] ) ) {
-                $this->tax_data[ $taxonomy ] = [ ];
+        if(!empty($term)){
+            if(empty($this->tax_data[$taxonomy])){
+                $this->tax_data[$taxonomy] = [];
             }
 
-            $this->tax_data[ $taxonomy ][] = $term;
-        } else {
-            return false;
+            $this->tax_data[$taxonomy][] = $term;
+        }else{
+            return FALSE;
         }
     }
 
     /**
      * @return void
      */
-    public function addTaxonomies( $attribute, Array $taxonomies )
+    public function addTaxonomies($attribute, Array $taxonomies)
     {
-        $this->tax_data[ $attribute ] = [ ];
-        foreach( $taxonomies as $taxonomy ) {
-            $this->addTaxonomy( $attribute, $taxonomy );
+        $this->tax_data[$attribute] = [];
+        foreach($taxonomies as $taxonomy){
+            $this->addTaxonomy($attribute, $taxonomy);
         }
     }
 
     /**
      * @return void
      */
-    public function removeTaxonomy( $attribute, $value )
+    public function removeTaxonomy($attribute, $value)
     {
-        $taxonomies = [ ];
-        if( !empty( $this->tax_data[ $attribute ] ) ) {
-            foreach( $this->tax_data[ $attribute ] as $tax ) {
-                if( is_int( $value ) ) {
-                    if( $tax->term_id !== $value ) {
+        $taxonomies = [];
+        if(!empty($this->tax_data[$attribute])){
+            foreach($this->tax_data[$attribute] as $tax){
+                if(is_int($value)){
+                    if($tax->term_id !== $value){
                         $taxonomies[] = $tax;
                     }
-                } elseif( is_string( $value ) ) {
-                    if( $tax->slug !== $value ) {
+                }elseif(is_string($value)){
+                    if($tax->slug !== $value){
                         $taxonomies[] = $tax;
                     }
                 }
             }
 
-            $this->tax_data[ $attribute ] = $taxonomies;
+            $this->tax_data[$attribute] = $taxonomies;
         }
     }
 
     /**
      * @return void
      */
-    public function removeTaxonomies( $attribute, Array $taxonomies )
+    public function removeTaxonomies($attribute, Array $taxonomies)
     {
-        foreach( $taxonomies as $taxonomy ) {
-            $this->removeTaxonomy( $attribute, $taxonomy );
+        foreach($taxonomies as $taxonomy){
+            $this->removeTaxonomy($attribute, $taxonomy);
         }
     }
 
     /**
      * @return void
      */
-    public function clearTaxonomy( $taxonomy )
+    public function clearTaxonomy($taxonomy)
     {
-        $this->addTaxonomies( $taxonomy, [ ] );
+        $this->addTaxonomies($taxonomy, []);
     }
 
     // -----------------------------------------------------
     // HELPER METHODS
     // -----------------------------------------------------
     /**
-     * Check if the post exists by Post id
+     * Check if the post exists by Post ID
      *
-     * @param  string|int $id           Post id
-     * @param  bool       $postTypeSafe Require post to be the same post type as the model
-     *
+     * @param  string|int   $ID   Post ID
+     * @param  bool 		$postTypeSafe Require post to be the same post type as the model
      * @return bool
      */
-    public static function exists( $id, $postTypeSafe = true )
+    public static function exists($ID, $postTypeSafe = TRUE)
     {
-        if( $postTypeSafe ) {
+        if($postTypeSafe){
             if(
-                ( get_post_status( $id ) !== false ) &&
-                ( get_post_type( $id ) === Self::getPostType() )
-            ) {
-                return true;
+                (get_post_status($ID) !== FALSE) &&
+                (get_post_type($ID) === Self::getPostType())){
+                return TRUE;
             }
-        } else {
-            return ( get_post_status( $id ) !== false );
+        }else{
+            return (get_post_status($ID) !== FALSE);
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
-     * Returns the total posts without using WP_Model::all()
+     * Returns the total posts without using HV_Data::all()
      *
      * @return int
      */
-    public static function count( $postStatus = 'publish' )
+    public static function count($postStatus = 'publish')
     {
-        $count = wp_count_posts( Self::getPostType() );
-
-        return !is_null( $count ) ? ( isset( $count->$postStatus ) ? intval( $count->$postStatus ) : 0 ) : 0;
+        $count = wp_count_posts(Self::getPostType());
+        return !is_null($count)? (isset($count->$postStatus)? intval($count->$postStatus) : 0) : 0;
     }
 
     /**
@@ -705,7 +680,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function post()
     {
-        return $this->post;
+        return $this->_post;
     }
 
     /**
@@ -715,21 +690,19 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function hasFeaturedImage()
     {
-        return ( get_the_post_thumbnail_url( $this->id ) !== false ) ? true : false;
+        return (get_the_post_thumbnail_url($this->ID) !== FALSE)? TRUE : FALSE;
     }
 
     /**
      * Get model's featured image or return $default if it does not exist
      *
      * @param  string $default
-     *
      * @return string
      */
-    public function featuredImage( $default = '' )
+    public function featuredImage($default = '')
     {
-        $featuredImage = get_the_post_thumbnail_url( $this->id );
-
-        return ( $featuredImage !== false ) ? $featuredImage : $default;
+        $featuredImage = get_the_post_thumbnail_url($this->ID);
+        return ($featuredImage !== FALSE)? $featuredImage : $default;
     }
 
     /**
@@ -739,36 +712,35 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function toArray()
     {
-        $model = [ ];
+        $model = [];
 
-        foreach( $this->attributes as $key => $attribute ) {
-            if( !empty( $this->protected ) && !in_array( $attribute, $this->protected ) ) {
+        foreach($this->attributes as $key => $attribute){
+            if(!empty($this->protected) && !in_array($attribute, $this->protected)){
                 // Do not add to $model
-            } else {
-                $model[ $attribute ] = $this->$attribute;
+            }else{
+                $model[$attribute] = $this->$attribute;
             }
         }
 
-        if( !empty( $this->serialize ) ) {
-            foreach( $this->serialize as $key => $attribute ) {
-                if( !empty( $this->protected ) && !in_array( $attribute, $this->protected ) ) {
+        if(!empty($this->serialize)){
+            foreach($this->serialize as $key => $attribute){
+                if(!empty($this->protected) && !in_array($attribute, $this->protected)){
                     // Do not add to $model
-                } else {
-                    $model[ $attribute ] = $this->$attribute;
+                }else{
+                    $model[$attribute] = $this->$attribute;
                 }
             }
         }
 
-        $model['id'] = $this->id;
+        $model['ID'] = $this->ID;
         $model['title'] = $this->title;
         $model['content'] = $this->content;
 
         return $model;
     }
 
-    public function postDate( $format = 'd-m-Y' )
-    {
-        return date( $format, strtotime( $this->post->post_date ) );
+    public function postDate($format = 'd-m-Y'){
+        return date($format, strtotime($this->_post->post_date));
     }
 
     /**
@@ -778,7 +750,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public static function single()
     {
-        return Self::find( get_the_ID() );
+        return Self::find(get_the_ID());
     }
 
     /**
@@ -788,7 +760,7 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function permalink()
     {
-        return get_permalink( $this->id );
+        return get_permalink($this->ID);
     }
 
 
@@ -796,68 +768,61 @@ Abstract Class HV_Data implements JsonSerializable
     // FINDERS
     // ----------------------------------------------------
     /**
-     * Find model by it's post id
+     * Find model by it's post ID
      *
-     * @param  int $id
-     *
+     * @param  int $ID
      * @return Object|NULL
      */
-    public static function find( $id )
+    public static function find($ID)
     {
-        if( Self::exists( $id ) ) {
+        if(Self::exists($ID)){
             $class = Self::newInstance();
-            $class->id = $id;
+            $class->ID = $ID;
             $class->boot();
-
             return $class;
         }
 
-        return null;
+        return NULL;
     }
 
     /**
-     * Get model by id without booting the model
+     * Get model by ID without booting the model
      *
-     * @param  int $id
-     *
+     * @param  int $ID
      * @return Object|NULL
      */
-    public static function findBypassBoot( $id )
+    public static function findBypassBoot($ID)
     {
-        if( Self::exists( $id ) ) {
+        if(Self::exists($ID)){
             $class = Self::newInstance();
-            $class->id = $id;
-
+            $class->ID = $ID;
             return $class;
         }
 
-        return null;
+        return NULL;
     }
 
     /**
      * Find most recent models
-     *
      * @param  integer $limit
-     *
      * @return Array
      */
-    public static function mostRecent( $limit = 1 )
+    public static function mostRecent($limit = 1)
     {
         $class = get_called_class();
-
-        return $class::finder( 'MostRecent__', [ 'limit' => $limit ] );
+        return $class::finder('MostRecent__', ['limit' => $limit]);
     }
 
-    public static function _finderMostRecent__( $args )
+    public static function _finderMostRecent__($args)
     {
         return [
-            'posts_per_page' => ( isset( $args['limit'] ) ? $args['limit'] : 3 ),
+            'posts_per_page' => (isset($args['limit'])? $args['limit'] : 3),
         ];
     }
 
-    public static function _postFinderMostRecent__( $results, $args )
+    public static function _postFinderMostRecent__($results, $args)
     {
-        if( $args['limit'] == '1' ) {
+        if($args['limit'] == '1'){
             return @$results[0];
         }
 
@@ -866,43 +831,41 @@ Abstract Class HV_Data implements JsonSerializable
 
 
     /**
-     * Find the model by id. If the post does not exist throw.
+     * Find the model by ID. If the post does not exist throw.
      *
      * @param  int $id
-     *
      * @return object
      *
      * @throws  \Exception
      */
-    public static function findOrFail( $id )
+    public static function findOrFail($ID)
     {
-        if( !Self::exists( $id ) ) {
-            throw new Exception( "Post {$id} not found" );
+        if(!Self::exists($ID)){
+            throw new Exception("Post {$ID} not found");
         }
 
-        return Self::find( $id );
+        return Self::find($ID);
     }
 
     /**
      * Returns all models
      *
      * @param  string $limit
-     *
      * @return array
      */
-    public static function all( $limit = '999999999' )
+    public static function all($limit = '999999999')
     {
-        $return = [ ];
+        $return = [];
         $args = [
-            'post_type'      => Self::getPostType(),
+            'post_type' 	 => Self::getPostType(),
             'posts_per_page' => $limit,
             'order'          => 'DESC',
             'orderby'        => 'id',
-            'post_status'    => [ 'publish' ],
+            'post_status'    => ['publish'],
         ];
 
-        foreach( ( new WP_Query( $args ) )->get_posts() as $post ) {
-            $return[] = Self::find( $post->id );
+        foreach((new WP_Query($args))->get_posts() as $post){
+            $return[] = Self::find($post->ID);
         }
 
         return $return;
@@ -911,28 +874,27 @@ Abstract Class HV_Data implements JsonSerializable
     /**
      * Retun an array of models as asoc array. Key by $value
      *
-     * @param  string $value
-     * @param  array  $models
-     *
+     * @param  string  $value
+     * @param  array   $models
      * @return array
      */
-    public static function asList( $value = null, $models = false )
+    public static function asList($value = NULL, $models = FALSE)
     {
-        if( !is_array( $models ) ) {
+        if(!is_array($models)){
             $self = get_called_class();
             $models = $self::all();
         }
 
-        $return = [ ];
-        foreach( $models as $model ) {
-            if( is_int( $model ) || $model instanceof WP_Post ) {
-                $model = Self::find( $model->id );
+        $return = [];
+        foreach($models as $model){
+            if(is_int($model) || $model instanceof WP_Post){
+                $model = Self::find($model->ID);
             }
 
-            if( is_null( $value ) ) {
-                $return[ $model->id ] = $model;
-            } else {
-                $return[ $model->id ] = $model->$value;
+            if(is_null($value)){
+                $return[$model->ID] = $model;
+            }else{
+                $return[$model->ID] = $model->$value;
             }
 
 
@@ -945,33 +907,32 @@ Abstract Class HV_Data implements JsonSerializable
      * Execute funder method
      *
      * @param  string $finder
-     * @param  array  $arguments
-     *
+     * @param  array $arguments
      * @return array
      */
-    public static function finder( $finder, Array $arguments = [ ] )
+    public static function finder($finder, Array $arguments = [])
     {
-        $return = [ ];
-        $finderMethod = '_finder' . ucfirst( $finder );
+        $return = [];
+        $finderMethod = '_finder'.ucfirst($finder);
         $class = get_called_class();
         $model = $class::newWithoutConstructor();
-        if( !in_array( $finderMethod, Self::extract( ( new ReflectionClass( get_called_class() ) )->getMethods(), 'name' ) ) ) {
-            throw new Exception( "Finder method {$finderMethod} not found in {$class}" );
+        if(!in_array($finderMethod, Self::extract(( new ReflectionClass(get_called_class()) )->getMethods(), 'name'))){
+            throw new Exception("Finder method {$finderMethod} not found in {$class}");
         }
 
-        $args = $model->$finderMethod( $arguments );
-        if( !is_array( $args ) ) {
-            throw new Exception( "Finder method must return an array" );
+        $args = $model->$finderMethod($arguments);
+        if(!is_array($args)){
+            throw new Exception("Finder method must return an array");
         }
 
         $args['post_type'] = Self::getPostType();
-        foreach( ( new WP_Query( $args ) )->get_posts() as $key => $post ) {
-            $return[] = Self::find( $post->id );
+        foreach((new WP_Query($args))->get_posts() as $key => $post){
+            $return[] = Self::find($post->ID);
         }
 
-        $postFinderMethod = '_postFinder' . ucfirst( $finder );
-        if( in_array( $postFinderMethod, Self::extract( ( new ReflectionClass( get_called_class() ) )->getMethods(), 'name' ) ) ) {
-            return $model->$postFinderMethod( $return, $arguments );
+        $postFinderMethod = '_postFinder'.ucfirst($finder);
+        if(in_array($postFinderMethod, Self::extract(( new ReflectionClass(get_called_class()) )->getMethods(), 'name'))){
+            return $model->$postFinderMethod($return, $arguments);
         }
 
         return $return;
@@ -980,46 +941,46 @@ Abstract Class HV_Data implements JsonSerializable
     /**
      * @return void
      */
-    public static function where( $key, $value = false )
+    public static function where($key, $value = FALSE)
     {
         $params = [
             'post_type' => Self::getPostType()
         ];
 
-        if( is_array( $value ) ) {
-            $params = array_merge( $params, $value );
+        if(is_array($value)){
+            $params = array_merge($params, $value);
         }
 
-        if( is_array( $key ) ) {
-            if( !isset( $params['meta_query'] ) ) {
-                $params['meta_query'] = [ ];
+        if(is_array($key)){
+            if(!isset($params['meta_query'])){
+                $params['meta_query'] = [];
             }
-            if( !isset( $params['tax_query'] ) ) {
-                $params['tax_query'] = [ ];
+            if(!isset($params['tax_query'])){
+                $params['tax_query'] = [];
             }
 
-            foreach( $key as $key_ => $meta ) {
-                if( $key_ === 'meta_relation' ) {
+            foreach($key as $key_ => $meta){
+                if($key_ === 'meta_relation'){
                     $params['meta_query']['relation'] = $meta;
-                } else if( $key_ === 'tax_relation' ) {
+                }else if($key_ === 'tax_relation'){
                     $params['tax_query']['relation'] = $meta;
-                } else if( !empty( $meta['taxonomy'] ) ) {
+                }else if(!empty($meta['taxonomy'])){
                     $params['tax_query'][] = [
                         'taxonomy' => $meta['taxonomy'],
-                        'field'    => isset( $meta['field'] ) ? $meta['field'] : 'slug',
+                        'field'    => isset($meta['field'])? $meta['field'] : 'slug',
                         'terms'    => $meta['terms'],
-                        'operator' => isset( $meta['operator'] ) ? $meta['operator'] : 'IN',
+                        'operator' => isset($meta['operator'])? $meta['operator'] : 'IN',
                     ];
-                } else {
+                }else{
                     $params['meta_query'][] = [
-                        'key'     => isset( $meta['key'] ) ? $meta['key'] : $meta['meta_key'],
-                        'value'   => isset( $meta['value'] ) ? $meta['value'] : $meta['meta_value'],
-                        'compare' => isset( $meta['compare'] ) ? $meta['compare'] : '=',
-                        'type'    => isset( $meta['type'] ) ? $meta['type'] : 'CHAR'
+                        'key'       => isset($meta['key'])? $meta['key'] : $meta['meta_key'],
+                        'value'     => isset($meta['value'])? $meta['value'] : $meta['meta_value'],
+                        'compare'   => isset($meta['compare'])? $meta['compare'] : '=',
+                        'type'      => isset($meta['type'])? $meta['type'] : 'CHAR'
                     ];
                 }
             }
-        } else {
+        }else{
             $params['meta_query'] = [
                 [
                     'key'     => $key,
@@ -1029,29 +990,28 @@ Abstract Class HV_Data implements JsonSerializable
             ];
         }
 
-        $query = new WP_Query( $params );
+        $query = new WP_Query($params);
 
-        $arr = [ ];
-        foreach( $query->get_posts() as $key => $post ) {
-            $arr[] = Self::find( $post->id );
+        $arr = [];
+        foreach($query->get_posts() as $key => $post){
+            $arr[] = Self::find($post->ID);
         }
-
         return $arr;
     }
 
     /**
      * @return void
      */
-    public static function in( $ids = [ ] )
+    public static function in($ids = [])
     {
-        $results = [ ];
-        if( !is_array( $ids ) ) {
+        $results = [];
+        if(!is_array($ids)){
             $ids = func_get_args();
         }
 
-        foreach( $ids as $key => $id ) {
-            if( Self::exists( $id ) ) {
-                $results[] = Self::find( $id );
+        foreach($ids as $key => $id){
+            if(Self::exists($id)){
+                $results[] = Self::find($id);
             }
         }
 
@@ -1064,65 +1024,63 @@ Abstract Class HV_Data implements JsonSerializable
     public static function query()
     {
         $model = Self::newWithoutConstructor();
-        $model->where = [ ];
-
+        $model->_where = [];
         return $model;
     }
 
-    public function params( $extra = [ ] )
+    public function params($extra = [])
     {
         $this->_params = $extra;
-
         return $this;
     }
 
-    public function meta( $key, $x, $y = null, $z = null )
+    public function meta($key, $x, $y = NULL, $z = NULL)
     {
-        if( !is_null( $z ) ) {
-            $this->where[] = [
+        if(!is_null($z)){
+            $this->_where[] = [
                 'key'     => $key,
                 'compare' => $x,
                 'value'   => $y,
                 'type'    => $z
             ];
-        } elseif( !is_null( $y ) ) {
-            $this->where[] = [
+        }elseif(!is_null($y)){
+            $this->_where[] = [
                 'key'     => $key,
                 'compare' => $x,
                 'value'   => $y,
             ];
-        } else {
-            $this->where[] = [
-                'key'   => $key,
-                'value' => $x,
+        }else{
+            $this->_where[] = [
+                'key'     => $key,
+                'value'   => $x,
             ];
         }
 
         return $this;
     }
 
-    public function tax( $taxonomy, $x, $y = null, $z = null )
+    public function tax($taxonomy, $x, $y = NULL, $z = NULL)
     {
-        if( !is_null( $z ) ) {
-            $this->where[] = [
-                'taxonomy' => $taxonomy,
-                'field'    => $x,
-                'operator' => $y,
-                'terms'    => $z,
+        if(!is_null($z)){
+            $this->_where[] = [
+                'taxonomy'  => $taxonomy,
+                'field'     => $x,
+                'operator'  => $y,
+                'terms'     => $z,
             ];
-        } elseif( !is_null( $y ) ) {
-            $this->where[] = [
-                'taxonomy' => $taxonomy,
-                'field'    => $x,
-                'operator' => 'IN',
-                'terms'    => $y,
+        }elseif(!is_null($y)){
+            $this->_where[] = [
+                'taxonomy'  => $taxonomy,
+                'field'     => $x,
+                'operator'  => 'IN',
+                'terms'     => $y,
             ];
-        } else {
-            $this->where[] = [
-                'taxonomy' => $taxonomy,
-                'field'    => ( is_int( $x ) ? 'term_id' : 'slug' ),
-                'operator' => 'IN',
-                'terms'    => $x,
+        }else{
+            $this->_where[] = [
+                'taxonomy'  => $taxonomy,
+                'field'     => (is_int($x)? 'term_id' : 'slug'),
+                'operator'  => 'IN',
+                'terms'     => $x,
             ];
         }
 
@@ -1131,14 +1089,13 @@ Abstract Class HV_Data implements JsonSerializable
 
     public function execute()
     {
-        return Self::where( $this->where, $this->_params );
+        return Self::where($this->_where, $this->_params);
     }
 
-    public function executeAsList( $key = null )
+    public function executeAsList($key = NULL)
     {
-        $models = Self::where( $this->where, $this->_params );
-
-        return Self::asList( $key, $models );
+        $models = Self::where($this->_where, $this->_params);
+        return Self::asList($key, $models);
     }
 
     // -----------------------------------------------------
@@ -1147,58 +1104,57 @@ Abstract Class HV_Data implements JsonSerializable
     /**
      * Save the model and all of it's associated data
      *
-     * @param Array $overrides List of parameters to override for wp_insert_post(), such as post_status
+     * @param Array $overrides  List of parameters to override for wp_insert_post(), such as post_status
      *
      * @return Object $this
      */
-    public function save( $overrides = [ ] )
+    public function save($overrides = [])
     {
-        $this->triggerEvent( 'saving' );
+        $this->triggerEvent('saving');
 
-        $overwrite = array_merge( $overrides, [
+        $overwrite = array_merge($overrides, [
             'post_type' => Self::getPostType()
-        ] );
+        ]);
 
         Self::removeHooks();
 
-        if( !is_null( $this->id ) ) {
+        if(!is_null($this->ID)){
             $defaults = [
-                'id'           => $this->id,
+                'ID'           => $this->ID,
                 'post_title'   => $this->title,
-                'post_content' => ( $this->content !== null ) ? $this->content : ' ',
+                'post_content' => ($this->content !== NULL)? $this->content :  ' ',
             ];
 
-            wp_update_post( array_merge( $defaults, $overwrite ) );
-        } else {
-            $this->triggerEvent( 'inserting' );
+            wp_update_post(array_merge($defaults, $overwrite));
+        }else{
+            $this->triggerEvent('inserting');
             $defaults = [
                 'post_status'  => 'publish',
                 'post_title'   => $this->title,
-                'post_content' => ( $this->content !== null ) ? $this->content : ' ',
+                'post_content' => ($this->content !== NULL)? $this->content :  ' ',
             ];
 
-            $this->id = wp_insert_post( array_merge( $defaults, $overwrite ) );
-            $this->post = get_post( $this->id );
-            $this->triggerEvent( 'inserted' );
+            $this->ID = wp_insert_post(array_merge($defaults, $overwrite));
+            $this->_post = get_post($this->ID);
+            $this->triggerEvent('inserted');
         }
 
         Self::addHooks();
 
-        if( !empty( $this->taxonomies ) ) {
-            foreach( $this->taxonomies as $taxonomy ) {
-                wp_set_post_terms( $this->id, $this->getTaxonomy( $taxonomy, 'term_id' ), $taxonomy );
+        if(!empty($this->taxonomies)){
+            foreach($this->taxonomies as $taxonomy) {
+                wp_set_post_terms($this->ID, $this->getTaxonomy($taxonomy, 'term_id'), $taxonomy);
             }
         }
 
-        foreach( $this->attributes as $attribute ) {
-            $this->setMeta( $attribute, $this->get( $attribute, '' ) );
+        foreach($this->attributes as $attribute){
+            $this->setMeta($attribute, $this->get($attribute, ''));
         }
 
-        $this->setMeta( '_id', $this->id );
-        $this->triggerEvent( 'saved' );
-        $this->dirty = false;
-        $this->new = false;
-
+        $this->setMeta('_id', $this->ID);
+        $this->triggerEvent('saved');
+        $this->dirty = FALSE;
+        $this->new = FALSE;
         return $this;
     }
 
@@ -1210,9 +1166,9 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function delete()
     {
-        $this->triggerEvent( 'deleting' );
-        wp_trash_post( $this->id );
-        $this->triggerEvent( 'deleted' );
+        $this->triggerEvent('deleting');
+        wp_trash_post($this->ID);
+        $this->triggerEvent('deleted');
     }
 
     /**
@@ -1220,34 +1176,33 @@ Abstract Class HV_Data implements JsonSerializable
      */
     public function hardDelete()
     {
-        $this->triggerEvent( 'hardDeleting' );
+        $this->triggerEvent('hardDeleting');
 
         $defaults = [
-            'id'           => $this->id,
+            'ID'           => $this->ID,
             'post_title'   => '',
             'post_content' => '',
         ];
 
-        wp_update_post( $defaults );
+        wp_update_post($defaults);
 
-        foreach( $this->attributes as $attribute ) {
-            $this->deleteMeta( $attribute );
-            $this->set( $attribute, null );
+        foreach($this->attributes as $attribute){
+            $this->deleteMeta($attribute);
+            $this->set($attribute, NULL);
         }
 
-        $this->setMeta( '_id', $this->id );
-        $this->setMeta( '_hardDeleted', '1' );
-        wp_delete_post( $this->id, true );
-        $this->triggerEvent( 'hardDeleted' );
+        $this->setMeta('_id', $this->ID);
+        $this->setMeta('_hardDeleted', '1');
+        wp_delete_post($this->ID, TRUE);
+        $this->triggerEvent('hardDeleted');
     }
 
     /**
      * @return void
      */
-    public static function restore( $id )
+    public static function restore($ID)
     {
-        wp_untrash_post( $id );
-
-        return Self::find( $id );
+        wp_untrash_post($ID);
+        return Self::find($ID);
     }
 }
