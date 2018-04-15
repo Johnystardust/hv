@@ -39,7 +39,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <?php echo do_shortcode('[hockey_vacatures_vacature_map2]'); ?>
+    <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
 
     <?php get_footer() ?>
 </div>

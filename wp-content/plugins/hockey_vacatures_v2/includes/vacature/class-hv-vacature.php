@@ -22,8 +22,51 @@ class HV_Vacature extends WP_Model {
         parent::__construct();
     }
 
-    public function get_single_info(){
-        $additional_data = get_user_meta($this->post()->post_author, 'hv_user_data', true);
+    public function get_vacature_author_meta_by_key($key){
+        if(!empty(get_user_meta($this->post()->post_author, $key, true))){
+            return get_user_meta($this->post()->post_author, $key, true);
+        }
+
+        return false;
+    }
+
+    public function get_vacature_author_email(){
+        $user = get_userdata($this->post()->post_author);
+        return $user->user_email;
+    }
+
+    public function get_vacature_author_url(){
+        $user = get_userdata($this->post()->post_author);
+        return $user->user_url;
+    }
+
+    public function get_vacature_gender(){
+
+        if($this->gender == 'male'){
+            return __('Man', 'hockey_vacatures');
+        }elseif($this->gender == 'female'){
+            return __('Vrouw', 'hockey_vacatures');
+        }elseif($this->gender == 'either'){
+            return __('Geen voorkeur', 'hockey_vacatures');
+        }
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+    public function get_vacature_meta_by_key($key){
+        return $this->{$key};
+    }
+
+
+    public function get_single_info_by_key($key){
+        $additional_data = get_user_meta($this->post()->post_author, $key, true);
 
 //        unset( $additional_data['postal'] );
 //        unset( $additional_data['addition'] );

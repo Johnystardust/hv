@@ -31,22 +31,24 @@ class HV_Template_Loader {
     /**
      * Get the default template file.
      *
+     * // TODO: REDIRECT TO 404 OR FORBIDDEN IF THE USER IS NOT LOGGED IN ON PAGES WHERE THIS IS REQUIRED
+     *
      * @return string
      */
     private static function get_default_template_file(){
         if( is_singular( 'vacature' ) ) {
             $default_file = 'single-vacature.php';
         }
-        elseif( is_page( 'nieuwe-vacature' ) ) {
+        elseif( is_page( 'nieuwe-vacature' ) && is_user_logged_in() ) {
             $default_file = 'vacature-form-page.php';
         }
-        elseif( is_page( 'bewerk-vacature' ) ) {
+        elseif( is_page( 'bewerk-vacature' ) && is_user_logged_in() ) {
             $default_file = 'vacature-form-page.php';
         }
         elseif( is_page( 'registreren' ) ) {
             $default_file = 'register-page.php';
         }
-        elseif( is_page( 'profiel-bewerken' ) ) {
+        elseif( is_page( 'profiel-bewerken' ) && is_user_logged_in() ) {
             $default_file = 'register-page.php';
         }
         elseif( is_post_type_archive( 'vacature' ) ) {

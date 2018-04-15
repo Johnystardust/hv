@@ -22,9 +22,6 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             $this->vacature = new HV_Vacature();
         }
 
-        var_dump($this->vacature->post()->post_author);
-        var_dump(get_current_user_id());
-
         // The form data
         $this->form_fields = array(
             'title'    => array(
@@ -81,12 +78,12 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             ),
             'content'  => array(
                 'type'        => 'textarea',
-                'label'       => __( 'Content', 'hockey_vacatures' ),
+                'label'       => __( 'Bericht', 'hockey_vacatures' ),
                 'name'        => 'content',
                 'col_size'    => 'col-12',
                 'required'    => true,
                 'value'       => $this->vacature->content,
-                'placeholder' => 'test',
+                'placeholder' => 'Bericht',
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text',
@@ -143,37 +140,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         }
 
         // TODO: ADD REDIRECT TO SAVED VACATURE
-
         include_once( HV_ABSPATH . 'templates/shortcodes/vacature-form.php' );
-
-        return $output;
-
-        // TODO: FIX
-        if( $this->edit ) {
-            if( $this->user_can_edit() ) {
-                // Add the template for the form
-                include_once( HV_ABSPATH . 'templates/shortcodes/vacature-form.php' );
-            } else {
-                $output .= $this->render_popup_message(
-                    __( 'Foutje bedankt', 'hockey_vacatures' ),
-                    __( 'De vacature kan niet worden geplaatst door de volgende reden(en):', 'hockey_vacatures' ),
-                    'error',
-                    $this->form_data->get_error_message(),
-                    array( '#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
-                );
-            }
-        } else {
-            // Add the template for the form
-            include_once( HV_ABSPATH . 'templates/shortcodes/vacature-form.php' );
-        }
 
         return $output;
     }
 
     /**
      * Save the vacature in the form
-     *
-     * TODO: RETURN WP_Error
      *
      * @return bool
      */
@@ -201,8 +174,8 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
      */
     private function user_can_edit()
     {
-        if( get_current_user_id() !== intval( $this->vacature->post()->post_author ) ) {
-            // TODO: LOG THIS EVENT
+        if( $this->edit !== false && get_current_user_id() !== intval( $this->vacature->post()->post_author ) ) {
+            // TODO: LOG THIS EVENT: a user has tried to edit an page that was not his
            return false;
         }
 

@@ -114,8 +114,8 @@ class HV_Forms_Helper
                     return new WP_Error( 'error', 'Ongeldig geslacht' );
                 }
             } elseif( $fields[ $key ]['validation']['type'] == 'function' ) {
-                if( !in_array( $value, array( 'coach', 'player', 'trainer' ) ) ) {
-                    return new WP_Error( 'error', 'Ongeldig geslacht' );
+                if( !in_array( $value, array( 'coach', 'player', 'trainer', 'other' ) ) ) {
+                    return new WP_Error( 'error', 'Ongeldige functie' );
                 }
             } elseif( $fields[ $key ]['validation']['type'] == 'url' && !filter_var( $value, FILTER_VALIDATE_URL ) ) {
                 return new WP_Error( 'website', 'Er is een niet geldige URL ingevuld. Controleer de velden.' );

@@ -30,20 +30,55 @@ get_header(); ?>
                 <div class="col-12 col-md-8 main-column">
                     <h2 class="font-weight-bold"><?php echo $vacature->title; ?></h2>
                     <div class="spacer"></div>
-
-                    <?php $vacature_info = $vacature->get_single_info(); ?>
-
                     <div class="row mb-3">
                         <div class="col-12 col-md-6">
                             <ul class="vacature-info">
-<!--                                TODO: FIX ME !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-<!--                                --><?php //foreach( $vacature_info as $key => $value ): ?>
-<!--                                    <li>-->
-<!--                                        <i class="fa fa-map-marker"></i>-->
-<!--                                        <strong>--><?php //echo $value['label']; ?><!--</strong>-->
-<!--                                        --><?php //echo $value['value']; ?>
-<!--                                    </li>-->
-<!--                                --><?php //endforeach; ?>
+                                <li>
+                                    <i class="fa fa-user"></i>
+                                    <strong><?php echo __('Functie:', TEXTDOMAIN); ?></strong>
+                                    <?php echo ucfirst($vacature->function); ?>
+                                </li>
+                                <li>
+                                    <i class="fa fa-user"></i>
+                                    <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_gender() ?>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_author_meta_by_key('city'); ?>
+
+                                </li>
+                                <li>
+                                    <i class="fa fa-globe"></i>
+                                    <strong><?php echo __('Provincie:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_author_meta_by_key('province'); ?>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <ul class="vacature-data">
+                                <li>
+                                    <i class="fa fa-calendar"></i>
+                                    <strong><?php echo __('Datum:', TEXTDOMAIN); ?></strong>
+                                    <?php echo get_the_date('d-m-Y'); ?>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope-o"></i>
+                                    <strong><?php echo __('Mail:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_author_email(); ?>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone"></i>
+                                    <strong><?php echo __('Tel:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_author_meta_by_key('tel'); ?>
+                                </li>
+                                <li>
+                                    <i class="fa fa-external-link"></i>
+                                    <strong><?php echo __('Website:', TEXTDOMAIN); ?></strong>
+                                    <?php echo $vacature->get_vacature_author_url(); ?>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -72,6 +107,7 @@ get_header(); ?>
 </div>
 
 <?php //echo do_shortcode('[hockey_vacatures_vacature_map lat="'.$latlng[1].'" lng="'.$latlng[0].'"]'); ?>
+<?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
 
 
 <?php get_footer(); ?>

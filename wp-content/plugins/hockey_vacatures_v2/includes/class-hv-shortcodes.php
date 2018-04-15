@@ -13,7 +13,8 @@ class HV_Shortcodes
             'hockey_vacatures_top_bar'       => __CLASS__ . '::top_bar',
             'hockey_vacatures_register_form' => __CLASS__ . '::register_form',
             'hockey_vacatures_vacature_form' => __CLASS__ . '::vacature_form',
-            'hockey_vacatures_user_panel'    => __CLASS__ . '::user_panel'
+            'hockey_vacatures_user_panel'    => __CLASS__ . '::user_panel',
+            'hockey_vacatures_vacature_map'  => __CLASS__ . '::vacature_map'
         );
 
         foreach( $shortcodes as $shortcode => $function ) {
@@ -83,6 +84,13 @@ class HV_Shortcodes
     public static function user_panel()
     {
         $shortcode = new HV_Shortcode_User_Panel();
+
+        return $shortcode->output();
+    }
+
+    public static function vacature_map( $atts = array() )
+    {
+        $shortcode = new HV_Shortcode_Vacature_Map( $atts );
 
         return $shortcode->output();
     }
