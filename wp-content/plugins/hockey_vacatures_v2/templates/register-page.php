@@ -17,8 +17,7 @@ get_header(); ?>
 <div id="register-page" class="wrapper page-normal">
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
-    <?php // Top Bar ?>
-    <?php echo do_shortcode( '[hockey_vacatures_top_bar]' ); ?>
+    <div id="vacatures-top-bar" class="top-bar container-fluid"></div>
 
     <div class="container-fluid main-content">
         <div class="container main-content-inner">
@@ -38,7 +37,6 @@ get_header(); ?>
                         $edit_id = isset( $_GET['id'] ) ? $_GET['id'] : null;
                         echo do_shortcode( '[hockey_vacatures_register_form edit_id="' . $edit_id . '"]' );
                     }
-
                     ?>
                 </div>
                 <div class="col-12 col-md-4 col-xl-3 push-xl-1 sidebar-column">

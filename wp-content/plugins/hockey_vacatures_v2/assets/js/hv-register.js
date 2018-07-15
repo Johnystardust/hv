@@ -158,20 +158,19 @@
         // Show correct form fields based on role
         // ======================================
         function role_select($value){
-            console.log($value);
-            if($value == 'player'){
+            if($value == 'speler' || $value == 'coach' || $value == 'trainer'){
                 $('.club-fields').addClass('disabled');
-                $('.player-fields.disabled').removeClass('disabled');
-                $('.player-fields input, .player-fields select').removeAttr('disabled');
+                $('.user-fields.disabled').removeClass('disabled');
+                $('.user-fields input, .user-fields select').removeAttr('disabled');
             }
             else if($value == 'club'){
-                $('.player-fields').addClass('disabled');
+                $('.user-fields').addClass('disabled');
                 $('.club-fields.disabled').removeClass('disabled');
                 $('.club-fields input, .club-fields select').removeAttr('disabled');
             }
             else {
-                $('.player-fields').addClass('disabled');
-                $('.player-fields input, .player-fields select').attr('disabled', 'disabled');
+                $('.user-fields').addClass('disabled');
+                $('.user-fields input, .user-fields select').attr('disabled', 'disabled');
                 $('.club-fields').addClass('disabled');
                 $('.club-fields input, .club-fields select').attr('disabled', 'disabled');
             }

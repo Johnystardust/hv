@@ -15,7 +15,7 @@ class HV_Admin {
      */
     public function includes(){
         include_once( dirname( __FILE__ ) . '/class-hv-admin-menus.php' );
-        include_once( dirname( __FILE__ ) . '/class-hv-admin-post-types.php' );
+        include_once( dirname( __FILE__ ) . '/class-hv-admin-meta-boxes.php' );
     }
 
 

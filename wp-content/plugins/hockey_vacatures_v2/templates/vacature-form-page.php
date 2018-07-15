@@ -17,8 +17,7 @@ get_header(); ?>
 <div id="register-page" class="page-<?php the_ID(); ?> page-normal">
     <?php get_template_part( 'template-parts/page/page', 'banner' ); ?>
 
-    <?php // Top Bar ?>
-    <?php echo do_shortcode('[hockey_vacatures_top_bar]'); ?>
+    <div id="vacatures-top-bar" class="top-bar container-fluid"></div>
 
     <div class="container-fluid main-content">
         <div class="container main-content-inner">

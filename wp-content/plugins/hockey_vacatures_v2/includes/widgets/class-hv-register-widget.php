@@ -9,7 +9,7 @@ class HV_Register_Widget extends WP_Widget {
     function __construct(){
         parent::__construct(
             'hv_register_widget',
-            __( 'HV: Login/Register Widget', 'hockey_vacatures' ),
+            __( 'HV: Login/Register', 'hockey_vacatures' ),
             array(
                 'description' => __( 'This widget provides a user login form, link to register page, logout link and my profile opening button. The menu links are best placed in a header of other logical place for ul ordered list.', 'hockey_vacatures' ),
             )

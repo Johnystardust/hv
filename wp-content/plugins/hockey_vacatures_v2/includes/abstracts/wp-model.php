@@ -575,6 +575,7 @@ Abstract Class WP_Model implements JsonSerializable
         }
 
         if(!empty($term)){
+
             if(empty($this->tax_data[$taxonomy])){
                 $this->tax_data[$taxonomy] = [];
             }

@@ -15,9 +15,9 @@
                 <?php $this->build_form( $this->get_form_section( array('c_name', 'c_cname', 'c_email', 'c_web_url', 'c_tel', 'blank', 'c_description') ) ); ?>
             </div>
 
-            <div class="player-fields disabled row animated fadeIn">
+            <div class="user-fields disabled row animated fadeIn">
                 <div class="col-12">
-                    <strong class="text-uppercase"><?php echo __('Speler', 'hockey_vacatures'); ?></strong>
+                    <strong class="text-uppercase"><?php echo __('Gebruiker', 'hockey_vacatures'); ?></strong>
                     <hr>
                 </div>
                 <?php $this->build_form( $this->get_form_section( array('p_fname', 'p_lname', 'p_tel', 'p_email', 'p_age', 'p_gender', 'p_description') ) ); ?>

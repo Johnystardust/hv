@@ -114,7 +114,8 @@ class HV_Forms_Helper
                     return new WP_Error( 'error', 'Ongeldig geslacht' );
                 }
             } elseif( $fields[ $key ]['validation']['type'] == 'function' ) {
-                if( !in_array( $value, array( 'coach', 'player', 'trainer', 'other' ) ) ) {
+//                if( !in_array( $value, array( 'coach', 'player', 'trainer', 'other' ) ) ) {
+                if( !in_array( $value, $this->_get_allowed_functions() ) ) {
                     return new WP_Error( 'error', 'Ongeldige functie' );
                 }
             } elseif( $fields[ $key ]['validation']['type'] == 'url' && !filter_var( $value, FILTER_VALIDATE_URL ) ) {
@@ -291,5 +292,25 @@ class HV_Forms_Helper
         }
 
         return $fields_html;
+    }
+
+    /**
+     * Return the allowed function options
+     *
+     * @return array
+     */
+    private function _get_allowed_functions(){
+        $options = array();
+
+        $vacature_terms = get_terms( array(
+            'taxonomy' => 'vacature_category',
+            'hide_empty' => false,
+        ) );
+
+        foreach ($vacature_terms as $vacature_term){
+            $options[] = $vacature_term->term_id;
+        }
+
+        return $options;
     }
 }

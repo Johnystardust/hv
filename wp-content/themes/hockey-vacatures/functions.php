@@ -63,6 +63,17 @@ function hv_register_widget_areas(){
         'after_title'   => '</h5><div class="spacer"></div>',
     ));
 
+    // Archive Sidebar
+    register_sidebar(array(
+        'name'          => __('Archive Sidebar', TEXTDOMAIN),
+        'id'            => 'archive_sidebar',
+        'description'   => __('Archive sidebar displayed on archive templates.', TEXTDOMAIN),
+        'before_widget' => '<div id="%1$s" class="%2$s widget sidebar-widget">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h5 class="widget-title">',
+        'after_title'   => '</h5><div class="spacer"></div>',
+    ));
+
     // Top Header
     register_sidebar(array(
         'name'          => __('Header Top Bar', TEXTDOMAIN),

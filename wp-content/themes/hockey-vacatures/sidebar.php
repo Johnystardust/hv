@@ -6,4 +6,8 @@
  * Time: 5:46 PM
  */
 
+
+// TODO: FIX THE SIDEBARS
+dynamic_sidebar('archive_sidebar');
+
 dynamic_sidebar( 'sidebar' ); ?>

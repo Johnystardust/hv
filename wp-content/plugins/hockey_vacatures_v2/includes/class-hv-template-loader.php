@@ -39,17 +39,31 @@ class HV_Template_Loader {
         if( is_singular( 'vacature' ) ) {
             $default_file = 'single-vacature.php';
         }
-        elseif( is_page( 'nieuwe-vacature' ) && is_user_logged_in() ) {
-            $default_file = 'vacature-form-page.php';
+        elseif( is_page( 'nieuwe-vacature' ) ) {
+            if(is_user_logged_in()){
+                $default_file = 'vacature-form-page.php';
+            } else {
+                wp_die(__('You need to be logged in to create a new vacature.', 'hockey_vacatures'));
+            }
         }
-        elseif( is_page( 'bewerk-vacature' ) && is_user_logged_in() ) {
-            $default_file = 'vacature-form-page.php';
+        elseif( is_page( 'bewerk-vacature' ) ) {
+            $post = get_post((int)$_GET['id']);
+
+            if(is_user_logged_in() && $post->post_author == get_current_user_id()){
+                $default_file = 'vacature-form-page.php';
+            } else {
+                wp_die(__('You are trying to edit someone else post. You naughty!', 'hockey_vacatures'));
+            }
         }
         elseif( is_page( 'registreren' ) ) {
             $default_file = 'register-page.php';
         }
-        elseif( is_page( 'profiel-bewerken' ) && is_user_logged_in() ) {
-            $default_file = 'register-page.php';
+        elseif( is_page( 'profiel-bewerken' ) ) {
+            if(is_user_logged_in()){
+                $default_file = 'register-page.php';
+            } else {
+                wp_die(__('You need to be logged in to edit your profile.', 'hockey_vacatures'));
+            }
         }
         elseif( is_post_type_archive( 'vacature' ) ) {
             $default_file = 'archive-vacature.php';

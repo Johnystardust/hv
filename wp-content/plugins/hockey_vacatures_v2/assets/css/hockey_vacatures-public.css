@@ -222,6 +222,45 @@ body.hv-side-panel-open:after {
   #vacature-archive .main-content .filter label {
     color: #ffffff; }
 
+.vacature-list .navigation.pagination {
+  margin-top: 5rem;
+  text-align: left; }
+  .vacature-list .navigation.pagination .screen-reader-text {
+    display: none; }
+  .vacature-list .navigation.pagination .nav-links {
+    text-align: left; }
+    .vacature-list .navigation.pagination .nav-links .page-numbers {
+      display: inline-block;
+      margin-right: 1rem;
+      margin-bottom: 1rem; }
+      .vacature-list .navigation.pagination .nav-links .page-numbers.dots {
+        display: none; }
+      .vacature-list .navigation.pagination .nav-links .page-numbers.next span, .vacature-list .navigation.pagination .nav-links .page-numbers.prev span {
+        display: inline-block; }
+    .vacature-list .navigation.pagination .nav-links span.current {
+      font-size: 1.1rem;
+      padding: .8rem 1.6rem;
+      font-weight: 600;
+      border: 2px solid #177FBF;
+      border-radius: 0;
+      color: #177FBF; }
+    .vacature-list .navigation.pagination .nav-links a {
+      font-size: 1.1rem;
+      padding: .8rem 1.6rem;
+      font-weight: 600;
+      border: 2px solid #177FBF;
+      border-radius: 0;
+      background-color: #177FBF;
+      color: #ffffff;
+      transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out; }
+      .vacature-list .navigation.pagination .nav-links a:hover {
+        background-color: #0E4C72;
+        border-color: #01549b;
+        color: #ffffff; }
+
 .archive-pagination {
   margin-top: 5rem;
   text-align: left; }

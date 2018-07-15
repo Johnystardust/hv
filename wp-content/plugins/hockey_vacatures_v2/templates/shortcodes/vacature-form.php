@@ -5,8 +5,6 @@
                 <?php $this->build_form($this->form_fields); ?>
 
                 <div class="form-group col-12">
-
-
                     <button class="btn btn-primary" type="submit" name="submit"><i class="fa fa-paper-plane"></i> &nbsp; <?php echo (isset($_GET['id'])) ? __( 'Vacature Bewerken', TEXTDOMAIN ) : __( 'Vacature Plaatsen', TEXTDOMAIN ); ?></button>
                 </div>
             </div>

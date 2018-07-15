@@ -25,6 +25,9 @@ class Hockey_Vacatures {
         do_action( 'hockey_vacatures_loaded' );
     }
 
+    /**
+     * Register the hooks
+     */
     private function init_hooks(){
         register_activation_hook( HV_PLUGIN_FILE, array( 'HV_Install', 'install' ) );
     }
@@ -50,24 +53,27 @@ class Hockey_Vacatures {
         include_once( HV_ABSPATH . 'includes/class-hv-autoloader.php' );
 
         // Abstracts
-        include_once( HV_ABSPATH . 'includes/abstracts/abstract-hv-data.php' );
+        include_once( HV_ABSPATH . 'includes/abstracts/abstract-hv-data.php' ); // Abstract data class for the plugin
 
         // Core Classes
-        include_once( HV_ABSPATH . 'includes/hv-core-functions.php' );
-        include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );
-        include_once( HV_ABSPATH . 'includes/class-hv-install.php' );
+        include_once( HV_ABSPATH . 'includes/hv-core-functions.php' );          // Core functions that can be used across the plugin
+        include_once( HV_ABSPATH . 'includes/class-hv-post-types.php' );        // Registers post types and taxonomies
+        include_once( HV_ABSPATH . 'includes/class-hv-install.php' );           // The Installation class
 
         // Include Classes by request
         // =============================================================================================================
 
         // Include the admin class
         if ( $this->is_request( 'admin' ) ) {
-            include_once( HV_ABSPATH . 'includes/admin/class-hv-admin.php' );
+            include_once( HV_ABSPATH . 'includes/admin/class-hv-admin.php' );   // Admin class holds the functions for the admin
         }
 
         // Include the frontend classes
         if ( $this->is_request( 'frontend' ) ) {
-            $this->frontend_includes();
+            include_once( HV_ABSPATH . 'includes/class-hv-template-loader.php' );
+            include_once( HV_ABSPATH . 'includes/class-hv-frontend-scripts.php' );
+            include_once( HV_ABSPATH . 'includes/class-hv-forms-helper.php' );
+            include_once( HV_ABSPATH . 'includes/class-hv-shortcodes.php' );
         }
 
         // TODO: ??? IMPLEMENT SESSIONS ???
@@ -77,16 +83,6 @@ class Hockey_Vacatures {
 
 //        $this->query = new WC_Query();
 //        $this->api   = new WC_API();
-    }
-
-    /**
-     * Include required frontend files.
-     */
-    public function frontend_includes() {
-        include_once( HV_ABSPATH . 'includes/class-hv-template-loader.php' );
-        include_once( HV_ABSPATH . 'includes/class-hv-frontend-scripts.php' );
-        include_once( HV_ABSPATH . 'includes/class-hv-forms-helper.php' );
-        include_once( HV_ABSPATH . 'includes/class-hv-shortcodes.php' );
     }
 
     /**

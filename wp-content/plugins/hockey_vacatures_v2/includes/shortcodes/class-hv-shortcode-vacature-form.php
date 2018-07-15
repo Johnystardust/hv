@@ -43,13 +43,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'type'       => 'select',
                 'label'      => __( 'Functie', 'hockey_vacatures' ),
                 'name'       => 'function',
-                'options'    => array(
-                    'default' => __( 'Maak een keuze...', 'hockey_vacatures' ),
-                    'coach'   => __( 'Coach', 'hockey_vacatures' ),
-                    'player'  => __( 'Speler', 'hockey_vacatures' ),
-                    'trainer' => __( 'Trainer', 'hockey_vacatures' ),
-                    'other'   => __( 'Overig', 'hockey_vacatures' )
-                ),
+                'options'    => hv_get_function_options(),
                 'col_size'   => 'col-12 col-md-6',
                 'required'   => true,
                 'value'      => $this->vacature->function,
@@ -78,6 +72,8 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             ),
             'content'  => array(
                 'type'        => 'textarea',
+                'cols'        => 5,
+                'rows'        => 10,
                 'label'       => __( 'Bericht', 'hockey_vacatures' ),
                 'name'        => 'content',
                 'col_size'    => 'col-12',
@@ -158,7 +154,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $this->vacature->gender = $this->form_data['gender'];
 
         // TODO: FIX TAXONOMY
-        $this->vacature->addTaxonomy( 'category', 'vacature' );
+        $this->vacature->addTaxonomy( 'vacature_category', (int)$this->form_data['function'] );
 
         if( $this->vacature = $this->vacature->save() ) {
             return true;

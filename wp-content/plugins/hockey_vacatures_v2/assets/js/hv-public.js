@@ -63,12 +63,16 @@
         });
 
         // -- Close side panel
-        $('a[href="#close-side-panel"]').on('click', function(){
+        $('a[href="#close-side-panel"], #hv-side-panel').on('click', function(){
             $('#hv-side-panel').removeClass('active');
-            $(this).removeClass('active');
+            $('.widget_hv_register_widget li.hv-profile-link, #open-side-panel').removeClass('active');
 
             $('body').removeClass('hv-side-panel-open');
             $('header').removeClass('fixed');
+        });
+
+        $('.hv-side-panel-inner').on('click', function(e){
+            e.stopPropagation();
         });
 
         // -- Side panel get template with ajax

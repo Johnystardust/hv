@@ -20,7 +20,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'hockeyvacatures-v2');
+define('DB_NAME', 'hockeyvacatures');
 //define('DB_NAME', 'timvasz104_hv');
 
 /** MySQL database username */
@@ -28,7 +28,7 @@ define('DB_USER', 'root');
 //define('DB_USER', 'timvasz104_hv');
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'mysql');
 //define('DB_PASSWORD', 'CYjggQ6u');
 
 /** MySQL hostname */
@@ -84,6 +84,8 @@ $table_prefix  = 'wp_';
 define('WP_DEBUG', true);
 define( 'SAVEQUERIES', true );
 define( 'WP_DEBUG_LOG', true );
+
+ini_set('display_errors', E_ALL);
 
 
 /* That's all, stop editing! Happy blogging. */

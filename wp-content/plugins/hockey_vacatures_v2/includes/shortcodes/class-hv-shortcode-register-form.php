@@ -246,11 +246,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'type'         => 'select',
                 'label'        => __( 'Soort profiel', 'hockey_vacatures' ),
                 'name'         => 'role',
-                'options'      => array(
-                    'default' => __( 'Maak een keuze...', 'hockey_vacatures' ),
-                    'club'    => __( 'Club', 'hockey_vacatures' ),
-                    'player'  => __( 'Speler', 'hockey_vacatures' ),
-                ),
+                'options'      => hv_get_function_options('slug'),
                 'col_size'     => 'col-12 col-md-6',
                 'required'     => true,
                 'validation'   => array(
@@ -486,6 +482,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'value'       => $this->user->description
             ),
         );
+
         $player_fields = array(
             'p_fname'       => array(
                 'type'        => 'text',
@@ -587,6 +584,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             )
         );
 
+        // TODO: FIX DYNAMIC FOR THE NEW ROLES BASED ON VACATURE CATEGORY TERMS
         if( $role === 'club' ) {
             return $club_fields;
         } elseif( $role === 'player' ) {

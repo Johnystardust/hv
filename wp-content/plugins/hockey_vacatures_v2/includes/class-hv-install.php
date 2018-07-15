@@ -36,7 +36,7 @@ class HV_Install
 
         // Run the installers
 //        self::create_roles();
-//        self::create_taxonomies();
+        self::create_taxonomies();
 //        self::register_pages();
 
 //        delete_transient( 'hv_installing' );
@@ -215,6 +215,41 @@ class HV_Install
 
     private static function create_taxonomies()
     {
+        $labels = array(
+            'name' => _x( 'Functions', 'hockey_vacatures' ),
+            'singular_name' => _x( 'Function', 'hockey_vacatures' ),
+            'search_items' =>  __( 'Search Functions' ),
+            'all_items' => __( 'All Functions' ),
+            'parent_item' => __( 'Parent Function' ),
+            'parent_item_colon' => __( 'Parent Function:' ),
+            'edit_item' => __( 'Edit Function' ),
+            'update_item' => __( 'Update Function' ),
+            'add_new_item' => __( 'Add New Function' ),
+            'new_item_name' => __( 'New Vacature Function' ),
+            'menu_name' => __( 'Functions' ),
+        );
+
+        $args = array(
+            'hierarchical' => true,
+            'labels' => $labels,
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => array( 'slug' => 'functions' ),
+        );
+
+        register_taxonomy('functions', array('vacature'), $args);
+
+        // Add Categories to the new Taxonomy
+        if(taxonomy_exists('function')){
+
+        }
+
+
+
+
+
+
         // TODO: FIX TAXONOMIES
         // User role categories
         wp_insert_category(
@@ -295,6 +330,7 @@ class HV_Install
 
             if( !isset( $title_check->ID ) && !isset( $slug_check ) ) {
                 $post_ids[] = wp_insert_post( $post_data );
+
             } else {
                 deactivate_plugins( plugin_basename( 'hockey_vacatures' ) );
 

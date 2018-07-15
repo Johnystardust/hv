@@ -8,8 +8,12 @@ class HV_Post_Types {
 
     public static function init(){
         add_action( 'init', array( __CLASS__, 'register_post_types' ), 5 );
+        add_action( 'init', array( __CLASS__, 'register_taxonomies' ) );
     }
 
+    /**
+     * Registers the post types needed for the plugin.
+     */
     public static function register_post_types() {
         if( post_type_exists('vacature' ) || post_type_exists( 'hv_order' ) ) {
             return;
@@ -59,7 +63,7 @@ class HV_Post_Types {
                 'hierarchical'       => false,
                 'menu_position'      => 50,
                 'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
-                'taxonomies'         => array( 'category' ),
+                'taxonomies'         => array( 'vacature' ),
                 'can_export'          => true,
                 'exclude_from_search' => false,
                 'map_meta_cap'        => true,
@@ -150,6 +154,27 @@ class HV_Post_Types {
                 'menu_icon'          => 'dashicons-location-alt',
             )
         );
+    }
+
+    /**
+     * Register the taxonomies needed for the plugin.
+     */
+    public static function register_taxonomies(){
+
+        // Vacature Taxonomy
+        // =============================================================================================================
+        register_taxonomy(
+            'vacature_category',
+            'vacature',
+            array(
+                'label' => __('Vacature Categorieën', 'hockey_vacatures'),
+                'show_tagcloud' => false,
+                'show_admin_column' => true,
+                'hierarchical' => true,
+                'rewrite' => array( 'vacature_category' )
+            )
+        );
+
     }
 
 }

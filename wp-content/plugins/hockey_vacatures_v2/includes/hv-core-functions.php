@@ -100,11 +100,39 @@ function hv_maybe_define_constant( $name, $value )
  */
 function hv_is_user_admin( WP_User $user )
 {
-    if( $user->roles[0] === 'administrator' ) {
+    if( count($user->roles) && $user->roles[0] === 'administrator' ) {
         return true;
     }
 
     return false;
+}
+
+/**
+ * Return the function options for the vacature and profile types
+ *
+ * @param $field;
+ *
+ * @return array
+ */
+function hv_get_function_options($field = 'term_id'){
+    $options = array(
+        '' => __('Maak een keuze', 'hockey_vactures')
+    );
+
+    $vacature_terms = get_terms( array(
+        'taxonomy' => 'vacature_category',
+        'hide_empty' => false,
+    ) );
+
+    foreach ($vacature_terms as $vacature_term){
+        if($field == 'term_id'){
+            $options[$vacature_term->term_id] = $vacature_term->name;
+        } elseif($field == 'slug'){
+            $options[$vacature_term->slug] = $vacature_term->name;
+        }
+    }
+
+    return $options;
 }
 
 
