@@ -1,6 +1,6 @@
 <?php
 
-if( !defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
@@ -18,18 +18,18 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      *
      * @param array $atts
      */
-    public function __construct( $atts = array() )
+    public function __construct($atts = array())
     {
         // Get the user and or create a new one
-        if( isset( $atts['edit_id'] ) && !empty( $atts['edit_id'] ) ) {
+        if (isset($atts['edit_id']) && !empty($atts['edit_id'])) {
             $this->id = $atts['edit_id'];
             $this->edit = true;
 
-            $this->user = new WP_User( $this->id );
-            $this->form_fields = array_merge( $this->get_form_fields(), $this->get_role_fields( $this->get_hv_user_role() ) );
+            $this->user = new WP_User($this->id);
+            $this->form_fields = array_merge($this->get_form_fields(), $this->_get_role_fields($this->get_hv_user_role()));
         } else {
             $this->user = new WP_User();
-            $this->form_fields = array_merge( $this->get_form_fields(), $this->get_role_fields( 'all' ) );
+            $this->form_fields = array_merge($this->get_form_fields(), $this->get_business_fields(), $this->get_person_fields());
         }
     }
 
@@ -42,12 +42,12 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
     {
         $output = '';
 
-        if( isset( $_POST['hv_reg_submit'] ) ) {
+        if (isset($_POST['hv_reg_submit'])) {
             $output .= $this->submit_form();
         }
 
         // Add the template for the form
-        include_once( HV_ABSPATH . 'templates/shortcodes/register-form.php' );
+        include_once(HV_ABSPATH . 'templates/shortcodes/register-form.php');
 
         return $output;
     }
@@ -61,63 +61,63 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
     {
         $output = '';
 
-        $this->remove_unneeded_fields( $_POST['role'] );
-        $this->form_data = $this->get_form_data( $this->form_fields );
-        $this->form_data = $this->validate_form_data( $this->form_data, $this->form_fields, $this->edit );
+        $this->remove_unneeded_fields(isset($_POST['role']) ? $_POST['role'] : '');
+        $this->form_data = $this->get_form_data($this->form_fields);
+        $this->form_data = $this->validate_form_data($this->form_data, $this->form_fields, $this->edit);
 
         // Form data and nonce validated
-        if( $this->verify_nonce() && !is_wp_error( $this->form_data ) ) {
+        if ($this->verify_nonce() && !is_wp_error($this->form_data)) {
 
             // If the user is editing
-            if( $this->edit ) {
-                if( !is_wp_error( $this->id = $this->update_user() ) ) {
+            if ($this->edit) {
+                if (!is_wp_error($this->id = $this->update_user())) {
                     $output .= $this->render_popup_message(
-                        __( 'Account aangepast!', 'hockey_vacatures' ),
-                        __( 'Uw account is bewerkt.', 'hockey_vacatures' ),
+                        __('Account aangepast!', 'hockey_vacatures'),
+                        __('Uw account is bewerkt.', 'hockey_vacatures'),
                         'success',
                         null,
-                        array( '#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
+                        array('#message-popup-close', __('Terug', 'hockey_vacatures'))
                     );
                 } else {
                     $output .= $this->render_popup_message(
-                        __( 'Foutje bedankt', 'hockey_vacatures' ),
-                        __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                        __('Foutje bedankt', 'hockey_vacatures'),
+                        __('Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures'),
                         'error',
                         $this->id->get_error_message(),
-                        array( '#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
+                        array('#message-popup-close', __('Terug', 'hockey_vacatures'))
                     );
                 }
             } // If the user is registering
             else {
-                if( !is_wp_error( $this->id = $this->save_user() ) ) {
+                if (!is_wp_error($this->id = $this->save_user())) {
                     $output .= $this->render_popup_message(
-                        __( 'Account aangemaakt!', 'hockey_vacatures' ),
-                        __( 'Uw account is geactiveerd, u kunt nu inloggen.', 'hockey_vacatures' ),
+                        __('Account aangemaakt!', 'hockey_vacatures'),
+                        __('Uw account is geactiveerd, u kunt nu inloggen.', 'hockey_vacatures'),
                         'success',
                         null,
-                        array( home_url() . '?register=true', __( 'Naar home', 'hockey_vacatures' ) )
+                        array(home_url() . '?register=true', __('Naar home', 'hockey_vacatures'))
                     );
                 } else {
                     $output .= $this->render_popup_message(
-                        __( 'Foutje bedankt', 'hockey_vacatures' ),
-                        __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                        __('Foutje bedankt', 'hockey_vacatures'),
+                        __('Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures'),
                         'error',
                         $this->id->get_error_message(),
-                        array( '#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
+                        array('#message-popup-close', __('Terug', 'hockey_vacatures'))
                     );
                 }
             }
         } else {
             $error_message = '';
-            if( is_wp_error( $this->form_data ) ) {
+            if (is_wp_error($this->form_data)) {
                 $error_message = $this->form_data->get_error_message();
             }
             $output .= $this->render_popup_message(
-                __( 'Foutje bedankt', 'hockey_vacatures' ),
-                __( 'Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures' ),
+                __('Foutje bedankt', 'hockey_vacatures'),
+                __('Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures'),
                 'error',
                 $error_message,
-                array( '#message-popup-close', __( 'Terug', 'hockey_vacatures' ) )
+                array('#message-popup-close', __('Terug', 'hockey_vacatures'))
             );
         }
 
@@ -125,28 +125,37 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
     }
 
     /**
-     * Saves the user
+     * Saves the user.
+     *
+     * First the user array gets made form the form fields.
+     * The user is inserted and the id is returned to a new WP_User object where the role is set.
+     * Last the users metadata is set and saved.
      *
      * @return WP_Error
      */
     public function save_user()
     {
-        $user_array = $this->get_user_array( $this->form_data );
-        $this->id = wp_insert_user( $user_array );
+        $user_array = $this->_get_user_insert_array($this->form_data);
+        $this->id = wp_insert_user($user_array);
 
-        if( is_wp_error( $this->id ) ) {
-            return new WP_Error( 'error', $this->id->get_error_message() );
+        if (is_wp_error($this->id)) {
+            return new WP_Error('error', $this->id->get_error_message());
         }
 
-        $user_obj = new WP_User( $this->id );
-        $user_obj->set_role( $this->form_data['role'] );
+        $user_obj = new WP_User($this->id);
+        $user_obj->set_role($this->form_data['role']);
 
-        return $this->save_user_meta( $this->form_data );
+        return $this->save_user_meta($this->form_data);
     }
 
+    /**
+     * Updates the user.
+     *
+     * @return WP_Error
+     */
     public function update_user()
     {
-        return $this->save_user_meta( $this->form_data );
+        return $this->save_user_meta($this->form_data);
 
         // TODO: ADD EXTRA FUNCTIONALITY SO WE CAN EDIT NAME AND EMAIL
     }
@@ -155,48 +164,16 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      * Save the user Meta
      *
      * @param $form_data
-     *
      * @return WP_Error
      */
-    public function save_user_meta( $form_data )
+    public function save_user_meta($form_data)
     {
-        // Start the general userinfo
-        $user_info = array(
-            'postal'        => $form_data['postal'],
-            'street_number' => $form_data['street_number'],
-            'addition'      => $form_data['addition'],
-            'city'          => $form_data['city'],
-            'province'      => $form_data['province'],
-            'street'        => $form_data['street'],
-            'coordinates'   => $form_data['coordinates'],
-        );
+        $user_info = $this->_get_user_meta_array($form_data);
 
-        // Complete general userinfo
-        if( $form_data['role'] === 'club' ) {
-            $user_info['tel'] = $form_data['c_tel'];
-            $user_info['name'] = $form_data['c_name'];
-            $user_info['contactperson'] = $form_data['c_cname'];
-            $user_info['web_url'] = $form_data['c_web_url'];
-        } elseif( $form_data['role'] === 'player' ) {
-            $user_info['tel'] = $form_data['p_tel'];
-            $user_info['age'] = $form_data['p_age'];
-            $user_info['gender'] = $form_data['p_gender'];
-            if( $this->edit ) {
-                $user_info['first_name'] = $form_data['p_fname'];
-                $user_info['last_name'] = $form_data['p_lname'];
-            }
-        }
-
-
-        if( $this->edit ) {
-            foreach( $user_info as $key => $value ) {
-                // TODO: FIX IF UPDATE USER META FAILS
-                update_user_meta( $this->id, $key, $value, '' );
-            }
-        } else {
-            foreach( $user_info as $key => $value ) {
-                if( !add_user_meta( $this->id, $key, $value, true ) ) {
-                    return new WP_Error( 'error', 'Error' ); // TODO: FIX THIS TEXT
+        foreach ($user_info as $key => $value){
+            if(!update_user_meta($this->id, $key, $value)){
+                if(!$this->edit){
+                    return new WP_Error('error', 'Er is iets mis gegaan met het verwerken van uw gegevens.'); // TODO: FIX THIS TEXT
                 }
             }
         }
@@ -211,10 +188,10 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      */
     private function get_hv_user_role()
     {
-        if( in_array( 'club', $this->user->roles ) ) {
-            return 'club';
-        } elseif( in_array( 'player', $this->user->roles ) ) {
-            return 'player';
+        if (in_array('business', $this->user->roles)) {
+            return 'business';
+        } elseif (in_array('person', $this->user->roles)) {
+            return 'person';
         }
     }
 
@@ -227,57 +204,60 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
     {
         return array(
             'username'        => array(
-                'type'         => 'text',
-                'label'        => __( 'Gebruikersnaam', 'hockey_vacatures' ),
-                'name'         => 'username',
-                'placeholder'  => __( 'Gebruikersnaam', 'hockey_vacatures' ),
-                'col_size'     => 'col-12 col-md-6',
-                'required'     => true,
-                'validation'   => ( $this->edit ) ? null : array(
+                'type'        => 'text',
+                'label'       => __('Gebruikersnaam', 'hockey_vacatures'),
+                'name'        => 'username',
+                'placeholder' => __('Gebruikersnaam', 'hockey_vacatures'),
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => ($this->edit) ? null : array(
                     'required'   => true,
                     'type'       => 'text',
                     'min_length' => 4
                 ),
-                'value'        => ( $this->edit ) ? $this->user->nickname : null,
-                'readonly'     => $this->edit,
-                'disabled' => $this->edit,
+                'value'       => ($this->edit) ? $this->user->nickname : null,
+                'readonly'    => $this->edit,
+                'disabled'    => $this->edit,
             ),
             'role'            => array(
-                'type'         => 'select',
-                'label'        => __( 'Soort profiel', 'hockey_vacatures' ),
-                'name'         => 'role',
-                'options'      => hv_get_function_options('slug'),
-                'col_size'     => 'col-12 col-md-6',
-                'required'     => true,
-                'validation'   => array(
+                'type'       => 'select',
+                'label'      => __('Type account', 'hockey_vacatures'),
+                'name'       => 'role',
+                'options'    => array(
+                    'default'  => __('Maak een keuze...', 'hockey_vacatures'),
+                    'person'   => __('Persoon', 'hockey_vacatures'),
+                    'business' => __('Club/Onderneming', 'hockey_vacatures')
+                ),
+                'col_size'   => 'col-12 col-md-6',
+                'required'   => true,
+                'validation' => array(
                     'required' => true,
                     'type'     => 'role',
                 ),
-                // TODO: FIX !!!
-                'value'        => $this->get_hv_user_role(),
-                'readonly'     => $this->edit,
-                'disabled' => $this->edit,
+                'value'      => $this->get_hv_user_role(),
+                'readonly'   => $this->edit,
+                'disabled'   => $this->edit,
             ),
 
             // Password fields
             'password'        => array(
-                'type'         => 'password',
-                'label'        => __( 'Wachtwoord', 'hockey_vacatures' ),
-                'name'         => 'password',
-                'placeholder'  => '',
-                'col_size'     => 'col-12 col-md-6',
-                'required'     => true,
-                'validation'   => ( $this->edit ) ? null : array(
+                'type'        => 'password',
+                'label'       => __('Wachtwoord', 'hockey_vacatures'),
+                'name'        => 'password',
+                'placeholder' => '',
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => ($this->edit) ? null : array(
                     'required'   => !$this->edit,
                     'type'       => 'text',
                     'min_length' => 5
                 ),
-                'readonly'     => $this->edit,
-                'disabled' => $this->edit,
+                'readonly'    => $this->edit,
+                'disabled'    => $this->edit,
             ),
             'password_check'  => array(
                 'type'        => 'password',
-                'label'       => __( 'Wachtwoord Check', 'hockey_vacatures' ),
+                'label'       => __('Wachtwoord Check', 'hockey_vacatures'),
                 'name'        => 'password_check',
                 'placeholder' => '',
                 'col_size'    => 'col-12 col-md-6',
@@ -293,9 +273,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             // Address fields
             'postal'          => array(
                 'type'        => 'text',
-                'label'       => __( 'Postcode', 'hockey_vacatures' ),
+                'label'       => __('Postcode', 'hockey_vacatures'),
                 'name'        => 'postal',
-                'placeholder' => __( 'Postcode', 'hockey_vacatures' ),
+                'placeholder' => __('Postcode', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -306,9 +286,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'street_number'   => array(
                 'type'        => 'number',
-                'label'       => __( 'Huisnummer', 'hockey_vacatures' ),
+                'label'       => __('Huisnummer', 'hockey_vacatures'),
                 'name'        => 'street_number',
-                'placeholder' => __( 'Huisnummer', 'hockey_vacatures' ),
+                'placeholder' => __('Huisnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-6 col-md-3',
                 'required'    => true,
                 'validation'  => array(
@@ -319,9 +299,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'addition'        => array(
                 'type'        => 'number',
-                'label'       => __( 'Toevoeging', 'hockey_vacatures' ),
+                'label'       => __('Toevoeging', 'hockey_vacatures'),
                 'name'        => 'addition',
-                'placeholder' => __( 'Toevoeging', 'hockey_vacatures' ),
+                'placeholder' => __('Toevoeging', 'hockey_vacatures'),
                 'col_size'    => 'col-6 col-md-3',
                 'required'    => false,
                 'validation'  => array(
@@ -332,9 +312,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'city'            => array(
                 'type'        => 'text',
-                'label'       => __( 'Stad', 'hockey_vacatures' ),
+                'label'       => __('Stad', 'hockey_vacatures'),
                 'name'        => 'city',
-                'placeholder' => __( 'Stad', 'hockey_vacatures' ),
+                'placeholder' => __('Stad', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'readonly'    => true,
@@ -346,9 +326,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'province'        => array(
                 'type'        => 'text',
-                'label'       => __( 'Provincie', 'hockey_vacatures' ),
+                'label'       => __('Provincie', 'hockey_vacatures'),
                 'name'        => 'province',
-                'placeholder' => __( 'Provincie', 'hockey_vacatures' ),
+                'placeholder' => __('Provincie', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'readonly'    => true,
@@ -360,9 +340,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'street'          => array(
                 'type'        => 'text',
-                'label'       => __( 'Straat', 'hockey_vacatures' ),
+                'label'       => __('Straat', 'hockey_vacatures'),
                 'name'        => 'street',
-                'placeholder' => __( 'Straat', 'hockey_vacatures' ),
+                'placeholder' => __('Straat', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'readonly'    => true,
@@ -374,7 +354,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
             'manual_location' => array(
                 'type'     => 'checkbox',
-                'label'    => __( 'Handmatig adres invullen', 'hockey_vacatures' ),
+                'label'    => __('Handmatig adres invullen', 'hockey_vacatures'),
                 'name'     => 'manual_location',
                 'col_size' => 'col-12',
                 'required' => false,
@@ -391,21 +371,23 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
         );
     }
 
+
     /**
-     * Return the Role fields
+     * Returns the business fields for the registration form.
      *
-     * @param $role
+     * The business role is for the clubs and enterprises that want to create an account with their
+     * company information.
      *
      * @return array
      */
-    function get_role_fields( $role )
+    private function get_business_fields()
     {
-        $club_fields = array(
-            'c_name'        => array(
+        return array(
+            'business_name'    => array(
                 'type'        => 'text',
-                'label'       => __( 'Club naam', 'hockey_vacatures' ),
-                'name'        => 'c_name',
-                'placeholder' => __( 'Naam', 'hockey_vacatures' ),
+                'label'       => __('Club naam', 'hockey_vacatures'),
+                'name'        => 'business_name',
+                'placeholder' => __('Naam', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -414,11 +396,11 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->name
             ),
-            'c_cname'       => array(
+            'business_cname'   => array(
                 'type'        => 'text',
-                'label'       => __( 'Contactpersoon', 'hockey_vacatures' ),
-                'name'        => 'c_cname',
-                'placeholder' => __( 'Contactpersoon', 'hockey_vacatures' ),
+                'label'       => __('Contactpersoon', 'hockey_vacatures'),
+                'name'        => 'business_cname',
+                'placeholder' => __('Contactpersoon', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -427,24 +409,26 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->contactperson
             ),
-            'c_email'       => array(
+            'business_email'   => array(
                 'type'        => 'text',
-                'label'       => __( 'E-mail', 'hockey_vacatures' ),
-                'name'        => 'c_email',
-                'placeholder' => __( 'E-mail', 'hockey_vacatures' ),
+                'label'       => __('E-mail', 'hockey_vacatures'),
+                'name'        => 'business_email',
+                'placeholder' => __('E-mail', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'validation'  => array(
+                'validation'  => ($this->edit) ? null : array(
                     'required' => true,
                     'type'     => 'email',
                 ),
-                'value'       => $this->user->user_email
+                'value'       => $this->user->user_email,
+                'readonly'   => $this->edit,
+                'disabled'   => $this->edit,
             ),
-            'c_web_url'     => array(
+            'business_web_url' => array(
                 'type'        => 'url',
-                'label'       => __( 'Club website', 'hockey_vacatures' ),
-                'name'        => 'c_web_url',
-                'placeholder' => __( 'https://www.google.nl', 'hockey_vacatures' ),
+                'label'       => __('Club website', 'hockey_vacatures'),
+                'name'        => 'business_web_url',
+                'placeholder' => __('https://www.google.nl', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
                     'required' => true,
@@ -452,12 +436,12 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->web_url
             ),
-            // TODO: FIX VALIDATION FOR C_TEL
-            'c_tel'         => array(
+            // TODO: FIX VALIDATION FOR business_TEL
+            'business_tel'     => array(
                 'type'        => 'text',
-                'label'       => __( 'Telefoonnummer', 'hockey_vacatures' ),
-                'name'        => 'c_tel',
-                'placeholder' => __( 'Telefoonnummer', 'hockey_vacatures' ),
+                'label'       => __('Telefoonnummer', 'hockey_vacatures'),
+                'name'        => 'business_tel',
+                'placeholder' => __('Telefoonnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
                     'required' => true,
@@ -465,30 +449,25 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->tel
             ),
-            'c_description' => array(
-                'type'        => 'textarea',
-                'label'       => __( 'Omschrijving', 'hockey_vacatures' ),
-                'name'        => 'c_description',
-                'placeholder' => __( 'Uw bericht', 'hockey_vacatures' ),
-                'rows'        => '7',
-                'cols'        => '30',
-                'col_size'    => 'col-12',
-                'required'    => false,
-                'description' => __( 'Vul hier een korte omschrijving over u zelf/club', 'hockey_vacatures' ),
-                'validation'  => array(
-                    'required' => false,
-                    'type'     => 'text'
-                ),
-                'value'       => $this->user->description
-            ),
         );
+    }
 
-        $person_fields = array(
-            'p_fname'       => array(
+    /**
+     * Returns the person fields for the registration form.
+     *
+     * Person role, the person role is for normal people who want to register but are not affiliated to a
+     * club or enterprise
+     *
+     * @return array
+     */
+    private function get_person_fields()
+    {
+        return array(
+            'person_fname'  => array(
                 'type'        => 'text',
-                'label'       => __( 'Naam', 'hockey_vacatures' ),
-                'name'        => 'p_fname',
-                'placeholder' => __( 'Naam', 'hockey_vacatures' ),
+                'label'       => __('Naam', 'hockey_vacatures'),
+                'name'        => 'person_fname',
+                'placeholder' => __('Naam', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -497,11 +476,11 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->first_name
             ),
-            'p_lname'       => array(
+            'person_lname'  => array(
                 'type'        => 'text',
-                'label'       => __( 'Achternaam', 'hockey_vacatures' ),
-                'name'        => 'p_lname',
-                'placeholder' => __( 'Achternaam', 'hockey_vacatures' ),
+                'label'       => __('Achternaam', 'hockey_vacatures'),
+                'name'        => 'person_lname',
+                'placeholder' => __('Achternaam', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -510,12 +489,12 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->last_name
             ),
-            // TODO: FIX VALIDATION FOR P_TEL
-            'p_tel'         => array(
+            // TODO: FIX VALIDATION FOR person_TEL
+            'person_tel'    => array(
                 'type'        => 'text',
-                'label'       => __( 'Telefoonnummer', 'hockey_vacatures' ),
-                'name'        => 'p_tel',
-                'placeholder' => __( 'Telefoonnummer', 'hockey_vacatures' ),
+                'label'       => __('Telefoonnummer', 'hockey_vacatures'),
+                'name'        => 'person_tel',
+                'placeholder' => __('Telefoonnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
                     'required' => true,
@@ -523,24 +502,26 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->tel
             ),
-            'p_email'       => array(
+            'person_email'  => array(
                 'type'        => 'text',
-                'label'       => __( 'E-mail', 'hockey_vacatures' ),
-                'name'        => 'p_email',
-                'placeholder' => __( 'E-mail', 'hockey_vacatures' ),
+                'label'       => __('E-mail', 'hockey_vacatures'),
+                'name'        => 'person_email',
+                'placeholder' => __('E-mail', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'validation'  => array(
+                'validation'  => ($this->edit) ? null : array(
                     'required' => true,
                     'type'     => 'email',
                 ),
-                'value'       => $this->user->user_email
+                'value'       => $this->user->user_email,
+                'readonly'   => $this->edit,
+                'disabled'   => $this->edit,
             ),
-            'p_age'         => array(
+            'person_age'    => array(
                 'type'        => 'number',
-                'label'       => __( 'Leeftijd', 'hockey_vacatures' ),
-                'name'        => 'p_age',
-                'placeholder' => __( 'Leeftijd', 'hockey_vacatures' ),
+                'label'       => __('Leeftijd', 'hockey_vacatures'),
+                'name'        => 'person_age',
+                'placeholder' => __('Leeftijd', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
                 'validation'  => array(
@@ -549,14 +530,14 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->age
             ),
-            'p_gender'      => array(
+            'person_gender' => array(
                 'type'       => 'select',
-                'label'      => __( 'Geslacht', 'hockey_vacatures' ),
-                'name'       => 'p_gender',
+                'label'      => __('Geslacht', 'hockey_vacatures'),
+                'name'       => 'person_gender',
                 'options'    => array(
-                    'default' => __( 'Maak een keuze...', 'hockey_vacatures' ),
-                    'male'    => __( 'Man', 'hockey_vacatures' ),
-                    'female'  => __( 'Vrouw', 'hockey_vacatures' )
+                    'default' => __('Maak een keuze...', 'hockey_vacatures'),
+                    'male'    => __('Man', 'hockey_vacatures'),
+                    'female'  => __('Vrouw', 'hockey_vacatures')
                 ),
                 'col_size'   => 'col-12 col-md-6',
                 'required'   => true,
@@ -566,32 +547,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'      => $this->user->gender
             ),
-            'p_description' => array(
-                'type'        => 'textarea',
-                'label'       => __( 'Een stukje over uzelf.', 'hockey_vacatures' ),
-                'name'        => 'p_description',
-                'placeholder' => __( 'Uw bericht', 'hockey_vacatures' ),
-                'rows'        => '7',
-                'cols'        => '30',
-                'col_size'    => 'col-12',
-                'required'    => false,
-                'description' => __( 'Vul hier een korte omschrijving over u zelf/club', 'hockey_vacatures' ),
-                'validation'  => array(
-                    'required' => false,
-                    'type'     => 'text'
-                ),
-                'value'       => $this->user->description,
-            )
         );
-
-        // TODO: FIX DYNAMIC FOR THE NEW ROLES BASED ON VACATURE CATEGORY TERMS
-        if( $role === 'club' ) {
-            return $club_fields;
-        } elseif( $role === 'player' || $role === 'trainer' || $role === 'coach' ) {
-            return $person_fields;
-        } elseif( $role === 'all' ) {
-            return array_merge( $club_fields, $person_fields );
-        }
     }
 
     /**
@@ -599,34 +555,32 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      *
      * @param $role
      */
-    private function remove_unneeded_fields( $role )
+    private function remove_unneeded_fields($role)
     {
-        $player_fields = array( 'p_fname', 'p_lname', 'p_tel', 'p_email', 'p_age', 'p_gender', 'p_description' );
-        $club_fields = array( 'c_name', 'c_cname', 'c_email', 'c_web_url', 'c_tel', 'blank', 'c_description' );
+        $role = (!empty($role)) ? $role : $this->get_hv_user_role();
 
-        if( $role == 'club' ) {
-            foreach( $player_fields as $field ) {
-                if( array_key_exists( $field, $this->form_fields ) ) {
-                    unset( $this->form_fields[ $field ] );
+        if ($role === 'person') {
+            foreach (array_keys($this->get_business_fields()) as $field) {
+                if (array_key_exists($field, $this->form_fields)) {
+                    unset($this->form_fields[$field]);
                 }
             }
-        } elseif( $role == 'player' ) {
-            foreach( $club_fields as $field ) {
-                if( array_key_exists( $field, $this->form_fields ) ) {
-                    unset( $this->form_fields[ $field ] );
+        } elseif ($role === 'business') {
+            foreach (array_keys($this->get_person_fields()) as $field) {
+                if (array_key_exists($field, $this->form_fields)) {
+                    unset($this->form_fields[$field]);
                 }
             }
         }
     }
 
     /**
-     * Returns the user_array used for wp_insert_user() function
+     * Get the array param for the wp_insert_user function.
      *
      * @param $form_data
-     *
      * @return array
      */
-    private function get_user_array( $form_data )
+    private function _get_user_insert_array($form_data)
     {
         // Start the general userdata
         $user_data = array(
@@ -635,20 +589,78 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
         );
 
         // Complete general userdata
-        if( $form_data['role'] === 'club' ) {
-            $user_data['first_name'] = $form_data['c_name'];
+        if ($form_data['role'] === 'business') {
+            $user_data['first_name'] = $form_data['business_name'];
             $user_data['last_name'] = $form_data['city'];
-            $user_data['user_email'] = $form_data['c_email'];
-            $user_data['description'] = $form_data['c_description'];
-            $user_data['user_url'] = $form_data['c_web_url'];
-        } elseif( $form_data['role'] === 'player' ) {
-            $user_data['first_name'] = $form_data['p_fname'];
-            $user_data['last_name'] = $form_data['p_lname'];
-            $user_data['user_email'] = $form_data['p_email'];
-            $user_data['description'] = $form_data['p_description'];
+            $user_data['user_email'] = $form_data['business_email'];
+            $user_data['description'] = $form_data['business_description'];
+            $user_data['user_url'] = $form_data['business_web_url'];
+        } elseif ($form_data['role'] === 'player') {
+            $user_data['first_name'] = $form_data['person_fname'];
+            $user_data['last_name'] = $form_data['person_lname'];
+            $user_data['user_email'] = $form_data['person_email'];
+            $user_data['description'] = $form_data['person_description'];
         }
 
         return $user_data;
+    }
+
+    /**
+     * Get the array for the user meta saving.
+     *
+     * @param $form_data
+     * @return array
+     */
+    private function _get_user_meta_array($form_data)
+    {
+        // Start the general userinfo
+        $user_info = array(
+            'postal'        => $form_data['postal'],
+            'street_number' => $form_data['street_number'],
+            'addition'      => $form_data['addition'],
+            'city'          => $form_data['city'],
+            'province'      => $form_data['province'],
+            'street'        => $form_data['street'],
+            'coordinates'   => $form_data['coordinates'],
+        );
+
+        // If the user is editing this profile set the required role param
+        if($this->edit && !isset($form_data['role'])){
+            $form_data['role'] = $this->get_hv_user_role();
+        }
+
+        // Complete general userinfo
+        if ($form_data['role'] === 'business') {
+            $user_info['tel'] = $form_data['business_tel'];
+            $user_info['name'] = $form_data['business_name'];
+            $user_info['contactperson'] = $form_data['business_cname'];
+            $user_info['web_url'] = $form_data['business_web_url'];
+        } elseif ($form_data['role'] === 'person') {
+            $user_info['tel'] = $form_data['person_tel'];
+            $user_info['age'] = $form_data['person_age'];
+            $user_info['gender'] = $form_data['person_gender'];
+            $user_info['first_name'] = $form_data['person_fname'];
+            $user_info['last_name'] = $form_data['person_lname'];
+        }
+
+        return $user_info;
+    }
+
+    /**
+     * Returns the role fields if person tries to edit their account
+     *
+     * @param $user_role
+     * @return array
+     */
+    private function _get_role_fields($user_role)
+    {
+        if($user_role === 'person'){
+            return $this->get_person_fields();
+        } elseif ($user_role === 'business'){
+            return $this->get_business_fields();
+        }
+
+        return array();
     }
 
     /**
@@ -658,13 +670,13 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      *
      * @return array
      */
-    private function get_form_section( $sections = array() )
+    private function get_form_section($sections = array())
     {
         $data = array();
 
-        foreach( $sections as $section ) {
-            if( array_key_exists( (string)$section, $this->form_fields ) ) {
-                $data[ $section ] = $this->form_fields[ $section ];
+        foreach ($sections as $section) {
+            if (array_key_exists((string)$section, $this->form_fields)) {
+                $data[$section] = $this->form_fields[$section];
             }
         }
 
@@ -678,7 +690,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      */
     private function verify_nonce()
     {
-        if( !isset( $_POST['register_form_nonce'] ) || !wp_verify_nonce( $_POST['register_form_nonce'], 'register_form_shortcode' ) ) {
+        if (!isset($_POST['register_form_nonce']) || !wp_verify_nonce($_POST['register_form_nonce'], 'register_form_shortcode')) {
             return false;
         }
 

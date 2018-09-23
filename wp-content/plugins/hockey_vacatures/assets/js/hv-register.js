@@ -158,26 +158,20 @@
         // Show correct form fields based on role
         // ======================================
         function role_select($value){
-            if($value == 'speler' || $value == 'coach' || $value == 'trainer'){
-                $('.club-fields').addClass('disabled');
-                $('.user-fields.disabled').removeClass('disabled');
-                $('.user-fields input, .user-fields select').removeAttr('disabled');
-            }
-            else if($value == 'club'){
-                $('.user-fields').addClass('disabled');
-                $('.club-fields.disabled').removeClass('disabled');
-                $('.club-fields input, .club-fields select').removeAttr('disabled');
-            }
-            else {
-                $('.user-fields').addClass('disabled');
-                $('.user-fields input, .user-fields select').attr('disabled', 'disabled');
-                $('.club-fields').addClass('disabled');
-                $('.club-fields input, .club-fields select').attr('disabled', 'disabled');
+
+            if($value != 'default'){
+                $('.hideable-fields').addClass('disabled');
+                $('.hideable-fields input, .hideable-fields select, .hideable-fields textarea').attr('disabled', 'disabled');
+                $('.'+$value+'-fields select, .'+$value+'-fields input, .'+$value+'-fields textarea' ).removeAttr('disabled');
+                $('.'+$value+'-fields').removeClass('disabled');
+            } else {
+                $('.hideable-fields').addClass('disabled');
+                $('.hideable-fields input, .hideable-fields select, .hideable-fields textarea').attr('disabled', 'disabled');
             }
         }
 
-        // On page refresh
-        // ===============
+        // On page refresh set the role
+        // ============================
         var role = $regForm.find('#role').find(":selected").val();
         role_select(role);
 

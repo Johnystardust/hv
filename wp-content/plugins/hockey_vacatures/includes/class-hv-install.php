@@ -55,12 +55,17 @@ class HV_Install
         }
 
         // Add the new roles
+        //
+        // These roles correspond with the types of roles that can be registered in the registration form
         // =============================================================================================================
 
-        // Club Role
+        /*
+         * The business role is for the clubs and enterprises that want to create an account with their
+         * company information.
+         */
         add_role(
-            'club',
-            __( 'Club', 'hockey_vacatures' ),
+            'business',
+            __( 'Club/Onderneming', 'hockey_vacatures' ),
             array(
                 // Post/Page
                 'read'                       => false,
@@ -100,10 +105,13 @@ class HV_Install
             )
         );
 
-        // Player Role
+        /*
+         * Person role, the person role is for normal people who want to register but are not affiliated to a
+         * club or enterprise
+         */
         add_role(
-            'player',
-            __( 'Speler', 'hockey_vacatures' ),
+            'person',
+            __( 'Persoon', 'hockey_vacatures' ),
             array(
                 // Post/Page
                 'read'                       => false,
@@ -143,93 +151,9 @@ class HV_Install
             )
         );
 
-        // Trainer
-        add_role(
-            'trainer',
-            __( 'Trainer', 'hockey_vacatures' ),
-            array(
-                // Post/Page
-                'read'                       => false,
-                'edit_posts'                 => false,
-                'edit_pages'                 => false,
-                'edit_others_posts'          => false,
-                'create_posts'               => false,
-                'publish_posts'              => false,
-                'delete_posts'               => false,
-
-                // Vacatures
-                'create_vacatures'           => true,
-                'read_vacatures'             => true,
-                'read_private_vacatures'     => true,
-                'edit_others_vacatures'      => false,
-                'edit_private_vacatures'     => true,
-                'edit_published_vacatures'   => true,
-                'edit_vacatures'             => true,
-                'delete_others_vacatures'    => false,
-                'delete_private_vacatures'   => true,
-                'delete_published_vacatures' => true,
-                'delete_vacatures'           => true,
-                'publish_vacatures'          => true,
-
-                // Theme functionality
-                'edit_themes'                => false,
-                'install_plugins'            => false,
-                'update_plugin'              => false,
-                'update_core'                => false,
-                'list_users'                 => false,
-                'manage_categories'          => false,
-                'manage_links'               => false,
-                'moderate_comments'          => false,
-                'upload_files'               => false,
-                'export'                     => false,
-                'import'                     => false,
-            )
-        );
-
-        // Coach
-        add_role(
-            'coach',
-            __( 'Coach', 'hockey_vacatures' ),
-            array(
-                // Post/Page
-                'read'                       => false,
-                'edit_posts'                 => false,
-                'edit_pages'                 => false,
-                'edit_others_posts'          => false,
-                'create_posts'               => false,
-                'publish_posts'              => false,
-                'delete_posts'               => false,
-
-                // Vacatures
-                'create_vacatures'           => true,
-                'read_vacatures'             => true,
-                'read_private_vacatures'     => true,
-                'edit_others_vacatures'      => false,
-                'edit_private_vacatures'     => true,
-                'edit_published_vacatures'   => true,
-                'edit_vacatures'             => true,
-                'delete_others_vacatures'    => false,
-                'delete_private_vacatures'   => true,
-                'delete_published_vacatures' => true,
-                'delete_vacatures'           => true,
-                'publish_vacatures'          => true,
-
-                // Theme functionality
-                'edit_themes'                => false,
-                'install_plugins'            => false,
-                'update_plugin'              => false,
-                'update_core'                => false,
-                'list_users'                 => false,
-                'manage_categories'          => false,
-                'manage_links'               => false,
-                'moderate_comments'          => false,
-                'upload_files'               => false,
-                'export'                     => false,
-                'import'                     => false,
-            )
-        );
-
-        // Vacature Manager Role
+        /*
+         * Vacature manager role, this is a additional role for a user who can edit/monitor other posts in the backend.
+         */
         add_role(
             'vacature_manager',
             __( 'Vacature Manager', 'hockey_vacatures' ),

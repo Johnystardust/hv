@@ -59,7 +59,7 @@ class HV_Template_Loader {
             $default_file = 'register-page.php';
         }
         elseif( is_page( 'profiel-bewerken' ) ) {
-            if(is_user_logged_in()){
+            if(is_user_logged_in() && (int)$_GET['id'] == get_current_user_id()){
                 $default_file = 'register-page.php';
             } else {
                 wp_die(__('You need to be logged in to edit your profile.', 'hockey_vacatures'));

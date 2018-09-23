@@ -211,8 +211,11 @@ class HV_Shortcode_Top_Bar
      */
     private function get_vacature_delete_menu_item()
     {
+        //TODO: FIX POST DELETE LINK
         if (current_user_can('delete_vacatures')) :?>
             <div class="top-bar-item col-3">
+                <?php var_dump(get_delete_post_link(get_the_ID())); ?>
+
                 <a id="delete-post" href="<?php echo get_delete_post_link(); ?>" data-id="<?php the_ID() ?>"
                    data-nonce="<?php echo wp_create_nonce('vacature_delete_nonce'); ?>" class="icon-left">
                     <i class="fa fa-trash"></i><?php echo __('Verwijderen', TEXTDOMAIN); ?>

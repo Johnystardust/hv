@@ -41,7 +41,7 @@ class HV_Filter_Widget extends WP_Widget {
                 <input type="text" name="s" id="search" class="form-control" placeholder="Zoeken..." value="<?php echo (isset($_POST['s'])) ? $_POST['s'] : ''; ?>">
             </div>
 
-            <?php if(count($vacature_terms) > 1): ?>
+            <?php if(count($vacature_terms) >= 1): ?>
                 <div class="form-group">
                     <label for="term_id"><?php echo __('Functie', TEXTDOMAIN); ?></label>
 

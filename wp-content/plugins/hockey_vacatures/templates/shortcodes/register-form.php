@@ -6,21 +6,22 @@
                 <?php $this->build_form( $this->get_form_section( array('username', 'role') ) ); ?>
             </div>
 
-            <div class="club-fields disabled row animated fadeIn">
+            <div class="business-fields disabled row animated fadeIn hideable-fields">
                 <div class="col-12">
-                    <strong class="text-uppercase"><?php echo __('Club', 'hockey_vacatures'); ?></strong>
+                    <strong class="text-uppercase"><?php echo __('Club/Onderneming', 'hockey_vactures'); ?></strong>
                     <hr>
                 </div>
-                <?php // TODO: FIX WEB URL NOT SHOWING ON FRONTEND ?>
-                <?php $this->build_form( $this->get_form_section( array('c_name', 'c_cname', 'c_email', 'c_web_url', 'c_tel', 'blank', 'c_description') ) ); ?>
+
+                <?php $this->build_form($this->get_business_fields()); ?>
             </div>
 
-            <div class="user-fields disabled row animated fadeIn">
+            <div class="person-fields disabled row animated fadeIn hideable-fields">
                 <div class="col-12">
-                    <strong class="text-uppercase"><?php echo __('Gebruiker', 'hockey_vacatures'); ?></strong>
+                    <strong class="text-uppercase"><?php echo __('Gebruiker', 'hockey_vactures'); ?></strong>
                     <hr>
                 </div>
-                <?php $this->build_form( $this->get_form_section( array('p_fname', 'p_lname', 'p_tel', 'p_email', 'p_age', 'p_gender', 'p_description') ) ); ?>
+
+                <?php $this->build_form($this->get_person_fields()); ?>
             </div>
 
             <div class="row">
