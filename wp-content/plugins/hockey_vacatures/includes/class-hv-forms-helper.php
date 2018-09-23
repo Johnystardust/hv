@@ -106,7 +106,7 @@ class HV_Forms_Helper
             } elseif( $fields[ $key ]['validation']['required'] == true && empty ( $value ) ) {
                 return new WP_Error( 'field', 'Een verplicht veld "' . $fields[ $key ]['label'] . '" is niet ingevuld. Controleer alle ingevulde velden.' );
             } elseif( $fields[ $key ]['validation']['type'] == 'role' ) {
-                if( !in_array( $value, array( 'club', 'player' ) ) ) {
+                if( !in_array( $value, $this->_get_allowed_functions('slug') ) ) {
                     return new WP_Error( 'error', 'Ongeldig gebruikersprofiel' );
                 }
             } elseif( $fields[ $key ]['validation']['type'] == 'gender' ) {
@@ -299,7 +299,7 @@ class HV_Forms_Helper
      *
      * @return array
      */
-    private function _get_allowed_functions(){
+    private function _get_allowed_functions($field = 'term_id'){
         $options = array();
 
         $vacature_terms = get_terms( array(
@@ -308,7 +308,11 @@ class HV_Forms_Helper
         ) );
 
         foreach ($vacature_terms as $vacature_term){
-            $options[] = $vacature_term->term_id;
+            if($field == 'term_id'){
+                $options[] = $vacature_term->term_id;
+            } elseif ($field == 'slug'){
+                $options[] = $vacature_term->slug;
+            }
         }
 
         return $options;

@@ -4,14 +4,23 @@ if( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
+/**
+ * Class HV_Install
+ */
 class HV_Install
 {
 
+    /**
+     * Initialize
+     */
     public static function init()
     {
         add_action( 'init', array( __CLASS__, 'check_version' ), 5 );
     }
 
+    /**
+     * Check the version of the plugin
+     */
     public static function check_version()
     {
         if( get_option( 'hockey_vacatures_version' ) !== HV()->version ) {
@@ -21,27 +30,18 @@ class HV_Install
         }
     }
 
+    /**
+     * The method that runs on plugin activation.
+     */
     public static function install()
     {
-
-        // TODO: FIX THE TRANSIENT
-//        // Check if we are not running this route
-//        if( 'yes' == get_transient( 'hv_installing' ) ) {
-//            return;
-//        }
-//
-//        // If the transient is not set lets set it now.
-//        set_transient( 'hv_installing', 'yes', MINUTE_IN_SECONDS * 10 );
-//        hv_maybe_define_constant( 'HV_INSTALLING', true );
-
-        // Run the installers
-//        self::create_roles();
-        self::create_taxonomies();
-//        self::register_pages();
-
-//        delete_transient( 'hv_installing' );
+        self::create_roles();
+        self::register_pages();
     }
 
+    /**
+     * Create the user roles
+     */
     private static function create_roles()
     {
         global $wp_roles;
@@ -143,9 +143,91 @@ class HV_Install
             )
         );
 
-        // TODO: ADD MORE USER ROLES
         // Trainer
+        add_role(
+            'trainer',
+            __( 'Trainer', 'hockey_vacatures' ),
+            array(
+                // Post/Page
+                'read'                       => false,
+                'edit_posts'                 => false,
+                'edit_pages'                 => false,
+                'edit_others_posts'          => false,
+                'create_posts'               => false,
+                'publish_posts'              => false,
+                'delete_posts'               => false,
+
+                // Vacatures
+                'create_vacatures'           => true,
+                'read_vacatures'             => true,
+                'read_private_vacatures'     => true,
+                'edit_others_vacatures'      => false,
+                'edit_private_vacatures'     => true,
+                'edit_published_vacatures'   => true,
+                'edit_vacatures'             => true,
+                'delete_others_vacatures'    => false,
+                'delete_private_vacatures'   => true,
+                'delete_published_vacatures' => true,
+                'delete_vacatures'           => true,
+                'publish_vacatures'          => true,
+
+                // Theme functionality
+                'edit_themes'                => false,
+                'install_plugins'            => false,
+                'update_plugin'              => false,
+                'update_core'                => false,
+                'list_users'                 => false,
+                'manage_categories'          => false,
+                'manage_links'               => false,
+                'moderate_comments'          => false,
+                'upload_files'               => false,
+                'export'                     => false,
+                'import'                     => false,
+            )
+        );
+
         // Coach
+        add_role(
+            'coach',
+            __( 'Coach', 'hockey_vacatures' ),
+            array(
+                // Post/Page
+                'read'                       => false,
+                'edit_posts'                 => false,
+                'edit_pages'                 => false,
+                'edit_others_posts'          => false,
+                'create_posts'               => false,
+                'publish_posts'              => false,
+                'delete_posts'               => false,
+
+                // Vacatures
+                'create_vacatures'           => true,
+                'read_vacatures'             => true,
+                'read_private_vacatures'     => true,
+                'edit_others_vacatures'      => false,
+                'edit_private_vacatures'     => true,
+                'edit_published_vacatures'   => true,
+                'edit_vacatures'             => true,
+                'delete_others_vacatures'    => false,
+                'delete_private_vacatures'   => true,
+                'delete_published_vacatures' => true,
+                'delete_vacatures'           => true,
+                'publish_vacatures'          => true,
+
+                // Theme functionality
+                'edit_themes'                => false,
+                'install_plugins'            => false,
+                'update_plugin'              => false,
+                'update_core'                => false,
+                'list_users'                 => false,
+                'manage_categories'          => false,
+                'manage_links'               => false,
+                'moderate_comments'          => false,
+                'upload_files'               => false,
+                'export'                     => false,
+                'import'                     => false,
+            )
+        );
 
         // Vacature Manager Role
         add_role(
@@ -213,100 +295,9 @@ class HV_Install
         }
     }
 
-    private static function create_taxonomies()
-    {
-        $labels = array(
-            'name' => _x( 'Functions', 'hockey_vacatures' ),
-            'singular_name' => _x( 'Function', 'hockey_vacatures' ),
-            'search_items' =>  __( 'Search Functions' ),
-            'all_items' => __( 'All Functions' ),
-            'parent_item' => __( 'Parent Function' ),
-            'parent_item_colon' => __( 'Parent Function:' ),
-            'edit_item' => __( 'Edit Function' ),
-            'update_item' => __( 'Update Function' ),
-            'add_new_item' => __( 'Add New Function' ),
-            'new_item_name' => __( 'New Vacature Function' ),
-            'menu_name' => __( 'Functions' ),
-        );
-
-        $args = array(
-            'hierarchical' => true,
-            'labels' => $labels,
-            'show_ui' => true,
-            'show_admin_column' => true,
-            'query_var' => true,
-            'rewrite' => array( 'slug' => 'functions' ),
-        );
-
-        register_taxonomy('functions', array('vacature'), $args);
-
-        // Add Categories to the new Taxonomy
-        if(taxonomy_exists('function')){
-
-        }
-
-
-
-
-
-
-        // TODO: FIX TAXONOMIES
-        // User role categories
-        wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Speler', 'hockey_vacatures'),
-                'category_description'	=> __( 'Speler categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'speler',
-                'taxonomy' 				=> 'category'
-            )
-        );
-        wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Club', 'hockey_vacatures'),
-                'category_description'	=> __( 'Club categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'club',
-                'taxonomy' 				=> 'category'
-            )
-        );
-
-        // Vacature categories
-        $vacature_cat_id = wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Vacature', 'hockey_vacatures'),
-                'category_description'	=> __( 'Vacatures categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'vacature',
-                'taxonomy' 				=> 'category'
-            )
-        );
-        wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Trainer vacature', 'hockey_vacatures'),
-                'category_description'	=> __( 'Trainer vacature categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'trainer-vacature',
-                'taxonomy' 				=> 'category',
-                'category_parent' 		=> $vacature_cat_id,
-            )
-        );
-        wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Speler vacature', 'hockey_vacatures'),
-                'category_description'	=> __( 'Speler vacature categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'speler-vacature',
-                'taxonomy' 				=> 'category',
-                'category_parent' 		=> $vacature_cat_id,
-            )
-        );
-        wp_insert_category(
-            array(
-                'cat_name' 				=> __( 'Coach vacature', 'hockey_vacatures'),
-                'category_description'	=> __( 'Coach vacature categorie', 'hockey_vacatures'),
-                'category_nicename' 	=> 'coach-vacature',
-                'taxonomy' 				=> 'category',
-                'category_parent' 		=> $vacature_cat_id,
-            )
-        );
-    }
-
+    /**
+     * Register the needed pages on activation
+     */
     private static function register_pages()
     {
         $post_ids = array();

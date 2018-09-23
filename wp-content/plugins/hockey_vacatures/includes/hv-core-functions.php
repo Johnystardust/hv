@@ -59,7 +59,7 @@ function hv_block_users_form_admin()
     }
 }
 
-add_action( 'init', 'hv_block_users_form_admin' );
+//add_action( 'init', 'hv_block_users_form_admin' );
 
 /**
  * Add to the body class

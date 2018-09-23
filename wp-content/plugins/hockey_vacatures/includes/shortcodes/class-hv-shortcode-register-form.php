@@ -483,7 +483,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             ),
         );
 
-        $player_fields = array(
+        $person_fields = array(
             'p_fname'       => array(
                 'type'        => 'text',
                 'label'       => __( 'Naam', 'hockey_vacatures' ),
@@ -587,10 +587,10 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
         // TODO: FIX DYNAMIC FOR THE NEW ROLES BASED ON VACATURE CATEGORY TERMS
         if( $role === 'club' ) {
             return $club_fields;
-        } elseif( $role === 'player' ) {
-            return $player_fields;
+        } elseif( $role === 'player' || $role === 'trainer' || $role === 'coach' ) {
+            return $person_fields;
         } elseif( $role === 'all' ) {
-            return array_merge( $club_fields, $player_fields );
+            return array_merge( $club_fields, $person_fields );
         }
     }
 

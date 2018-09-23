@@ -75,14 +75,6 @@ class Hockey_Vacatures {
             include_once( HV_ABSPATH . 'includes/class-hv-forms-helper.php' );
             include_once( HV_ABSPATH . 'includes/class-hv-shortcodes.php' );
         }
-
-        // TODO: ??? IMPLEMENT SESSIONS ???
-//        if ( $this->is_request( 'frontend' ) || $this->is_request( 'cron' ) ) {
-//            include_once( HV_ABSPATH . 'includes/class-wc-session-handler.php' );
-//        }
-
-//        $this->query = new WC_Query();
-//        $this->api   = new WC_API();
     }
 
     /**

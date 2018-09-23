@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Hockey Vacatures v2
+ * Plugin Name:       Hockey Vacatures
  * Plugin URI:        http://timvanderslik.nl/hockey-vacatures
  * Description:       Vacatures functionaliteit voor hockey-vacatures.nl
  * Version:           1.0.0
