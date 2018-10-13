@@ -425,13 +425,13 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'disabled'   => $this->edit,
             ),
             'business_web_url' => array(
-                'type'        => 'url',
+                'type'        => 'text',
                 'label'       => __('Club website', 'hockey_vacatures'),
                 'name'        => 'business_web_url',
-                'placeholder' => __('https://www.google.nl', 'hockey_vacatures'),
+                'placeholder' => __('https://www.example.com', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
-                    'required' => true,
+                    'required' => false,
                     'type'     => 'url'
                 ),
                 'value'       => $this->user->web_url
@@ -444,7 +444,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'placeholder' => __('Telefoonnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
-                    'required' => true,
+                    'required' => false,
                     'type'     => 'text'
                 ),
                 'value'       => $this->user->tel
@@ -497,7 +497,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'placeholder' => __('Telefoonnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
-                    'required' => true,
+                    'required' => false,
                     'type'     => 'text'
                 ),
                 'value'       => $this->user->tel

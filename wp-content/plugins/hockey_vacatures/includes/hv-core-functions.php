@@ -176,7 +176,6 @@ function hv_get_vacature_categories($field = 'term_id')
  */
 function hv_side_panel_get_template()
 {
-
     if ($_GET['name'] == '#user_vacatures') {
         include_once(HV_ABSPATH . 'templates/shortcodes/user-panel/user-vacatures.php');
     } elseif ($_GET['name'] == '#edit_vacature') {
@@ -188,3 +187,32 @@ function hv_side_panel_get_template()
 
 add_action('wp_ajax_nopriv_hv_side_panel_get_template', 'hv_side_panel_get_template');
 add_action('wp_ajax_hv_side_panel_get_template', 'hv_side_panel_get_template');
+
+/**
+ * Vacature delete
+ */
+function hv_delete_vacature()
+{
+    $data = array();
+
+    $nonce = check_ajax_referer('vacature_delete_nonce', 'nonce', false);
+    if($nonce == false){
+        $data['status'] = 'FALSE';
+        $data['message'] = __('Nonce not valid', 'hockey_vacatures');
+
+        wp_send_json($data);
+    } else {
+//        if(wp_delete_post($_POST['id'], true)){
+//            $data['status'] = 'OK';
+//            $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
+//        }
+
+        $data['status'] = 'OK';
+        $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
+
+        wp_send_json($data);
+    }
+}
+
+add_action('wp_ajax_nopriv_hv_delete_vacature', 'hv_delete_vacatures');
+add_action('wp_ajax_hv_delete_vacature', 'hv_delete_vacature');
