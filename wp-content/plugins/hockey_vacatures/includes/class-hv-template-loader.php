@@ -47,6 +47,10 @@ class HV_Template_Loader {
             }
         }
         elseif( is_page( 'bewerk-vacature' ) ) {
+            if(!isset($_GET['id'])){
+                wp_die(__('Vacature not found.', 'hockey_vacatures'));
+            }
+
             $post = get_post((int)$_GET['id']);
 
             if(is_user_logged_in() && $post->post_author == get_current_user_id()){

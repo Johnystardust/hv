@@ -202,13 +202,10 @@ function hv_delete_vacature()
 
         wp_send_json($data);
     } else {
-//        if(wp_delete_post($_POST['id'], true)){
-//            $data['status'] = 'OK';
-//            $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
-//        }
-
-        $data['status'] = 'OK';
-        $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
+        if(wp_delete_post($_POST['id'], true)){
+            $data['status'] = 'OK';
+            $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
+        }
 
         wp_send_json($data);
     }

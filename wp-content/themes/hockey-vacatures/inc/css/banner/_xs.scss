@@ -17,6 +17,7 @@ $banner_height: 150px;
   h2 {
     color: #fff;
     text-transform: uppercase;
+    font-size: 2rem;
   }
 }
 #page-banner-spacer {
@@ -29,28 +30,27 @@ $banner_height: 150px;
 /* ------------ Page Slider ------------ */
 $slider_height: 250px;
 
-#page-slider {
+#home-banner {
   z-index: 1;
   position: fixed;
   width: 100%;
   height: $slider_height;
-  .slick-container {
-    height: 100%;
-  }
-  .slide {
-    height: $slider_height;
-    width: 100%;
-    float: left;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  h1 {
+    color: #fff;
+    text-transform: uppercase;
   }
 
-  .slick-dots {
-    z-index: 1000;
+  h2 {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2rem;
   }
 }
-#page-slider-spacer {
+#home-banner-spacer {
   z-index: 0;
   height: $slider_height;
   width: 100%;

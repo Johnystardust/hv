@@ -151,13 +151,13 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
     /**
      * Updates the user.
      *
+     * TODO: ADD EXTRA FUNCTIONALITY SO WE CAN EDIT NAME AND EMAIL
+     *
      * @return WP_Error
      */
     public function update_user()
     {
         return $this->save_user_meta($this->form_data);
-
-        // TODO: ADD EXTRA FUNCTIONALITY SO WE CAN EDIT NAME AND EMAIL
     }
 
     /**
@@ -168,7 +168,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      */
     public function save_user_meta($form_data)
     {
-        $user_info = $this->_get_user_meta_array($form_data);
+        $user_info = array_filter($this->_get_user_meta_array($form_data));
 
         foreach ($user_info as $key => $value){
             if(!update_user_meta($this->id, $key, $value)){
@@ -432,7 +432,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'col_size'    => 'col-12 col-md-6',
                 'validation'  => array(
                     'required' => false,
-                    'type'     => 'url'
+                    'type'     => 'text'
                 ),
                 'value'       => $this->user->web_url
             ),
@@ -595,7 +595,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             $user_data['user_email'] = $form_data['business_email'];
             $user_data['description'] = $form_data['business_description'];
             $user_data['user_url'] = $form_data['business_web_url'];
-        } elseif ($form_data['role'] === 'player') {
+        } elseif ($form_data['role'] === 'person') {
             $user_data['first_name'] = $form_data['person_fname'];
             $user_data['last_name'] = $form_data['person_lname'];
             $user_data['user_email'] = $form_data['person_email'];
@@ -639,8 +639,10 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
             $user_info['tel'] = $form_data['person_tel'];
             $user_info['age'] = $form_data['person_age'];
             $user_info['gender'] = $form_data['person_gender'];
-            $user_info['first_name'] = $form_data['person_fname'];
-            $user_info['last_name'] = $form_data['person_lname'];
+            if($this->edit){
+                $user_info['first_name'] = $form_data['person_fname'];
+                $user_info['last_name'] = $form_data['person_lname'];
+            }
         }
 
         return $user_info;

@@ -594,7 +594,8 @@ footer {
     text-transform: uppercase; }
   #page-banner h2 {
     color: #fff;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    font-size: 2rem; }
 
 #page-banner-spacer {
   height: 150px;
@@ -602,24 +603,23 @@ footer {
   position: relative; }
 
 /* ------------ Page Slider ------------ */
-#page-slider {
+#home-banner {
   z-index: 1;
   position: fixed;
   width: 100%;
-  height: 250px; }
-  #page-slider .slick-container {
-    height: 100%; }
-  #page-slider .slide {
-    height: 250px;
-    width: 100%;
-    float: left;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center; }
-  #page-slider .slick-dots {
-    z-index: 1000; }
+  height: 250px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  #home-banner h1 {
+    color: #fff;
+    text-transform: uppercase; }
+  #home-banner h2 {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2rem; }
 
-#page-slider-spacer {
+#home-banner-spacer {
   z-index: 0;
   height: 250px;
   width: 100%;
@@ -712,19 +712,19 @@ footer {
       color: #177FBF; }
 
 @media screen and (min-width: 576px) {
-  #page-slider, #page-slider .slide, #page-slider-spacer {
+  #home-banner, #home-banner-spacer {
     height: 350px; }
 
   #page-banner, #page-banner-spacer {
     height: 170px; } }
 @media screen and (min-width: 768px) {
-  #page-slider, #page-slider .slide, #page-slider-spacer {
+  #home-banner, #home-banner-spacer {
     height: 450px; }
 
   #page-banner, #page-banner-spacer {
     height: 200px; } }
 @media screen and (min-width: 992px) {
-  #page-slider, #page-slider .slide, #page-slider-spacer {
+  #home-banner, #home-banner-spacer {
     height: 550px; } }
 html {
   font-size: 87.5%; }

@@ -1,7 +1,7 @@
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 576px){
   $slider_height: 350px;
-  #page-slider, #page-slider .slide, #page-slider-spacer {
+  #home-banner, #home-banner-spacer {
     height: $slider_height;
   }
 

@@ -110,6 +110,37 @@ function my_login_page() { ?>
             background: #177FBF;
         }
 
+        label {
+            color: #ffffff !important;
+        }
+
+        #wp-submit {
+            border: 2px solid #fff;
+            border-radius: 0;
+            color: #fff;
+            font-weight: 600;
+            background: transparent;
+            text-shadow: none;
+        }
+        #wp-submit:hover {
+            background-color: #fff;
+            color: #177FBF;
+            text-shadow: none;
+        }
+
+        .login form .input, .login input[type=text] {
+            background: transparent !important;
+            box-shadow: none;
+            border: none;
+            color: #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        #loginform {
+            background: transparent;
+            box-shadow: none;
+        }
+
         body.login #nav a, body.login #backtoblog a {color: #ffffff;}
         #login h1 a, .login h1 a {
             background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/inc/img/hockey-vacatures-logo.png);
