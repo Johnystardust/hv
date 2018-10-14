@@ -16,6 +16,10 @@
 <?php $vacature = HV_Vacature::find($post->ID); ?>
 
 <div class="vacature-item col-12 px-0">
+    <?php if($vacature->show_flagged_notice()): ?>
+        <p class="flagged-notice"><?php echo __('De vacature is gemarkeerd voor controle omdat gebruikers deze aanstootgevend vonden. De vacature is alleen voor u zichtbaar.', 'hockey_vacatures'); ?></p>
+    <?php endif; ?>
+
     <h4 class="title">
         <a href="<?php echo get_the_permalink(); ?>">
             <?php echo get_the_title(); ?>
@@ -28,7 +32,7 @@
         <?php endif; ?>
     </h5>
     <div class="spacer small"></div>
-    <?php if(function_exists('the_views')): ?>
+    <?php if (function_exists('the_views')): ?>
         <h5 class="sub-line">
             <span><?php echo __('Aantal keer bekeken', TEXTDOMAIN); ?> - <?php the_views(); ?></span>
         </h5>
@@ -49,9 +53,11 @@
         </li>
     </ul>
     <div class="btn-set">
-        <a class="btn btn-primary" href="<?php echo get_the_permalink(); ?>"><?php echo __( 'Meer informatie', TEXTDOMAIN ); ?></a>
+        <a class="btn btn-primary"
+           href="<?php echo get_the_permalink(); ?>"><?php echo __('Meer informatie', TEXTDOMAIN); ?></a>
         <?php if (!empty($vacature->get_vacature_author_email())): ?>
-            <a class="btn btn-border" href="mailto:<?php echo $vacature->get_vacature_author_email(); ?>"><?php echo __( 'Solliciteer direct', TEXTDOMAIN ); ?></a>
+            <a class="btn btn-border"
+               href="mailto:<?php echo $vacature->get_vacature_author_email(); ?>"><?php echo __('Solliciteer direct', TEXTDOMAIN); ?></a>
         <?php endif; ?>
     </div>
 </div>

@@ -108,10 +108,7 @@ get_header(); ?>
                         <?php //TODO: If the user clicks the link send mail to admins ?>
                         <?php //TODO: Add the * ass option in the backend ?>
                         <div class="send-notification">
-                            <form action="">
-                                <input type="hidden" value="<?php echo $post->ID; ?>">
-                            </form>
-                            <a href="#"><?php echo __('Vacature niet oke? Laat het ons weten!', TEXTDOMAIN); ?></a>
+                            <a id="hv-flag-vacature" href="#" data-id="<?php echo $post->ID; ?>" data-nonce="<?php echo wp_create_nonce('vacature_flag_nonce'); ?>"><?php echo __('Vacature niet oke? Laat het ons weten!', TEXTDOMAIN); ?></a>
                         </div>
 
                     </div>

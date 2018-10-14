@@ -10,6 +10,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     private   $form_fields;
     private   $form_data;
     private   $vacature;
+    private   $flags;
     protected $edit = false;
 
     public function __construct($atts = array())
@@ -91,7 +92,9 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     /**
      * Output for the vacature form
      *
-     * // TODO: TEST NONCE FAIL
+     * TODO: TEST NONCE FAIL
+     *
+     * TODO: Redirect to the vacature on complete.
      *
      * @return string
      */
@@ -135,7 +138,6 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             }
         }
 
-        // TODO: ADD REDIRECT TO SAVED VACATURE
         include_once(HV_ABSPATH . 'templates/shortcodes/vacature-form.php');
 
         return $output;
@@ -152,6 +154,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $this->vacature->content = $this->form_data['content'];
         $this->vacature->vacature_cat = $this->form_data['vacature_category'];
         $this->vacature->gender = $this->form_data['gender'];
+        $this->vacature->flags = '0';
 
         $this->vacature->addTaxonomy('vacature_category', (int)$this->form_data['vacature_category']);
 
@@ -165,12 +168,14 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     /**
      * Check if the user is post_author
      *
+     * TODO: LOG THIS EVENT: a user has tried to edit an page that was not his
+     *
      * @return bool
      */
     private function user_can_edit()
     {
         if ($this->edit !== false && get_current_user_id() !== intval($this->vacature->post()->post_author)) {
-            // TODO: LOG THIS EVENT: a user has tried to edit an page that was not his
+
             return false;
         }
 

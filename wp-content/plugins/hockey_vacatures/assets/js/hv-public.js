@@ -75,9 +75,8 @@
         // =============================================================================================================
 
         // -- Message popup close
-        $('.message-popup a[href="#message-popup-close"]').on('click', function (event) {
-            event.preventDefault();
-
+        $(document).on('click', '.message-popup a[href="#message-popup-close"]', function (e) {
+            e.preventDefault();
             $(this).parentsUntil('.message-popup').parent().fadeOut();
         });
 
@@ -88,12 +87,12 @@
         $(document).on('click', '#vacatures-top-bar #delete-post', function (e) {
             e.preventDefault();
 
-            var id = $(this).attr('data-id');
-            var nonce = $(this).attr('data-nonce');
+            var nonce = $(this).data('nonce');
+            var id = $(this).data('id');
 
-            var validation = confirm('Weet u zeker dat u de vacature wilt verwijderen. Deze actie kan niet ongedaan worden.');
+            var validation = confirm('Weet u zeker dat u de vacature wilt verwijderen. Deze actie kan niet ongedaan gemaakt worden.');
 
-            if(validation === true){
+            if (validation === true) {
                 $.ajax({
                     type: 'post',
                     url: ajax_object.ajax_url,
@@ -103,12 +102,40 @@
                         id: id
                     },
                     success: function (result) {
-                        var popup = render_popup_message('Vacature verwijderd', result.message, 'Naar home', '/', 'success');
+                        var popup = render_popup_message(result.title, result.message, result.button_text, result.url, result.status);
                         $('body').append(popup);
+
+                        console.log(result);
                     }
                 });
             }
         });
+
+        // 4.0 Vacature Single
+        // =============================================================================================================
+
+        // -- Flag vacature
+        $(document).on('click', '#hv-flag-vacature', function (e) {
+            e.preventDefault();
+
+            var nonce = $(this).data('nonce');
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: 'post',
+                url: ajax_object.ajax_url,
+                data: {
+                    action: 'hv_flag_vacature',
+                    nonce: nonce,
+                    id: id
+                },
+                success: function (result) {
+                    var popup = render_popup_message(result.title, result.message, result.button_text, result.url, result.status);
+                    $('body').append(popup);
+                }
+            })
+        });
+
 
         // General
         // =============================================================================================================
@@ -132,11 +159,8 @@
 
         // -- Renders the html for the popup message
         function render_popup_message(title, text, button_text, url, status) {
-            var popup = $('<div>').addClass('message-popup '+ status);
-            popup.append('<div class="message-popup-inner"><h5>'+title+'</h5><p>'+text+'</p><br><br><a href="'+url+'" class="btn btn-primary">'+button_text+'</a></div>');
-
-            console.log(popup);
-
+            var popup = $('<div>').addClass('message-popup ' + status);
+            popup.append('<div class="message-popup-inner"><h5>' + title + '</h5><p>' + text + '</p><br><br><a href="' + url + '" class="btn btn-primary">' + button_text + '</a></div>');
             return popup;
         }
     });

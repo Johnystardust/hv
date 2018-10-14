@@ -123,7 +123,7 @@ function hv_get_function_options($field = 'term_id')
     );
 
     $vacature_terms = get_terms(array(
-        'taxonomy' => 'vacature_category',
+        'taxonomy'   => 'vacature_category',
         'hide_empty' => false,
     ));
 
@@ -152,7 +152,7 @@ function hv_get_vacature_categories($field = 'term_id')
     );
 
     $vacature_terms = get_terms(array(
-        'taxonomy' => 'vacature_category',
+        'taxonomy'   => 'vacature_category',
         'hide_empty' => false,
     ));
 
@@ -190,26 +190,79 @@ add_action('wp_ajax_hv_side_panel_get_template', 'hv_side_panel_get_template');
 
 /**
  * Vacature delete
+ *
+ * Used in the vacature archive top bar.
  */
 function hv_delete_vacature()
 {
     $data = array();
-
     $nonce = check_ajax_referer('vacature_delete_nonce', 'nonce', false);
-    if($nonce == false){
-        $data['status'] = 'FALSE';
-        $data['message'] = __('Nonce not valid', 'hockey_vacatures');
 
-        wp_send_json($data);
+    if ($nonce == false) {
+        $data['status'] = 'error';
+        $data['title'] = __('Niet verwijderd', 'hockey_vacatures');
+        $data['message'] = __('Er is iets mis gegaan met het verwerken van de gegevens probeer het later nog een keer.', 'hockey_vactures');
+        $data['button_text'] = __('Terug');
+        $data['url'] = '#message-popup-close';
     } else {
-        if(wp_delete_post($_POST['id'], true)){
+        if (wp_delete_post($_POST['id'], true)) {
             $data['status'] = 'OK';
-            $data['message'] = __('Vacature is verwijderd', 'hockey_vacatures');
+            $data['title'] = __('Vacature is verwijderd', 'hockey_vacatures');
+            $data['message'] = __('De vacature is verwijderd en zal niet meer te zien zijn.', 'hockey_vacatures');
+            $data['button_text'] = __('Naar vacatures overzicht');
+            $data['url'] = get_post_type_archive_link('vacature');
         }
-
-        wp_send_json($data);
     }
+
+    wp_send_json($data);
 }
 
-add_action('wp_ajax_nopriv_hv_delete_vacature', 'hv_delete_vacatures');
+add_action('wp_ajax_nopriv_hv_delete_vacature', 'hv_delete_vacature');
 add_action('wp_ajax_hv_delete_vacature', 'hv_delete_vacature');
+
+/**
+ * Flag the vacature if the user thinks isn't valid
+ *
+ * TODO: Send email on vacature set to private
+ *
+ * TODO: If the vacature is set to private the vacature gets shown in the archive with the private prefix.
+ * TODO: add an description so the user knows his post is flagged and will be checked by an site author.
+ */
+function hv_flag_vacature()
+{
+    $data = array();
+    $nonce = check_ajax_referer('vacature_flag_nonce', 'nonce', false);
+
+    if($nonce == false){
+        $data['status'] = 'error';
+        $data['title'] = __('Foutje bedankt', 'hockey_vactures');
+        $data['message'] = __('Er is iets mis gegaan met het verwerken van de gegevens probeer het later nog een keer.', 'hockey_vactures');
+        $data['button_text'] = __('Terug');
+        $data['url'] = '#message-popup-close';
+    } else {
+        $flags = get_post_meta($_POST['id'], 'flags', true);
+
+        if($flags < 5){
+            if(update_post_meta($_POST['id'], 'flags', $flags + 1)){
+                $data['status'] = 'success';
+                $data['title'] = __('Bericht ontvangen', 'hockey_vacatures');
+                $data['message'] = __('Bedankt voor je bericht we gaan er meteen naar kijken.'. ($flags + 1), 'hockey_vacatures');
+                $data['button_text'] = __('Terug');
+                $data['url'] = '#message-popup-close';
+            }
+        } else {
+            if(wp_update_post(array('ID' => $_POST['id'], 'post_status' => 'flagged'))){
+                $data['status'] = 'success';
+                $data['title'] = __('Bericht ontvangen', 'hockey_vacatures');
+                $data['message'] = __('Bedankt voor je bericht we gaan er meteen naar kijken.', 'hockey_vacatures');
+                $data['button_text'] = __('Naar vacatures overzicht');
+                $data['url'] = get_post_type_archive_link('vacature');
+            }
+        }
+    }
+
+    wp_send_json($data);
+}
+
+add_action('wp_ajax_nopriv_hv_flag_vacature', 'hv_flag_vacature');
+add_action('wp_ajax_hv_flag_vacature', 'hv_flag_vacature');

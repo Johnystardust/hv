@@ -10,10 +10,11 @@ include_once(HV_ABSPATH . 'includes/abstracts/wp-model.php');
 class HV_Vacature extends WP_Model
 {
 
-    public $postType = 'vacature';
+    public $postType   = 'vacature';
     public $attributes = array(
         'function',
         'gender',
+        'flags'
     );
     public $taxonomies = array(
         'vacature_category'
@@ -44,7 +45,7 @@ class HV_Vacature extends WP_Model
      *
      * @return false|WP_User
      */
-    private function get_user()
+    private function _get_user()
     {
         return get_userdata($this->post()->post_author);
     }
@@ -56,7 +57,7 @@ class HV_Vacature extends WP_Model
      */
     public function get_vacature_author_email()
     {
-        return $this->get_user()->user_email;
+        return $this->_get_user()->user_email;
     }
 
     /**
@@ -66,7 +67,7 @@ class HV_Vacature extends WP_Model
      */
     public function get_vacature_author_url()
     {
-        return $this->get_user()->user_url;
+        return $this->_get_user()->user_url;
     }
 
     /**
@@ -92,13 +93,30 @@ class HV_Vacature extends WP_Model
      *
      * @return bool|string
      */
-    public function get_vacature_gender_icon(){
+    public function get_vacature_gender_icon()
+    {
         if ($this->gender == 'male') {
             return '<i class="fa fa-mars"></i>';
         } elseif ($this->gender == 'female') {
             return '<i class="fa fa-venus"></i>';
         } elseif ($this->gender == 'either') {
             return '<i class="fa fa-user"></i>';
+        }
+
+        return false;
+    }
+
+    /**
+     * Show the flagged notice text.
+     *
+     * @return bool
+     */
+    public function show_flagged_notice()
+    {
+        if (is_user_logged_in() && $this->post()->post_author == get_current_user_id() || hv_is_user_admin(wp_get_current_user())){
+            if($this->post()->post_status === 'flagged'){
+                return true;
+            }
         }
 
         return false;

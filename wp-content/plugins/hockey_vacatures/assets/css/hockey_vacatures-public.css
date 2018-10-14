@@ -18,6 +18,11 @@
   .sidebar-column .sidebar-widget {
     margin-bottom: 4rem; }
 
+.flagged-notice {
+  position: relative;
+  color: red;
+  max-width: 550px; }
+
 .totals table {
   width: 300px; }
   .totals table tr td:last-child {
