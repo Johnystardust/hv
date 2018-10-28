@@ -14,7 +14,14 @@ class HV_Vacature extends WP_Model
     public $attributes = array(
         'function',
         'gender',
-        'flags'
+        'flags',
+        'street',
+        'street_number',
+        'addition',
+        'postal',
+        'city',
+        'province',
+        'coordinates'
     );
     public $taxonomies = array(
         'vacature_category'

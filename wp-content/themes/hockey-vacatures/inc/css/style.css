@@ -476,36 +476,44 @@ footer {
 
 #copyright {
   background-color: #171717; }
-  #copyright ul {
-    text-align: right;
-    margin-bottom: 0; }
-    #copyright ul li {
-      display: inline-block; }
-      #copyright ul li a {
-        display: block;
-        padding: 1rem;
-        font-size: 1rem;
-        color: #ffffff;
-        font-weight: 600;
-        text-transform: uppercase; }
-      #copyright ul li .social-popup {
-        position: absolute;
-        display: none;
-        width: 200px;
-        padding: 1rem 2rem;
-        top: -49px;
-        background-color: #cccccc;
-        color: #177FBF;
-        text-align: center; }
-      #copyright ul li:hover .social-popup {
-        display: block; }
-      #copyright ul li:hover a {
-        background-color: #cccccc;
-        color: #177FBF; }
+  #copyright .copyright-social {
+    z-index: 1000; }
+    #copyright .copyright-social ul {
+      text-align: right;
+      margin-bottom: 0; }
+      #copyright .copyright-social ul li {
+        display: inline-block; }
+        #copyright .copyright-social ul li a {
+          display: block;
+          padding: 1rem;
+          font-size: 1rem;
+          color: #ffffff;
+          font-weight: 600;
+          text-transform: uppercase; }
+        #copyright .copyright-social ul li .social-popup {
+          position: absolute;
+          display: none;
+          width: 200px;
+          padding: 1rem 2rem;
+          top: -49px;
+          background-color: #cccccc;
+          color: #177FBF;
+          text-align: center; }
+        #copyright .copyright-social ul li:hover .social-popup {
+          display: block; }
+        #copyright .copyright-social ul li:hover a {
+          background-color: #cccccc;
+          color: #177FBF; }
   #copyright p {
     color: #ccc;
     margin-bottom: 0;
-    line-height: 49px; }
+    line-height: 49px;
+    font-size: .9rem; }
+  #copyright a {
+    color: #ccc;
+    font-weight: 300; }
+    #copyright a:hover {
+      color: #ffffff; }
 
 .btn {
   font-size: 1.1rem;

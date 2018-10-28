@@ -30,12 +30,12 @@ function hv_enqueue(){
     // Enqueue the scripts
     // ===================
     wp_deregister_script('jquery');
-    wp_enqueue_script('jquery-cdn', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(/* Dependencies */), null, true);
-    wp_enqueue_script('theme-js', get_stylesheet_directory_uri().'/inc/js/main.js', array('jquery-cdn'), null, true);
+    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(/* Dependencies */), null, true);
+    wp_enqueue_script('theme-js', get_stylesheet_directory_uri().'/inc/js/main.js', array('jquery'), null, true);
 
-    wp_enqueue_script('tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', array('jquery-cdn'), null, true);
-    wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', array('jquery-cdn', 'tether'), null, true);
-    wp_enqueue_script('slick-slider', get_stylesheet_directory_uri().'/inc/js/slick.min.js', array('jquery-cdn'), null, true);
+    wp_enqueue_script('tether', 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', array('jquery'), null, true);
+    wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', array('jquery', 'tether'), null, true);
+    wp_enqueue_script('slick-slider', get_stylesheet_directory_uri().'/inc/js/slick.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'hv_enqueue');
 

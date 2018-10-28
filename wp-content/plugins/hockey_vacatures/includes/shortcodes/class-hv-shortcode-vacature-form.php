@@ -11,10 +11,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     private   $form_data;
     private   $vacature;
     private   $flags;
+    private   $user;
     protected $edit = false;
 
     public function __construct($atts = array())
     {
+        $this->user = new WP_User(get_current_user_id());
+
         // Get the vacature or create an new object
         if (isset($atts['edit_id']) && !empty($atts['edit_id'])) {
             $this->vacature = HV_Vacature::find($atts['edit_id']);
@@ -24,7 +27,17 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         }
 
         // The form data
-        $this->form_fields = array(
+        $this->form_fields = array_merge($this->get_form_fields(), $this->get_address_fields(), $this->get_user_address_fields());
+    }
+
+    /**
+     * Get the vacature form fields
+     *
+     * @return array
+     */
+    private function get_form_fields()
+    {
+        return array(
             'title'             => array(
                 'type'        => 'text',
                 'label'       => __('Titel', 'hockey_vacatures'),
@@ -90,6 +103,193 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     }
 
     /**
+     * Get vacature address fields
+     *
+     * @return array
+     */
+    private function get_address_fields()
+    {
+        return array(
+            'postal'          => array(
+                'type'        => 'text',
+                'label'       => __('Postcode', 'hockey_vacatures'),
+                'name'        => 'postal',
+                'placeholder' => __('Postcode', 'hockey_vacatures'),
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'disabled'    => true
+            ),
+            'street_number'   => array(
+                'type'        => 'number',
+                'label'       => __('Huisnummer', 'hockey_vacatures'),
+                'name'        => 'street_number',
+                'placeholder' => __('Huisnummer', 'hockey_vacatures'),
+                'col_size'    => 'col-6 col-md-3',
+                'required'    => true,
+                'validation'  => array(
+                    'required' => true,
+                    'type'     => 'number'
+                ),
+                'disabled'    => true
+            ),
+            'addition'        => array(
+                'type'        => 'number',
+                'label'       => __('Toevoeging', 'hockey_vacatures'),
+                'name'        => 'addition',
+                'placeholder' => __('Toevoeging', 'hockey_vacatures'),
+                'col_size'    => 'col-6 col-md-3',
+                'required'    => false,
+                'validation'  => array(
+                    'required' => false,
+                    'type'     => 'text'
+                ),
+                'disabled'    => true
+            ),
+            'city'            => array(
+                'type'        => 'text',
+                'label'       => __('Stad', 'hockey_vacatures'),
+                'name'        => 'city',
+                'placeholder' => __('Stad', 'hockey_vacatures'),
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'readonly'    => true,
+                'validation'  => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'disabled'    => true
+            ),
+            'province'        => array(
+                'type'        => 'text',
+                'label'       => __('Provincie', 'hockey_vacatures'),
+                'name'        => 'province',
+                'placeholder' => __('Provincie', 'hockey_vacatures'),
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'readonly'    => true,
+                'validation'  => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'disabled'    => true
+            ),
+            'street'          => array(
+                'type'        => 'text',
+                'label'       => __('Straat', 'hockey_vacatures'),
+                'name'        => 'street',
+                'placeholder' => __('Straat', 'hockey_vacatures'),
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'readonly'    => true,
+                'validation'  => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'disabled'    => true
+            ),
+            'manual_location' => array(
+                'type'       => 'checkbox',
+                'label'      => __('Handmatig adres invullen', 'hockey_vacatures'),
+                'name'       => 'manual_location',
+                'col_size'   => 'col-12',
+                'required'   => false,
+                'validation' => array(
+                    'required' => false,
+                    'type' => 'checkbox'
+                ),
+            ),
+            'coordinates'     => array(
+                'type'       => 'hidden',
+                'name'       => 'coordinates',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'disabled'   => true
+            ),
+        );
+    }
+
+    /**
+     * Get the user address fields.
+     *
+     * @return array
+     */
+    private function get_user_address_fields()
+    {
+        return array(
+            'user_postal'        => array(
+                'type'       => 'hidden',
+                'name'       => 'user_postal',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->postal
+            ),
+            'user_street_number' => array(
+                'type'       => 'hidden',
+                'name'       => 'user_street_number',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'number'
+                ),
+                'value'      => $this->user->street_number
+            ),
+            'user_addition'      => array(
+                'type'       => 'hidden',
+                'name'       => 'user_addition',
+                'validation' => array(
+                    'required' => false,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->user_addition
+            ),
+            'user_city'          => array(
+                'type'       => 'hidden',
+                'name'       => 'user_city',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->city
+            ),
+            'user_province'      => array(
+                'type'       => 'hidden',
+                'name'       => 'user_province',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->province
+            ),
+            'user_street'        => array(
+                'type'       => 'hidden',
+                'name'       => 'user_street',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->street
+            ),
+            'user_coordinates'   => array(
+                'type'       => 'hidden',
+                'name'       => 'user_coordinates',
+                'validation' => array(
+                    'required' => true,
+                    'type'     => 'text'
+                ),
+                'value'      => $this->user->coordinates
+            ),
+        );
+    }
+
+
+    /**
      * Output for the vacature form
      *
      * TODO: TEST NONCE FAIL
@@ -103,6 +303,11 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $output = '';
 
         if (isset ($_POST['submit'])) {
+
+            // TODO: FIX COORDINATES
+            $_POST['coordinates'] = 'fafbnkabkfkadfak2390203';
+
+            $this->remove_unneeded_fields();
             $this->form_data = $this->get_form_data($this->form_fields);
             $this->form_data = $this->validate_form_data($this->form_data, $this->form_fields);
 
@@ -156,6 +361,24 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $this->vacature->gender = $this->form_data['gender'];
         $this->vacature->flags = '0';
 
+        if (isset($_POST['toggle-address'])) {
+            $this->vacature->street = $this->form_data['user_street'];
+            $this->vacature->street_number = $this->form_data['user_street_number'];
+            $this->vacature->addition = $this->form_data['user_addition'];
+            $this->vacature->postal = $this->form_data['user_postal'];
+            $this->vacature->city = $this->form_data['user_city'];
+            $this->vacature->province = $this->form_data['user_province'];
+            $this->vacature->coordinates = $this->form_data['user_coordinates'];
+        } else {
+            $this->vacature->street = $this->form_data['street'];
+            $this->vacature->street_number = $this->form_data['street_number'];
+            $this->vacature->addition = $this->form_data['addition'];
+            $this->vacature->postal = $this->form_data['postal'];
+            $this->vacature->city = $this->form_data['city'];
+            $this->vacature->province = $this->form_data['province'];
+            $this->vacature->coordinates = $this->form_data['coordinates'];
+        }
+
         $this->vacature->addTaxonomy('vacature_category', (int)$this->form_data['vacature_category']);
 
         if ($this->vacature = $this->vacature->save()) {
@@ -194,5 +417,61 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         }
 
         return true;
+    }
+
+    /**
+     * Get an section of the form_fields by array key
+     *
+     * @param array $sections
+     *
+     * @return array
+     */
+    private function get_form_section($sections = array())
+    {
+        $data = array();
+
+        foreach ($sections as $section) {
+            if (array_key_exists((string)$section, $this->form_fields)) {
+                $data[$section] = $this->form_fields[$section];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Removes the not needed fields form the form fields
+     */
+    private function remove_unneeded_fields()
+    {
+        if (isset($_POST['toggle-address'])) {
+            foreach (array_keys($this->get_address_fields()) as $field) {
+                if (array_key_exists($field, $this->form_fields)) {
+                    unset($this->form_fields[$field]);
+                }
+            }
+        } else {
+            foreach (array_keys($this->get_user_address_fields()) as $field) {
+                if (array_key_exists($field, $this->form_fields)) {
+                    unset($this->form_fields[$field]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the users address ad html.
+     *
+     * @return string
+     */
+    public function get_user_address_format()
+    {
+        $html = '<div class="user-address-format">';
+        $html .= '<span>' . $this->user->street . ' ' . $this->user->street_number . '</span><br>';
+        $html .= '<span>' . $this->user->city . ' ' . $this->user->postal . '</span><br>';
+        $html .= '<span>' . $this->user->province . '</span><br>';
+        $html .= '</div>';
+
+        return $html;
     }
 }

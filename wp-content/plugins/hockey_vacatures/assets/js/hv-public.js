@@ -7,6 +7,8 @@
         // 1.0	Side Panel
         // 2.0  Messages
         // 3.0  Top Bar
+        // 4.0  Vacature Single
+        // 5.0  Vacature Form
 
         // 1.0 Side Panel
         // =============================================================================================================
@@ -136,6 +138,40 @@
             })
         });
 
+        // 5.0  Vacature Form
+        // =============================================================================================================
+
+        // -- Toggle custom address
+        $('#new_vacature_form #toggle-address').on('change', function(){
+            var checked = $(this).is(':checked');
+
+            if(checked){
+                $('.address-toggle.current-address').removeClass('hidden');
+                $('.address-toggle.alternate-address').addClass('hidden');
+                $('.address-toggle.alternate-address input, .address-toggle.alternate-address select, .address-toggle.alternate-address textarea').attr('disabled', 'disabled');
+                $('.address-toggle.current-address input').removeAttr('disabled');
+            } else {
+                $('.address-toggle.alternate-address').removeClass('hidden');
+                $('.address-toggle.current-address').addClass('hidden');
+                $('.address-toggle.current-address input').attr('disabled', 'disabled');
+                $('.address-toggle.alternate-address input, .address-toggle.alternate-address select, .address-toggle.alternate-address textarea').removeAttr('disabled');
+            }
+        });
+
+        // -- Manual Location
+        $('#new_vacature_form #manual_location').on('change', function(){
+            console.log('test');
+
+            if($(this).is(':checked')){
+                $('#new_vacature_form .address-toggle').find('#city').removeAttr('readonly');
+                $('#new_vacature_form .address-toggle').find('#province').removeAttr('readonly');
+                $('#new_vacature_form .address-toggle').find('#street').removeAttr('readonly');
+            } else {
+                $('#new_vacature_form .address-toggle').find('#city').attr('readonly', 'readonly');
+                $('#new_vacature_form .address-toggle').find('#province').attr('readonly', 'readonly');
+                $('#new_vacature_form .address-toggle').find('#street').attr('readonly', 'readonly');
+            }
+        });
 
         // General
         // =============================================================================================================

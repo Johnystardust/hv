@@ -27,9 +27,7 @@
     </h4>
     <h5 class="sub-line">
         <strong><?php echo get_the_author(); ?></strong>
-        <?php if (!empty($vacature->get_vacature_author_meta_by_key('city'))): ?>
-            <span>- <?php echo $vacature->get_vacature_author_meta_by_key('city'); ?></span>
-        <?php endif; ?>
+        <span>- <?php echo $vacature->city; ?></span>
     </h5>
     <div class="spacer small"></div>
     <?php if (function_exists('the_views')): ?>

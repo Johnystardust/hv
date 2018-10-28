@@ -45,20 +45,16 @@ get_header(); ?>
                                         <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
                                         <?php echo $vacature->get_vacature_gender() ?>
                                     </li>
-                                    <?php if (!empty($vacature->get_vacature_author_meta_by_key('city'))): ?>
-                                        <li>
-                                            <i class="fa fa-map-marker"></i>
-                                            <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
-                                            <?php echo $vacature->get_vacature_author_meta_by_key('city'); ?>
-                                        </li>
-                                    <?php endif; ?>
-                                    <?php if (!empty($vacature->get_vacature_author_meta_by_key('province'))): ?>
-                                        <li>
-                                            <i class="fa fa-globe"></i>
-                                            <strong><?php echo __('Provincie:', TEXTDOMAIN); ?></strong>
-                                            <?php echo $vacature->get_vacature_author_meta_by_key('province'); ?>
-                                        </li>
-                                    <?php endif; ?>
+                                    <li>
+                                        <i class="fa fa-map-marker"></i>
+                                        <strong><?php echo __('Plaats:', TEXTDOMAIN); ?></strong>
+                                        <?php echo $vacature->city; ?>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-globe"></i>
+                                        <strong><?php echo __('Provincie:', TEXTDOMAIN); ?></strong>
+                                        <?php echo $vacature->province; ?>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-12 col-md-6">

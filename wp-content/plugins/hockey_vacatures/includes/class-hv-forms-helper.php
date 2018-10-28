@@ -100,6 +100,7 @@ class HV_Forms_Helper
      */
     public function validate_form_data($form_data, $fields = array(), $edit = false)
     {
+
         foreach ($form_data as $key => $value) {
             if (isset($fields[$key]['not_editable']) && $fields[$key]['not_editable'] == true && $edit == true) {
                 continue;
