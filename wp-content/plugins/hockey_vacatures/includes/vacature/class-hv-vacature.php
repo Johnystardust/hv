@@ -12,7 +12,7 @@ class HV_Vacature extends WP_Model
 
     public $postType   = 'vacature';
     public $attributes = array(
-        'function',
+        'vacature_cat',
         'gender',
         'flags',
         'street',
@@ -21,7 +21,8 @@ class HV_Vacature extends WP_Model
         'postal',
         'city',
         'province',
-        'coordinates'
+        'coordinates',
+        'alternate_address',
     );
     public $taxonomies = array(
         'vacature_category'

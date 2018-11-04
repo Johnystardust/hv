@@ -36,7 +36,7 @@ function hv_vc_gmaps_output( $atts ) {
     $output .= '<div id="map-attributes" '.implode(' ', $map_attributes).'></div>';
     $output .= '<div id="map-canvas" style="'.implode(' ', $map_style).'"></div>';
     $output .= '<script src="'.get_stylesheet_directory_uri().'/theme-functions/vc-js/hv-vc-maps.js"></script>';
-    $output .= '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDegnKkyQR90JmYSF2sJ2kMNjfxbFg5EEs&callback=initMap" async defer></script>';
+    $output .= '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTjw-Z0dph6JxefZkVg7o_NpPk9L24JGo&callback=initMap" async defer></script>';
 
     return $output;
 }

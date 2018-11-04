@@ -5,6 +5,8 @@ var map;
 
 function initMap() {
 
+    console.log('test');
+
     var attributes = document.getElementById('map-attributes');
     var center = attributes.getAttribute('data-center').split(',');
     var zoom = attributes.getAttribute('data-zoom');

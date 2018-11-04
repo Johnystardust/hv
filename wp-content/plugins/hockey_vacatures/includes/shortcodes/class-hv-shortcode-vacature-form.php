@@ -60,7 +60,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'options'    => hv_get_vacature_categories(),
                 'col_size'   => 'col-12 col-md-6',
                 'required'   => true,
-                'value'      => $this->vacature->function, // TODO: FIX VALUE INSERT FOR EDIT. Get the category id and set it here
+                'value'      => $this->vacature->vacature_cat,
                 'validation' => array(
                     'required' => true,
                     'type'     => 'function',
@@ -114,6 +114,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'type'        => 'text',
                 'label'       => __('Postcode', 'hockey_vacatures'),
                 'name'        => 'postal',
+                'value'       => $this->edit ? $this->vacature->postal : '',
                 'placeholder' => __('Postcode', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
@@ -121,12 +122,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => true,
                     'type'     => 'text'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'street_number'   => array(
                 'type'        => 'number',
                 'label'       => __('Huisnummer', 'hockey_vacatures'),
                 'name'        => 'street_number',
+                'value'       => $this->edit ? $this->vacature->street_number : '',
                 'placeholder' => __('Huisnummer', 'hockey_vacatures'),
                 'col_size'    => 'col-6 col-md-3',
                 'required'    => true,
@@ -134,12 +136,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => true,
                     'type'     => 'number'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'addition'        => array(
                 'type'        => 'number',
                 'label'       => __('Toevoeging', 'hockey_vacatures'),
                 'name'        => 'addition',
+                'value'       => $this->edit ? $this->vacature->addition : '',
                 'placeholder' => __('Toevoeging', 'hockey_vacatures'),
                 'col_size'    => 'col-6 col-md-3',
                 'required'    => false,
@@ -147,12 +150,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => false,
                     'type'     => 'text'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'city'            => array(
                 'type'        => 'text',
                 'label'       => __('Stad', 'hockey_vacatures'),
                 'name'        => 'city',
+                'value'       => $this->edit ? $this->vacature->city : '',
                 'placeholder' => __('Stad', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
@@ -161,12 +165,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => true,
                     'type'     => 'text'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'province'        => array(
                 'type'        => 'text',
                 'label'       => __('Provincie', 'hockey_vacatures'),
                 'name'        => 'province',
+                'value'       => $this->edit ? $this->vacature->province : '',
                 'placeholder' => __('Provincie', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
@@ -175,12 +180,13 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => true,
                     'type'     => 'text'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'street'          => array(
                 'type'        => 'text',
                 'label'       => __('Straat', 'hockey_vacatures'),
                 'name'        => 'street',
+                'value'       => $this->edit ? $this->vacature->street : '',
                 'placeholder' => __('Straat', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
@@ -189,7 +195,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'required' => true,
                     'type'     => 'text'
                 ),
-                'disabled'    => true
+                'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'manual_location' => array(
                 'type'       => 'checkbox',
@@ -199,17 +205,18 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'required'   => false,
                 'validation' => array(
                     'required' => false,
-                    'type' => 'checkbox'
+                    'type'     => 'checkbox'
                 ),
             ),
             'coordinates'     => array(
                 'type'       => 'hidden',
                 'name'       => 'coordinates',
+                'value'      => $this->edit ? $this->vacature->coordinates : '',
                 'validation' => array(
                     'required' => true,
                     'type'     => 'text'
                 ),
-                'disabled'   => true
+                'disabled'   => !($this->edit && !$this->vacature->alternate_address),
             ),
         );
     }
@@ -379,6 +386,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             $this->vacature->coordinates = $this->form_data['coordinates'];
         }
 
+        $this->vacature->clearTaxonomy('vacature_category');
         $this->vacature->addTaxonomy('vacature_category', (int)$this->form_data['vacature_category']);
 
         if ($this->vacature = $this->vacature->save()) {
@@ -440,17 +448,21 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
     }
 
     /**
-     * Removes the not needed fields form the form fields
+     * Removes the not needed fields form the form fields, and set the address toggle value.
      */
     private function remove_unneeded_fields()
     {
         if (isset($_POST['toggle-address'])) {
+            $this->vacature->alternate_address = true;
+
             foreach (array_keys($this->get_address_fields()) as $field) {
                 if (array_key_exists($field, $this->form_fields)) {
                     unset($this->form_fields[$field]);
                 }
             }
         } else {
+            $this->vacature->alternate_address = false;
+
             foreach (array_keys($this->get_user_address_fields()) as $field) {
                 if (array_key_exists($field, $this->form_fields)) {
                     unset($this->form_fields[$field]);
@@ -473,5 +485,14 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $html .= '</div>';
 
         return $html;
+    }
+
+    public function is_alternate_address()
+    {
+        if($this->edit && !$this->vacature->alternate_address){
+            return true;
+        }
+
+        return false;
     }
 }

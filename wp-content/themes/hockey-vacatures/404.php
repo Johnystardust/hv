@@ -8,7 +8,6 @@
  */
 ?>
 
-
 <?php get_header(); ?>
 
 <div id="page-<?php the_ID(); ?>" <?php post_class('page-normal'); ?>>
@@ -32,5 +31,3 @@
 <?php echo do_shortcode('[hockey_vacatures_vacature_map]'); ?>
 
 <?php get_footer(); ?>
-
-
