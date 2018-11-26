@@ -110,11 +110,11 @@
       .top-bar .top-bar-item a[rel='prev']:before {
         content: "\f104";
         margin-right: 1rem;
-        font: normal normal normal 14px/1 FontAwesome; }
+        font-family: "Font Awesome 5 Free"; }
       .top-bar .top-bar-item a[rel='next']:after {
         content: "\f105";
         margin-left: 1rem;
-        font: normal normal normal 14px/1 FontAwesome; }
+        font-family: "Font Awesome 5 Free"; }
 
 @media screen and (max-width: 576px) {
   #vacature-archive .main-content .vacature-list .vacature-item .btn-set a {
@@ -188,6 +188,10 @@ body.hv-side-panel-open:after {
     margin-bottom: 0 !important; }
   #vacature-single .main-content .main-column .the-content {
     padding-right: 0; } }
+@media screen and (min-width: 768px) {
+  #vacature-single .vacature-data,
+  #vacature-single .vacature-info {
+    column-count: 2; } }
 #vacature-archive .main-content .vacature-list .vacature-counter {
   display: inline-block;
   float: right;

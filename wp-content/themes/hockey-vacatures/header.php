@@ -27,13 +27,13 @@
                 <div class="col-8 col-md-6">
                     <ul>
                         <?php if(get_theme_mod('header_social_facebook')): ?>
-                            <li><a href="<?php echo get_theme_mod('header_social_facebook'); ?>"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="<?php echo get_theme_mod('header_social_facebook'); ?>"><i class="fab fa-facebook-f"></i></a></li>
                         <?php endif; ?>
                         <?php if(get_theme_mod('header_social_twitter')): ?>
-                            <li><a href="<?php echo get_theme_mod('header_social_twitter'); ?>"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="<?php echo get_theme_mod('header_social_twitter'); ?>"><i class="fab fa-twitter"></i></a></li>
                         <?php endif; ?>
                         <?php if(get_theme_mod('header_social_linkedin')): ?>
-                            <li><a href="<?php echo get_theme_mod('header_social_linkedin'); ?>"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="<?php echo get_theme_mod('header_social_linkedin'); ?>"><i class="fab fa-linkedin-in"></i></a></li>
                         <?php endif; ?>
                         <?php if(get_theme_mod('header_social_phone')): ?>
                             <li><a href="tel:<?php echo get_theme_mod('header_social_phone'); ?>"><i class="fa fa-phone"></i> <span><?php echo get_theme_mod('header_social_phone'); ?></span></a></li>

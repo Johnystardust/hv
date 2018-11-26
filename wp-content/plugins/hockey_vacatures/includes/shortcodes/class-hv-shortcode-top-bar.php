@@ -114,7 +114,7 @@ class HV_Shortcode_Top_Bar
         <div class="top-bar-item col-3">
             <a id="new-vacature" href="<?php echo get_post_type_archive_link('vacature'); ?>" class="icon-right">
                 <?php echo __('Alle Vacatures', TEXTDOMAIN); ?>
-                <i class="fa fa-pencil-square-o"></i>
+                <i class="fas fa-list-ul"></i>
             </a>
         </div>
         <?php
@@ -176,17 +176,20 @@ class HV_Shortcode_Top_Bar
 
     /**
      * Get New Vacature Menu Item
+     *
+     * @DEPRECATED
+     *
      */
     private function get_new_vacature_menu_item()
     {
         ?>
-        <div class="top-bar-item col-3">
-            <a id="new-vacature" href="<?php echo get_permalink(get_page_by_path('nieuwe-vacature')); ?>"
-               class="icon-left">
-                <i class="fa fa-pencil-square-o"></i>
-                <?php echo __('Vacature plaatsen', TEXTDOMAIN); ?>
-            </a>
-        </div>
+<!--        <div class="top-bar-item col-3">-->
+<!--            <a id="new-vacature" href="--><?php //echo get_permalink(get_page_by_path('nieuwe-vacature')); ?><!--"-->
+<!--               class="icon-left">-->
+<!--                <i class="fa fa-pencil-square-o"></i>-->
+<!--                --><?php //echo __('Vacature plaatsen', TEXTDOMAIN); ?>
+<!--            </a>-->
+<!--        </div>-->
         <?php
     }
 

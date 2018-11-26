@@ -19,7 +19,10 @@ if(!empty($color)){
 }
 
 //---------------- Adding the Classes ----------------//
-$container_class = ($container == 'container-fluid') ? 'container-fluid' : 'container';
+$container_class = '';
+if($container != 'none'){
+    $container_class = ($container == 'container-fluid') ? 'container-fluid' : 'container';
+}
 
 $css_classes = array(
     $container_class,

@@ -29,6 +29,16 @@ class HV_Filter_Widget extends WP_Widget {
             echo $args['before_title'] . $instance['title'] . $args['after_title'];
         }
 
+        $field_types = array(
+            'outdoor' => __('Veld', TEXTDOMAIN),
+            'indoor' => __('Zaal', TEXTDOMAIN),
+        );
+
+        $age_types = array(
+            'senior' => __('Senior', TEXTDOMAIN),
+            'junior' => __('Junior', TEXTDOMAIN),
+        );
+
         $vacature_terms = get_terms( array(
             'taxonomy' => 'vacature_category',
             'hide_empty' => true,
@@ -56,6 +66,34 @@ class HV_Filter_Widget extends WP_Widget {
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
+
+            <div class="form-group">
+                <label for="age"><?php echo __('Leeftijd', TEXTDOMAIN); ?></label>
+
+                <?php foreach($age_types as $key => $value): ?>
+                    <label for="<?php echo 'field-'.$key; ?>">
+                        <input type="checkbox" id="<?php echo 'field-'.$key; ?>"
+                               name="age[<?php echo $key; ?>]"
+                               value="true"
+                               <?php isset($_POST['age'][$key]) ? checked($_POST['age'][$key], 'true') : null ?>>
+                        <?php echo $value ?>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="form-group">
+                <label for="field"><?php echo __('Leeftijd', TEXTDOMAIN); ?></label>
+
+                <?php foreach($field_types as $key => $value): ?>
+                    <label for="<?php echo 'field-'.$key; ?>">
+                        <input type="checkbox" id="<?php echo 'field-'.$key; ?>"
+                               name="field[<?php echo $key; ?>]"
+                               value="true">
+                        <?php echo $value ?>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary"><?php echo __('Zoeken', TEXTDOMAIN); ?></button>
             </div>

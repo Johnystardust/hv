@@ -2,7 +2,7 @@
 
 add_shortcode( 'hv_vc_button', 'hv_vc_button_output' );
 function hv_vc_button_output( $atts ) {
-    $output = $button_style = $link  = '';
+    $output = $button_style = $button_align = $align = $link  = '';
 
     extract( shortcode_atts( array(
         'link' => '',
@@ -18,7 +18,17 @@ function hv_vc_button_output( $atts ) {
         'btn-'.$button_style,
     );
 
+    if($button_align === 'center'){
+        $align = 'text-center';
+    } elseif($button_align === 'left'){
+        $align = 'text-left';
+    } elseif($button_align === 'right'){
+        $align = 'text-right';
+    }
+
+    $output .= '<div class="'.$align.'">';
     $output .= '<a href="'.$href['url'].'" class="'.implode(' ', $classes).'">'.$href['title'].'</a>';
+    $output .= '</div>';
 
     return $output;
 }

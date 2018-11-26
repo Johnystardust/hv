@@ -84,6 +84,40 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                     'type'     => 'gender',
                 )
             ),
+            'age'               => array(
+                'type'       => 'select',
+                'label'      => __('Leeftijd', 'hockey_vactures'),
+                'name'       => 'age',
+                'options'    => array(
+                    'default' => __('Maak een keuze...', 'hockey_vacatures'),
+                    'junior'  => __('Junioren', 'hockey_vactures'),
+                    'senior'  => __('Senioren', 'hockey_vactures'),
+                ),
+                'col_size'   => 'col-12 col-md-6',
+                'required'   => true,
+                'value' => $this->vacature->age,
+                'validation' => array(
+                    'required' => true,
+                    'type' => 'age'
+                )
+            ),
+            'field' => array(
+                'type' => 'select',
+                'label'      => __('Veld/zaal', 'hockey_vactures'),
+                'name'       => 'field',
+                'options'    => array(
+                    'default' => __('Maak een keuze...', 'hockey_vacatures'),
+                    'outdoor'  => __('Veld', 'hockey_vactures'),
+                    'indoor'  => __('Zaal', 'hockey_vactures'),
+                ),
+                'col_size'   => 'col-12 col-md-6',
+                'required'   => true,
+                'value' => $this->vacature->field,
+                'validation' => array(
+                    'required' => true,
+                    'type' => 'field',
+                )
+            ),
             'content'           => array(
                 'type'        => 'textarea',
                 'cols'        => 5,
@@ -365,6 +399,8 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $this->vacature->title = $this->form_data['title'];
         $this->vacature->content = $this->form_data['content'];
         $this->vacature->vacature_cat = $this->form_data['vacature_category'];
+        $this->vacature->field = $this->form_data['field'];
+        $this->vacature->age = $this->form_data['age'];
         $this->vacature->gender = $this->form_data['gender'];
         $this->vacature->flags = '0';
 
@@ -489,7 +525,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
 
     public function is_alternate_address()
     {
-        if($this->edit && !$this->vacature->alternate_address){
+        if ($this->edit && !$this->vacature->alternate_address) {
             return true;
         }
 

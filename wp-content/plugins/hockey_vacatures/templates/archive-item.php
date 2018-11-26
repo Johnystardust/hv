@@ -37,7 +37,7 @@
     <?php endif; ?>
     <p><?php echo wp_trim_words(get_the_content(), 25); ?></p>
     <ul class="vacature-info row mt-2">
-        <?php if ($function_term = get_term_by('id', $vacature->function, 'vacature_category')): ?>
+        <?php if ($function_term = get_term_by('id', $vacature->vacature_cat, 'vacature_category')): ?>
             <li class="col-6 col-md-3">
                 <i class="fa fa-user"></i>
                 <strong><?php echo __('Functie:', TEXTDOMAIN); ?></strong>
@@ -48,6 +48,16 @@
             <?php echo $vacature->get_vacature_gender_icon(); ?>
             <strong><?php echo __('Geslacht:', TEXTDOMAIN); ?></strong>
             <?php echo $vacature->get_vacature_gender() ?>
+        </li>
+        <li class="col-6 col-md-3">
+            <i class="fa fa-user"></i>
+            <strong><?php echo __('Leeftijd:', TEXTDOMAIN); ?></strong>
+            <?php echo ucfirst($vacature->age); ?>
+        </li>
+        <li class="col-6 col-md-3">
+            <i class="fa fa-user"></i>
+            <strong><?php echo __('Veld/zaal:', TEXTDOMAIN); ?></strong>
+            <?php echo $vacature->get_vacature_field(); ?>
         </li>
     </ul>
     <div class="btn-set">

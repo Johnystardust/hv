@@ -21,29 +21,34 @@ get_template_part('theme-functions/vc-elements/hv-vc-button');
 get_template_part('theme-functions/vc-elements/hv-vc-vacature-list');
 get_template_part('theme-functions/vc-elements/hv-vc-counter');
 
-function hv_vc_remove_params(){
-    vc_remove_param( "vc_row", "gap" );
-    vc_remove_param( "vc_row", "full_width" );
-    vc_remove_param( "vc_row", "full_height" );
-    vc_remove_param( "vc_row", "equal_height" );
-    vc_remove_param( "vc_row", "columns_placement" );
-    vc_remove_param( "vc_row", "content_placement" );
-    vc_remove_param( "vc_row", "video_bg" );
-    vc_remove_param( "vc_row", "video_bg_url" );
-    vc_remove_param( "vc_row", "parallax" );
-    vc_remove_param( "vc_row", "video_bg_parallax" );
-    vc_remove_param( "vc_row", "parallax_speed_video" );
-    vc_remove_param( "vc_row", "parallax_image" );
-    vc_remove_param( "vc_row", "parallax_speed_bg" );
+function hv_vc_remove_params()
+{
+    vc_remove_param("vc_row", "gap");
+    vc_remove_param("vc_row", "full_width");
+    vc_remove_param("vc_row", "full_height");
+    vc_remove_param("vc_row", "equal_height");
+    vc_remove_param("vc_row", "columns_placement");
+    vc_remove_param("vc_row", "content_placement");
+    vc_remove_param("vc_row", "video_bg");
+    vc_remove_param("vc_row", "video_bg_url");
+    vc_remove_param("vc_row", "parallax");
+    vc_remove_param("vc_row", "video_bg_parallax");
+    vc_remove_param("vc_row", "parallax_speed_video");
+    vc_remove_param("vc_row", "parallax_image");
+    vc_remove_param("vc_row", "parallax_speed_bg");
 }
+
 add_action('vc_before_init', 'hv_vc_remove_params');
 
-function hv_vc_remove_elements(){
+function hv_vc_remove_elements()
+{
     vc_remove_element('vc_gmaps');
 }
+
 add_action('vc_before_init', 'hv_vc_remove_elements');
 
-function hv_vc_update_params(){
+function hv_vc_update_params()
+{
 //    $attributes = array(
 //        'type' => 'textfield',
 //        'heading' => __( 'Extra class name', 'js_composer' ),
@@ -52,47 +57,45 @@ function hv_vc_update_params(){
 //    );
 //    vc_update_shortcode_param( 'vc_row', $attributes );
 }
+
 add_action('vc_before_init', 'hv_vc_update_params');
 
-function hv_vc_add_params(){
+function hv_vc_add_params()
+{
     $attributes = array(
         array(
-            'type' => 'dropdown',
-            'heading' => 'Padding Block',
+            'type'       => 'dropdown',
+            'heading'    => 'Padding Block',
             'param_name' => 'padding_block',
-            'value' => array(
-                'None' => 'none',
-                'Big Block' => 'big-block',
+            'value'      => array(
+                'None'       => 'none',
+                'Big Block'  => 'big-block',
                 'Half Block' => 'half-block'
             ),
-            'weight' => 100,
+            'weight'     => 100,
         ),
         array(
-            'type'          => 'dropdown',
-            'heading'       => 'Container',
-            'param_name'    => 'container',
-            'value' => array(
-                'Container' => 'container',
-                'Container Fluid' => 'container-fluid'
+            'type'       => 'dropdown',
+            'heading'    => 'Container',
+            'param_name' => 'container',
+            'value'      => array(
+                'Container'       => 'container',
+                'Container Fluid' => 'container-fluid',
+                'None'            => 'none',
             ),
-            'weight' => 99,
+            'weight'     => 99,
         ),
         array(
-            'type' => 'colorpicker',
-            'heading' => 'Background color',
+            'type'       => 'colorpicker',
+            'heading'    => 'Background color',
             'param_name' => 'color',
-            'weight' => 98,
+            'weight'     => 98,
         )
     );
-    vc_add_params( 'vc_row', $attributes ); // Note: 'vc_message' was used as a base for "Message box" element
+    vc_add_params('vc_row', $attributes); // Note: 'vc_message' was used as a base for "Message box" element
 }
+
 add_action('vc_before_init', 'hv_vc_add_params');
-
-
-
-
-
-
 
 //  Link your VC elements's folder //
 //function vc_before_init_actions() {

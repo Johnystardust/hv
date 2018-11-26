@@ -116,7 +116,15 @@ class HV_Forms_Helper
                 }
             } elseif ($fields[$key]['validation']['type'] == 'vacature_category') {
                 if (!in_array($value, $this->_get_allowed_vacature_categories())) {
-                    return new WP_Error('error', 'Ongeldige vacature type');
+                    return new WP_Error('error', 'Ongeldig vacature type');
+                }
+            } elseif ($fields[$key]['validation']['type'] == 'field') {
+                if (!in_array($value, $this->_get_allowed_vacature_field_values())) {
+                    return new WP_Error('error', 'Ongeldig veld type');
+                }
+            } elseif ($fields[$key]['validation']['type'] == 'age') {
+                if (!in_array($value, $this->_get_allowed_vacature_age_values())) {
+                    return new WP_Error('error', 'Ongeldige leeftijds categorie');
                 }
             } elseif ($fields[$key]['validation']['type'] == 'url' && !filter_var($value, FILTER_VALIDATE_URL)) {
                 return new WP_Error('website', 'Er is een niet geldige URL ingevuld. Controleer de velden.');
@@ -330,6 +338,26 @@ class HV_Forms_Helper
         return array(
             'business',
             'person'
+        );
+    }
+
+    /**
+     * Returns the allowed values for the field on the vacature create
+     *
+     * @return array
+     */
+    private function _get_allowed_vacature_field_values()
+    {
+        return array(
+            'outdoor',
+            'indoor'
+        );
+    }
+
+    private function _get_allowed_vacature_age_values(){
+        return array(
+            'senior',
+            'junior'
         );
     }
 }

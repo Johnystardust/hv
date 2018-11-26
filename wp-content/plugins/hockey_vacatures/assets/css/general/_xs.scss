@@ -151,12 +151,12 @@
       &[rel='prev']:before {
         content: "\f104";
         margin-right: 1rem;
-        font: normal normal normal 14px/1 FontAwesome;
+        font-family: "Font Awesome 5 Free";
       }
       &[rel='next']:after {
         content: "\f105";
         margin-left: 1rem;
-        font: normal normal normal 14px/1 FontAwesome;
+        font-family: "Font Awesome 5 Free";
       }
     }
   }

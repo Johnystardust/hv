@@ -5,7 +5,7 @@
     font-size: 1.5rem;
   }
 
-  &.widget_nav_menu, &.widget_recent_entries {
+  &.widget_nav_menu, &.widget_recent_entries, &.widget.sidebar-widget {
     ul {
       li {
         a {
@@ -17,8 +17,8 @@
           border-bottom: 1px solid $light-grey;
 
           &:before {
-            content: '\f101';
-            font: normal normal normal 14px/1 FontAwesome;
+            content: '\f054';
+            font-family: "Font Awesome 5 Free";
 
             margin-right: 1rem;
           }

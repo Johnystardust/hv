@@ -23,6 +23,8 @@ class HV_Vacature extends WP_Model
         'province',
         'coordinates',
         'alternate_address',
+        'age',
+        'field'
     );
     public $taxonomies = array(
         'vacature_category'
@@ -97,6 +99,22 @@ class HV_Vacature extends WP_Model
     }
 
     /**
+     * Get the vacature field type.
+     *
+     * @return bool|string
+     */
+    public function get_vacature_field()
+    {
+        if($this->field == 'outdoor'){
+            return __('Veld', 'hockey_vactures');
+        } elseif ($this->field == 'indoor'){
+            return __('Zaal', 'hockey_vacatures');
+        }
+
+        return false;
+    }
+
+    /**
      * Get the vacature gender icon.
      *
      * @return bool|string
@@ -121,8 +139,8 @@ class HV_Vacature extends WP_Model
      */
     public function show_flagged_notice()
     {
-        if (is_user_logged_in() && $this->post()->post_author == get_current_user_id() || hv_is_user_admin(wp_get_current_user())){
-            if($this->post()->post_status === 'flagged'){
+        if (is_user_logged_in() && $this->post()->post_author == get_current_user_id() || hv_is_user_admin(wp_get_current_user())) {
+            if ($this->post()->post_status === 'flagged') {
                 return true;
             }
         }

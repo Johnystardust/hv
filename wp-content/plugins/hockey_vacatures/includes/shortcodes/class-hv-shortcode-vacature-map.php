@@ -9,21 +9,15 @@ class HV_Shortcode_Vacature_Map
 
     public function output()
     {
-
         // TODO: //  FIX ME !!!!!!!!!!!!!!!!!!!
 
         ?>
         <div id="map-canvas" style="height: 300px;"></div>
-        <script type="text/javascript">
-            var map;
-
+        <script>
             function initMap() {
-
-                var myLatLng = {lat: 51.9794412, lng: 5.9076394};
-
                 map = new google.maps.Map(document.getElementById('map-canvas'), {
-                    center: myLatLng,
-                    zoom: Number(14),
+                    center: {lat: 51.9646808, lng: 5.9114894},
+                    zoom: 14,
                     styles: [
                         {
                             "featureType": "administrative",
@@ -106,8 +100,9 @@ class HV_Shortcode_Vacature_Map
                     ]
                 });
 
+                var myLatLng = {lat: 51.9646808, lng: 5.9114894};
                 var image = {
-                    url: '<?php echo get_stylesheet_directory_uri(). '/inc/img/hv-maps-marker.png'; ?>',
+                    url: '/wp-content/themes/hockey-vacatures/inc/img/hv-maps-marker.png',
                 };
                 var marker = new google.maps.Marker({
                     position: myLatLng,
@@ -117,9 +112,7 @@ class HV_Shortcode_Vacature_Map
                 });
             }
         </script>
-        <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDegnKkyQR90JmYSF2sJ2kMNjfxbFg5EEs&callback=initMap"
-            async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTjw-Z0dph6JxefZkVg7o_NpPk9L24JGo&callback=initMap" async defer></script>
         <?php
     }
 
