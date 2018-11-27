@@ -23,6 +23,11 @@
   color: red;
   max-width: 550px; }
 
+.review-notice {
+  position: relative;
+  color: orange;
+  max-width: 550px; }
+
 .totals table {
   width: 300px; }
   .totals table tr td:last-child {
@@ -182,6 +187,8 @@ body.hv-side-panel-open:after {
     color: #000; }
     #vacature-single .main-content .main-column .vacature-data li a:hover, #vacature-single .main-content .main-column .vacature-info li a:hover {
       color: #177FBF; }
+#vacature-single .main-content .main-column #related-vacatures .related-vacature .title a {
+  color: #177FBF; }
 
 @media screen and (max-width: 576px) {
   #vacature-single .main-content .main-column .vacature-info {

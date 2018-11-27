@@ -10,7 +10,7 @@ $(document).ready(function(){
     // Nav toggle
     // ==========
     $('.menu-toggle a').on('click', function(){
-        $('.menu-hoofdmenu-container').toggleClass('active');
+        $('.main-menu-container').toggleClass('active');
         $('html').toggleClass('noscroll');
     });
 

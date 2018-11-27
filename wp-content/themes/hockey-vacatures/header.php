@@ -66,7 +66,8 @@
                 <div class="col-6">
                     <?php $args = array(
                         'menu'          => 'primary',
-                        'menu_class'    => 'main-menu'
+                        'menu_class'    => 'main-menu',
+                        'container_class' => 'main-menu-container'
                     );
                     wp_nav_menu( $args ); ?>
                     <div class="menu-toggle">

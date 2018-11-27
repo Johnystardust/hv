@@ -76,21 +76,23 @@ body.admin-bar #header {
       }
     }
 
-    ul {
-      text-align: right;
-      li {
-        margin-top: 10px;
-        display: inline-block;
-        a {
-          color: #ffffff;
-          font-size: 1rem;
-          font-weight: 600;
-          margin-left: 1rem;
-          text-transform: uppercase;
+    .main-menu-container {
+      ul {
+        text-align: right;
+        li {
+          margin-top: 10px;
+          display: inline-block;
+          a {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 1rem;
+            text-transform: uppercase;
 
-          &:hover {
-            color: $light-blue;
-            text-decoration: none;
+            &:hover {
+              color: $light-blue;
+              text-decoration: none;
+            }
           }
         }
       }

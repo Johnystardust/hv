@@ -16,7 +16,9 @@
 <?php $vacature = HV_Vacature::find($post->ID); ?>
 
 <div class="vacature-item col-12 px-0">
-    <?php if($vacature->show_flagged_notice()): ?>
+    <?php if($vacature->show_in_review_notice()): ?>
+        <p class="review-notice"><?php echo __('De vacature staat klaar voor controle zodra deze gedaan is zal de vacature openbaar zijn. De vacature is nu alleen voor u zichtbaar.', 'hockey_vacatures'); ?></p>
+    <?php elseif($vacature->show_flagged_notice()): ?>
         <p class="flagged-notice"><?php echo __('De vacature is gemarkeerd voor controle omdat gebruikers deze aanstootgevend vonden. De vacature is alleen voor u zichtbaar.', 'hockey_vacatures'); ?></p>
     <?php endif; ?>
 

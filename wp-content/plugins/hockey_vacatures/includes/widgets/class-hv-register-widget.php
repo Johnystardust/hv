@@ -31,7 +31,7 @@ class HV_Register_Widget extends WP_Widget {
                 <li><a href="<?php echo wp_logout_url(  home_url() ); ?>"><i class="fa fa-sign-out-alt"></i> <span><?php echo __( 'Uitloggen', 'hockey_vacatures' ); ?></span></a></li>
             <?php else: ?>
                 <li class="hv-login-link <?php echo ( isset( $_GET['register'] ) == true ) ? 'active' : '';  ?>">
-                    <a href="#"><i class="fa fa-sign-in"></i> <span><?php echo __( 'Inloggen', 'hockey_vacatures' ); ?></span></a>
+                    <a href="#"><i class="fa fa-sign-in-alt"></i> <span><?php echo __( 'Inloggen', 'hockey_vacatures' ); ?></span></a>
                     <div class="hv-register-widget-form animated bounceIn">
                         <?php
                         $form_args = array(

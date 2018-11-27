@@ -24,6 +24,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
             $this->edit = true;
         } else {
             $this->vacature = new HV_Vacature();
+//            $this->vacature->post()->post_status = 'review';
         }
 
         // The form data
@@ -425,7 +426,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         $this->vacature->clearTaxonomy('vacature_category');
         $this->vacature->addTaxonomy('vacature_category', (int)$this->form_data['vacature_category']);
 
-        if ($this->vacature = $this->vacature->save()) {
+        if ($this->vacature = $this->vacature->save(['post_status'  => 'pending'])) {
             return true;
         }
 

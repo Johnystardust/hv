@@ -17,14 +17,14 @@ function hv_vc_title_spacer_output( $atts ) {
     ), $atts ) );
 
     if($subtitle_placement == 'above_title' && !empty($subtitle)){
-        $output .= '<h5 class="text-uppercase">'.$subtitle.'</h5>';
+        $output .= '<h6 class="text-uppercase">'.$subtitle.'</h6>';
     }
 
     $output .= '<h2 class="font-weight-bold">'.$title.'</h2>';
     $output .= '<div class="spacer"></div>';
 
     if($subtitle_placement == 'below_title' && !empty($subtitle)){
-        $output .= '<h5 class="text-uppercase">'.$subtitle.'</h5>';
+        $output .= '<h6 class="text-uppercase">'.$subtitle.'</h6>';
     }
 
     return $output;

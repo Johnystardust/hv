@@ -36,8 +36,9 @@ get_header(); ?>
                     <?php if ( have_posts() ) : ?>
                         <h2 class="font-weight-bold d-inline-block"><?php echo __('Alle Vacatures'); ?></h2>
                         <span class="vacature-counter" style="font-size: 1rem;"><?php echo __('Aantal vacatures', TEXTDOMAIN); ?>: <?php echo $post_count ?></span>
+
                         <?php while ( have_posts() ) : the_post();
-                            include( HV_ABSPATH . 'templates/archive-item.php' );
+                            include( HV_ABSPATH . 'templates/content-archive.php' );
                         endwhile;
 
                         the_posts_pagination( array(

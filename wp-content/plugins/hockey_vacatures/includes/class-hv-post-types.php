@@ -195,13 +195,31 @@ class HV_Post_Types
             'public'                    => false,
             'internal'                  => false,
             'private'                   => true,
-            'exclude_from_search'       => false,
+            'exclude_from_search'       => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop('Flagged <span class="count">(%s)</span>', 'Flagged <span class="count">(%s)</span>'),
         );
 
         register_post_status('flagged', $args);
+
+
+        // TODO: FIX WITH PENDING POST STATUS
+        $args = array(
+            'label'       => __('In Review', 'hockey_vacatures'),
+            'exclude_from_search' => null,
+            'public' => null,
+            'internal' => null,
+            'protected' => null,
+            'private' => true,
+            'publicly_queryable' => null,
+            'show_in_admin_status_list' => null,
+            'show_in_admin_all_list' => null,
+            'label_count' => _n_noop('Review <span class="count">(%s)</span>', 'Reviews <span class="count">(%s)</span>'),
+        );
+
+        register_post_status('review', $args);
+
     }
 }
 

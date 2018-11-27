@@ -4,15 +4,17 @@
 @media screen and (max-width: 992px){
   #header {
     .main-header {
-      .menu-hoofdmenu-container {
+      .main-menu-container {
         display: block;
         position: fixed;
         height: calc(100vh - 99px);
         width: 350px;
         background-color: #171717;
         border-top: 1px solid $light-grey;
-        right: -100%;
+        right: 0;
+        transform: translateX(100%);
         top: 99px;
+
         @include transition-ease-all;
 
 
@@ -30,7 +32,7 @@
 
 
         &.active {
-          right: 0;
+          transform: translateX(0);
         }
       }
       .menu-toggle {
@@ -40,3 +42,4 @@
     }
   }
 }
+

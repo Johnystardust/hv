@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 include_once(HV_ABSPATH . 'includes/abstracts/wp-model.php');
 
-
 class HV_Vacature extends WP_Model
 {
 
@@ -81,6 +80,24 @@ class HV_Vacature extends WP_Model
     }
 
     /**
+     * Function to get the related vacature.
+     *
+     * // TODO: Expand on this related function.
+     *
+     * @return array
+     */
+    public function get_related_vacatures()
+    {
+        $args = array(
+            'posts_per_page' => 3,
+            'post_type' => 'vacature',
+            'order' => 'ASC'
+        );
+
+        return get_posts($args);
+    }
+
+    /**
      * Get the vacature gender role.
      *
      * @return bool|string
@@ -105,9 +122,9 @@ class HV_Vacature extends WP_Model
      */
     public function get_vacature_field()
     {
-        if($this->field == 'outdoor'){
+        if ($this->field == 'outdoor') {
             return __('Veld', 'hockey_vactures');
-        } elseif ($this->field == 'indoor'){
+        } elseif ($this->field == 'indoor') {
             return __('Zaal', 'hockey_vacatures');
         }
 
@@ -141,6 +158,24 @@ class HV_Vacature extends WP_Model
     {
         if (is_user_logged_in() && $this->post()->post_author == get_current_user_id() || hv_is_user_admin(wp_get_current_user())) {
             if ($this->post()->post_status === 'flagged') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * // TODO: FIX PENDING VACATURES ONLY SHOWN BY THEIR Authors
+     *
+     * Show the in review notice
+     *
+     * @return bool
+     */
+    public function show_in_review_notice()
+    {
+        if (is_user_logged_in() && $this->post()->post_author == get_current_user_id() || hv_is_user_admin(wp_get_current_user())) {
+            if($this->post()->post_status === 'review') {
                 return true;
             }
         }

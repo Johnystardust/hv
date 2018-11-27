@@ -82,7 +82,7 @@ class HV_Filter_Widget extends WP_Widget {
             </div>
 
             <div class="form-group">
-                <label for="field"><?php echo __('Leeftijd', TEXTDOMAIN); ?></label>
+                <label for="field"><?php echo __('Veld/Zaal', TEXTDOMAIN); ?></label>
 
                 <?php foreach($field_types as $key => $value): ?>
                     <label for="<?php echo 'field-'.$key; ?>">

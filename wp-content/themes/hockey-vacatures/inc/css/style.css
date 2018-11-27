@@ -57,18 +57,18 @@ body.admin-bar #header {
         line-height: 49px;
         font-size: 1.4rem;
         text-align: center; }
-    #header .main-header ul {
+    #header .main-header .main-menu-container ul {
       text-align: right; }
-      #header .main-header ul li {
+      #header .main-header .main-menu-container ul li {
         margin-top: 10px;
         display: inline-block; }
-        #header .main-header ul li a {
+        #header .main-header .main-menu-container ul li a {
           color: #ffffff;
           font-size: 1rem;
           font-weight: 600;
           margin-left: 1rem;
           text-transform: uppercase; }
-          #header .main-header ul li a:hover {
+          #header .main-header .main-menu-container ul li a:hover {
             color: #6BC7FF;
             text-decoration: none; }
   #header.normal .top-header {
@@ -81,35 +81,36 @@ body.admin-bar #header {
     background-color: rgba(23, 23, 23, 0.9); }
 
 @media screen and (max-width: 576px) {
-  #header .main-header .menu-hoofdmenu-container {
+  #header .main-header .main-menu-container {
     width: 100% !important; } }
 @media screen and (max-width: 768px) {
   #header .top-header ul li a span {
     display: none; } }
 @media screen and (max-width: 992px) {
-  #header .main-header .menu-hoofdmenu-container {
+  #header .main-header .main-menu-container {
     display: block;
     position: fixed;
     height: calc(100vh - 99px);
     width: 350px;
     background-color: #171717;
     border-top: 1px solid #f6f6f6;
-    right: -100%;
+    right: 0;
+    transform: translateX(100%);
     top: 99px;
     transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out; }
-    #header .main-header .menu-hoofdmenu-container .main-menu {
+    #header .main-header .main-menu-container .main-menu {
       text-align: left; }
-      #header .main-header .menu-hoofdmenu-container .main-menu li {
+      #header .main-header .main-menu-container .main-menu li {
         display: block !important;
         margin-top: 0;
         padding: 1rem; }
-        #header .main-header .menu-hoofdmenu-container .main-menu li a {
+        #header .main-header .main-menu-container .main-menu li a {
           margin-left: 0; }
-    #header .main-header .menu-hoofdmenu-container.active {
-      right: 0; }
+    #header .main-header .main-menu-container.active {
+      transform: translateX(0); }
   #header .main-header .menu-toggle {
     float: right;
     display: inline-block; } }
@@ -727,11 +728,12 @@ h4 {
   font-weight: 600; }
 
 h5 {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 600; }
 
 h6 {
-  font-size: 1rem; }
+  font-size: 1.1rem;
+  font-weight: 600; }
 
 p {
   font-weight: 300;

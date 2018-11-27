@@ -42,6 +42,14 @@
           }
         }
       }
+
+      #related-vacatures {
+        .related-vacature {
+          .title a {
+            color: $primary-color;
+          }
+        }
+      }
     }
   }
 }
