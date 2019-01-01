@@ -91,7 +91,14 @@ class HV_Vacature extends WP_Model
         $args = array(
             'posts_per_page' => 3,
             'post_type' => 'vacature',
-            'order' => 'ASC'
+            'post__not_in' => array($this->post()->ID),
+            'order' => 'ASC',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'vacature_category',
+                    'terms' => $this->vacature_cat,
+                )
+            )
         );
 
         return get_posts($args);

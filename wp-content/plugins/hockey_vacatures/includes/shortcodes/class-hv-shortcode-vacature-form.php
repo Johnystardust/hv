@@ -65,7 +65,9 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'validation' => array(
                     'required' => true,
                     'type'     => 'function',
-                )
+                ),
+                'description' => 'option_based',
+                'description_options' => hv_get_vacature_category_descriptions(),
             ),
             'gender'            => array(
                 'type'       => 'select',
@@ -83,7 +85,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'validation' => array(
                     'required' => true,
                     'type'     => 'gender',
-                )
+                ),
             ),
             'age'               => array(
                 'type'       => 'select',
@@ -174,7 +176,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
             'addition'        => array(
-                'type'        => 'number',
+                'type'        => 'text',
                 'label'       => __('Toevoeging', 'hockey_vacatures'),
                 'name'        => 'addition',
                 'value'       => $this->edit ? $this->vacature->addition : '',
@@ -195,7 +197,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'placeholder' => __('Stad', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
@@ -210,7 +212,7 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'placeholder' => __('Provincie', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
@@ -225,34 +227,34 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 'placeholder' => __('Straat', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
                 ),
                 'disabled'    => !($this->edit && !$this->vacature->alternate_address),
             ),
-            'manual_location' => array(
-                'type'       => 'checkbox',
-                'label'      => __('Handmatig adres invullen', 'hockey_vacatures'),
-                'name'       => 'manual_location',
-                'col_size'   => 'col-12',
-                'required'   => false,
-                'validation' => array(
-                    'required' => false,
-                    'type'     => 'checkbox'
-                ),
-            ),
-            'coordinates'     => array(
-                'type'       => 'hidden',
-                'name'       => 'coordinates',
-                'value'      => $this->edit ? $this->vacature->coordinates : '',
-                'validation' => array(
-                    'required' => true,
-                    'type'     => 'text'
-                ),
-                'disabled'   => !($this->edit && !$this->vacature->alternate_address),
-            ),
+//            'manual_location' => array(
+//                'type'       => 'checkbox',
+//                'label'      => __('Handmatig adres invullen', 'hockey_vacatures'),
+//                'name'       => 'manual_location',
+//                'col_size'   => 'col-12',
+//                'required'   => false,
+//                'validation' => array(
+//                    'required' => false,
+//                    'type'     => 'checkbox'
+//                ),
+//            ),
+//            'coordinates'     => array(
+//                'type'       => 'hidden',
+//                'name'       => 'coordinates',
+//                'value'      => $this->edit ? $this->vacature->coordinates : '',
+//                'validation' => array(
+//                    'required' => true,
+//                    'type'     => 'text'
+//                ),
+//                'disabled'   => !($this->edit && !$this->vacature->alternate_address),
+//            ),
         );
     }
 
@@ -318,15 +320,15 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 ),
                 'value'      => $this->user->street
             ),
-            'user_coordinates'   => array(
-                'type'       => 'hidden',
-                'name'       => 'user_coordinates',
-                'validation' => array(
-                    'required' => true,
-                    'type'     => 'text'
-                ),
-                'value'      => $this->user->coordinates
-            ),
+//            'user_coordinates'   => array(
+//                'type'       => 'hidden',
+//                'name'       => 'user_coordinates',
+//                'validation' => array(
+//                    'required' => true,
+//                    'type'     => 'text'
+//                ),
+//                'value'      => $this->user->coordinates
+//            ),
         );
     }
 
@@ -368,10 +370,10 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 else {
                     $output .= $this->render_popup_message(
                         __('Vacature geplaatst!', 'hockey_vacatures'),
-                        __('De vacature is geplaatst veel succes met de werving! U word over 5 seconden doorverwezen naar de vacature.', 'hockey_vacatures'),
+                        __('De vacature is geplaatst veel succes met de werving! De vacature is zichtbaar na controle.', 'hockey_vacatures'),
                         'success',
                         null,
-                        array($this->vacature->permalink(), __('Naar vacature', 'hockey_vacatures'))
+                        array(get_post_type_archive_link('vacature'), __('Naar vacatures', 'hockey_vacatures'))
                     );
                 }
             } else {

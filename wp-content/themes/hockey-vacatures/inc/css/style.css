@@ -252,6 +252,10 @@ form .description {
   font-size: .8rem;
   font-weight: 300;
   color: #999999; }
+form .description-option {
+  display: none; }
+  form .description-option.active {
+    display: block; }
 form .form-group, form .wpcf7-form-control-wrap {
   margin-bottom: 2rem;
   width: 100%; }

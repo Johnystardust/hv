@@ -239,7 +239,7 @@ class HV_Forms_Helper
                                 <span class="required">*</span>
                             <?php endif; ?>
                         </label>
-                        <select class="form-control custom-select" name="<?php echo $field['name']; ?>"
+                        <select class="form-control custom-select <?php echo (isset($field['description']) && $field['description'] == 'option_based') ? 'option-based-description' : ''; ?>" name="<?php echo $field['name']; ?>"
                                 id="<?php echo $field['name']; ?>" <?php echo (isset($field['disabled']) && $field['disabled']) ? 'disabled' : ''; ?> <?php echo (isset($field['readonly']) && $field['readonly']) ? 'readonly' : ''; ?>>
                             <?php foreach ($field['options'] as $option => $value): ?>
                                 <option <?php if (isset($_POST[$field['name']]) && $_POST[$field['name']] == $option) {
@@ -250,7 +250,13 @@ class HV_Forms_Helper
                             <?php endforeach; ?>
                         </select>
                         <?php if (array_key_exists('description', $field)): ?>
-                            <span class="description"><?php echo $field['description'] ?></span>
+                            <?php if($field['description'] == 'option_based'): ?>
+                                <?php foreach ($field['description_options'] as $term => $description_option): ?>
+                                    <span id="description-option-<?php echo $term; ?>" class="description-option description"><?php echo $description_option; ?></span>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <span class="description"><?php echo $field['description'] ?></span>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                     <?php break;

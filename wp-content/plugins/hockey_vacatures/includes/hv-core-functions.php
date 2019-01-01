@@ -141,7 +141,7 @@ function hv_get_function_options($field = 'term_id')
 /**
  * Return the categories options for the vacature types in the vacature add form.
  *
- * @param $field ;
+ * @param $field
  *
  * @return array
  */
@@ -161,6 +161,33 @@ function hv_get_vacature_categories($field = 'term_id')
             $options[$vacature_term->term_id] = $vacature_term->name;
         } elseif ($field == 'slug') {
             $options[$vacature_term->slug] = $vacature_term->name;
+        }
+    }
+
+    return $options;
+}
+
+/**
+ * Return the category descriptions for the vacature types in the vacature add form
+ *
+ * @param string $field
+ *
+ * @return array
+ */
+function hv_get_vacature_category_descriptions($field = 'term_id')
+{
+    $options = array();
+
+    $vacature_terms = get_terms(array(
+        'taxonomy' => 'vacature_category',
+        'hide_empty' => false,
+    ));
+
+    foreach ($vacature_terms as $vacature_term){
+        if($field == 'term_id'){
+            $options[$vacature_term->term_id] = $vacature_term->description;
+        } elseif ($field == 'slug'){
+            $options[$vacature_term->term_id] = $vacature_term->description;
         }
     }
 

@@ -125,32 +125,32 @@
 
         // Register Form postcode API
         // ==========================
-        $regForm.find('#street_number').on('keyup', function(){
-            var street_number 	= $(this).val();
-            var postal 			= $regForm.find('#postal').val();
-
-            $.ajax({
-                url: "https://api.postcodeapi.nu/v2/addresses/?postcode="+postal+"&number="+street_number,
-                "method": "GET",
-                "headers": {
-                    "x-api-key": "1vRaaykvlV3pcEmP6sGjG3wVMxYcgvMD6buKoVHg",
-                    "accept": "application/hal+json"
-                },
-                "async": true,
-                "crossDomain": true,
-            }).done(function(response){
-                $regForm.find('#city').val(response._embedded.addresses[0].city.label);
-                $regForm.find('#province').val(response._embedded.addresses[0].province.label);
-                $regForm.find('#street').val(response._embedded.addresses[0].street);
-
-                var coordinates = [
-                    response._embedded.addresses[0].geo.center.wgs84.coordinates[0],
-                    response._embedded.addresses[0].geo.center.wgs84.coordinates[1],
-                ];
-
-                $regForm.find('#coordinates').val(coordinates);
-            });
-        });
+        // $regForm.find('#street_number').on('keyup', function(){
+        //     var street_number 	= $(this).val();
+        //     var postal 			= $regForm.find('#postal').val();
+        //
+        //     $.ajax({
+        //         url: "https://api.postcodeapi.nu/v2/addresses/?postcode="+postal+"&number="+street_number,
+        //         "method": "GET",
+        //         "headers": {
+        //             "x-api-key": "1vRaaykvlV3pcEmP6sGjG3wVMxYcgvMD6buKoVHg",
+        //             "accept": "application/hal+json"
+        //         },
+        //         "async": true,
+        //         "crossDomain": true,
+        //     }).done(function(response){
+        //         $regForm.find('#city').val(response._embedded.addresses[0].city.label);
+        //         $regForm.find('#province').val(response._embedded.addresses[0].province.label);
+        //         $regForm.find('#street').val(response._embedded.addresses[0].street);
+        //
+        //         var coordinates = [
+        //             response._embedded.addresses[0].geo.center.wgs84.coordinates[0],
+        //             response._embedded.addresses[0].geo.center.wgs84.coordinates[1],
+        //         ];
+        //
+        //         $regForm.find('#coordinates').val(coordinates);
+        //     });
+        // });
 
         // 3.0 Register Page
         // =============================================================================================================

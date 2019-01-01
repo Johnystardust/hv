@@ -191,6 +191,13 @@ form {
     }
   }
   .description {font-size: .8rem; font-weight: 300; color: #999999;}
+  .description-option {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+
   .form-group, .wpcf7-form-control-wrap {margin-bottom: 2rem; width: 100%}
   .form-control, .wpcf7-form-control {
     border: 1px solid rgba(0,0,0,.12);

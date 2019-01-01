@@ -252,8 +252,8 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                     'type'       => 'text',
                     'min_length' => 5
                 ),
-                'readonly'    => $this->edit,
-                'disabled'    => $this->edit,
+//                'readonly'    => $this->edit,
+//                'disabled'    => $this->edit,
             ),
             'password_check'  => array(
                 'type'        => 'password',
@@ -266,8 +266,8 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                     'required' => !$this->edit,
                     'type'     => 'text'
                 ),
-                'readonly'    => $this->edit,
-                'disabled'    => $this->edit,
+//                'readonly'    => $this->edit,
+//                'disabled'    => $this->edit,
             ),
 
             // Address fields
@@ -298,7 +298,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'value'       => $this->user->street_number
             ),
             'addition'        => array(
-                'type'        => 'number',
+                'type'        => 'text',
                 'label'       => __('Toevoeging', 'hockey_vacatures'),
                 'name'        => 'addition',
                 'placeholder' => __('Toevoeging', 'hockey_vacatures'),
@@ -317,7 +317,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'placeholder' => __('Stad', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
@@ -331,7 +331,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'placeholder' => __('Provincie', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
@@ -345,29 +345,31 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'placeholder' => __('Straat', 'hockey_vacatures'),
                 'col_size'    => 'col-12 col-md-6',
                 'required'    => true,
-                'readonly'    => true,
+                'readonly'    => false,
                 'validation'  => array(
                     'required' => true,
                     'type'     => 'text'
                 ),
                 'value'       => $this->user->street
             ),
-            'manual_location' => array(
-                'type'     => 'checkbox',
-                'label'    => __('Handmatig adres invullen', 'hockey_vacatures'),
-                'name'     => 'manual_location',
-                'col_size' => 'col-12',
-                'required' => false,
-            ),
-            'coordinates'     => array(
-                'type'       => 'hidden',
-                'name'       => 'coordinates',
-                'validation' => array(
-                    'required' => true,
-                    'type'     => 'text'
-                ),
-                'value'      => $this->user->coordinates
-            ),
+// TODO: FIX POSTCODE API
+
+//            'manual_location' => array(
+//                'type'     => 'checkbox',
+//                'label'    => __('Handmatig adres invullen', 'hockey_vacatures'),
+//                'name'     => 'manual_location',
+//                'col_size' => 'col-12',
+//                'required' => false,
+//            ),
+//            'coordinates'     => array(
+//                'type'       => 'hidden',
+//                'name'       => 'coordinates',
+//                'validation' => array(
+//                    'required' => true,
+//                    'type'     => 'text'
+//                ),
+//                'value'      => $this->user->coordinates
+//            ),
         );
     }
 
@@ -514,8 +516,8 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                     'type'     => 'email',
                 ),
                 'value'       => $this->user->user_email,
-                'readonly'   => $this->edit,
-                'disabled'   => $this->edit,
+//                'readonly'   => $this->edit,
+//                'disabled'   => $this->edit,
             ),
             'person_age'    => array(
                 'type'        => 'number',

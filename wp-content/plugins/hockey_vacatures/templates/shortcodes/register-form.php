@@ -29,7 +29,7 @@
                     <strong class="text-uppercase"><?php echo __('adresgegevens', 'hockey_vacatures'); ?></strong>
                     <hr>
                 </div>
-                <?php $this->build_form( $this->get_form_section( array('postal', 'street_number', 'addition', 'city', 'province', 'street', 'blank', 'manual_location', 'coordinates') ) ); ?>
+                <?php $this->build_form( $this->get_form_section( array('postal', 'street_number', 'addition', 'city', 'province', 'street', 'blank') ) ); ?>
             </div>
 
             <div class="row">

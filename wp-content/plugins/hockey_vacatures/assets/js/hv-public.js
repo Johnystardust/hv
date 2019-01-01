@@ -116,27 +116,29 @@
         // 4.0 Vacature Single
         // =============================================================================================================
 
+        // TODO: FIX VACATURE FLAGGED
+
         // -- Flag vacature
-        $(document).on('click', '#hv-flag-vacature', function (e) {
-            e.preventDefault();
-
-            var nonce = $(this).data('nonce');
-            var id = $(this).data('id');
-
-            $.ajax({
-                type: 'post',
-                url: ajax_object.ajax_url,
-                data: {
-                    action: 'hv_flag_vacature',
-                    nonce: nonce,
-                    id: id
-                },
-                success: function (result) {
-                    var popup = render_popup_message(result.title, result.message, result.button_text, result.url, result.status);
-                    $('body').append(popup);
-                }
-            })
-        });
+        // $(document).on('click', '#hv-flag-vacature', function (e) {
+        //     e.preventDefault();
+        //
+        //     var nonce = $(this).data('nonce');
+        //     var id = $(this).data('id');
+        //
+        //     $.ajax({
+        //         type: 'post',
+        //         url: ajax_object.ajax_url,
+        //         data: {
+        //             action: 'hv_flag_vacature',
+        //             nonce: nonce,
+        //             id: id
+        //         },
+        //         success: function (result) {
+        //             var popup = render_popup_message(result.title, result.message, result.button_text, result.url, result.status);
+        //             $('body').append(popup);
+        //         }
+        //     })
+        // });
 
         // 5.0  Vacature Form
         // =============================================================================================================
@@ -175,6 +177,14 @@
 
         // General
         // =============================================================================================================
+
+        // -- Toggle Form Descriptions
+        $('.option-based-description').on('change', function(e){
+            var value = $(this).val();
+
+            $(this).parent().find('.description-option').removeClass('active');
+            $(this).parent().find('#description-option-'+value).addClass('active');
+        });
 
         // -- Archive open filter
         $('#archive-add-filter').on('click', function (e) {
