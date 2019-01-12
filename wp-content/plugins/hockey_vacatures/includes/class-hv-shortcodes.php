@@ -14,7 +14,9 @@ class HV_Shortcodes
             'hockey_vacatures_register_form'    => __CLASS__ . '::register_form',
             'hockey_vacatures_vacature_form'    => __CLASS__ . '::vacature_form',
             'hockey_vacatures_user_panel'       => __CLASS__ . '::user_panel',
-            'hockey_vacatures_vacature_map'     => __CLASS__ . '::vacature_map'
+            'hockey_vacatures_vacature_map'     => __CLASS__ . '::vacature_map',
+            'hockey_vacatures_password_change'  => __CLASS__ . '::password_change_form',
+            'hockey_vacatures_email_change'     => __CLASS__ . '::email_change_form'
         );
 
         foreach ($shortcodes as $shortcode => $function) {
@@ -63,7 +65,7 @@ class HV_Shortcodes
     }
 
     /**
-     * Register form shortcode
+     * Register form shortcode.
      *
      * @return string
      */
@@ -86,6 +88,11 @@ class HV_Shortcodes
         return $shortcode->output();
     }
 
+    /**
+     * User panel shortcode.
+     *
+     * @return string
+     */
     public static function user_panel()
     {
         $shortcode = new HV_Shortcode_User_Panel();
@@ -93,12 +100,44 @@ class HV_Shortcodes
         return $shortcode->output();
     }
 
+    /**
+     * Maps shortcode.
+     *
+     * @param array $atts
+     */
     public static function vacature_map($atts = array())
     {
         $shortcode = new HV_Shortcode_Vacature_Map($atts);
 
         return $shortcode->output();
     }
+
+    /**
+     * Password change form shortcode.
+     *
+     * @param array $atts
+     * @return mixed
+     */
+    public static function password_change_form($atts = array())
+    {
+        $shortcode = new HV_Shortcode_Password_Change($atts);
+
+        return $shortcode->output();
+    }
+
+    /**
+     * Email change form shortcode.
+     *
+     * @param array $atts
+     * @return string
+     */
+    public static function email_change_form($atts = array())
+    {
+        $shortcode = new HV_Shortcode_Email_Change($atts);
+
+        return $shortcode->output();
+    }
+
 }
 
 HV_Shortcodes::init();

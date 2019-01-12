@@ -5,10 +5,14 @@
         // 1.0 Register Form Validation
         // 2.0 Register Form Postcode API
         // 3.0 Register Page
+        // 4.0 Password Change Form Validation
+        // 5.0 Email Change Form Validation
 
         // 1.0 Register Form Validation
         // =============================================================================================================
         var $regForm = $('#hv_reg_form');
+        var $passForm = $('#hv_pass_form');
+        var $emailForm = $('#hv_email_form');
 
         // jQuery validate addMethods
         // ==========================
@@ -18,7 +22,6 @@
 
         // Register Form Validation
         // ========================
-
         $regForm.validate({
             rules: {
                 // General
@@ -39,7 +42,6 @@
                     required: true,
                     minlength: 5
                 },
-                //TODO: FIX PASSWORD CHECK
                 password_check: {
                     required: true,
                     equalTo: '#password'
@@ -158,7 +160,6 @@
         // Show correct form fields based on role
         // ======================================
         function role_select($value){
-
             if($value != 'default'){
                 $('.hideable-fields').addClass('disabled');
                 $('.hideable-fields input, .hideable-fields select, .hideable-fields textarea').attr('disabled', 'disabled');
@@ -172,13 +173,15 @@
 
         // On page refresh set the role
         // ============================
-        var role = $regForm.find('#role').find(":selected").val();
-        role_select(role);
+        if(!$regForm.hasClass('edit-form')){
+            var role = $regForm.find('#role').find(":selected").val();
+            role_select(role);
 
-        // On select
-        $regForm.find('select[name="role"]').on('change', function(event){
-            role_select($(this).val());
-        });
+            // On select
+            $regForm.find('select[name="role"]').on('change', function(event){
+                role_select($(this).val());
+            });
+        }
 
         // Manual Location
         // ===============
@@ -194,6 +197,58 @@
             }
         });
 
+        // 4.0 Password Change Form Validation
+        // =============================================================================================================
+        $passForm.validate({
+            rules: {
+                new_password: {
+                    required: true,
+                    minlength: 5
+                },
+                new_password_check: {
+                    required: true,
+                    equalTo: '#new_password'
+                },
+                current_password: {
+                    required: true
+                }
+            },
+            messages: {
+                new_password: {
+                    required: 'Geef een wachtwoord op.',
+                    minlength: 'Password moet tenminste 5 letters zijn.'
+                },
+                new_password_check: {
+                    required: 'Geef een wachtwoord op.',
+                    equalTo: 'Geef nogmaals hetzelfde wachtwoord op.'
+                },
+                current_password: {
+                    required: 'Geef een wachtwoord op.',
+                    minlength: 'Password moet tenminste 5 letters zijn.'
+                }
+            }
+        });
+
+        // 5.0 Email Change Form Validation
+        // =============================================================================================================
+        $emailForm.validate({
+            rules: {
+                new_email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                password: {
+                    required: 'Geef een wachtwoord op.',
+                    minlength: 'Password moet tenminste 5 letters zijn.'
+                },
+                new_email: 'Geef een geldig email adres op.',
+            }
+        });
     });
 
 })( jQuery );

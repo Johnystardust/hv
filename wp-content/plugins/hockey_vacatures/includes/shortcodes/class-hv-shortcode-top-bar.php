@@ -75,7 +75,7 @@ class HV_Shortcode_Top_Bar
                 if ($this->is_user_author()) {
                     return array('vacature_delete', 'vacature_edit', 'archive_link');
                 } else {
-                    return array('previous_post', 'maps', 'archive_link', 'next_post');
+                    return array('previous_post', 'archive_link', 'next_post');
                 }
             }
         } else {
@@ -85,7 +85,7 @@ class HV_Shortcode_Top_Bar
             }
             // Vacature Single
             elseif (is_singular('vacature')) {
-                return array('previous_post', 'maps', 'archive_link', 'next_post');
+                return array('previous_post', 'archive_link', 'next_post');
             }
         }
 

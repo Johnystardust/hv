@@ -39,6 +39,26 @@ class HV_Forms_Helper
     }
 
     /**
+     * Get an section of the form_fields by array key
+     *
+     * @param array $sections
+     *
+     * @return array
+     */
+    public function get_form_section($sections = array())
+    {
+        $data = array();
+
+        foreach ($sections as $section) {
+            if (array_key_exists((string)$section, $this->form_fields)) {
+                $data[$section] = $this->form_fields[$section];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
      * Get the data from the form
      *
      * @param $form_fields
@@ -249,6 +269,10 @@ class HV_Forms_Helper
                                 }; ?> value="<?php echo $option; ?>"><?php echo $value; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?php if($field['name'] == 'date'): ?>
+                            <?php // TODO: FIX DATEPICKER ?>
+                            <input type="text" class="datepicker form-control">
+                        <?php endif; ?>
                         <?php if (array_key_exists('description', $field)): ?>
                             <?php if($field['description'] == 'option_based'): ?>
                                 <?php foreach ($field['description_options'] as $term => $description_option): ?>

@@ -1,4 +1,4 @@
-<form class="px-0" id="hv_reg_form" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
+<form class="px-0 <?php echo ($this->edit) ? 'edit-form' : null; ?>" id="hv_reg_form" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>">
     <div class="row">
         <div class="col-12 col-md-11">
 
@@ -6,7 +6,7 @@
                 <?php $this->build_form( $this->get_form_section( array('username', 'role') ) ); ?>
             </div>
 
-            <div class="business-fields disabled row animated fadeIn hideable-fields">
+            <div class="business-fields <?php echo ($this->edit && $this->get_hv_user_role() == 'business') ? '' : 'disabled' ?> row animated fadeIn hideable-fields">
                 <div class="col-12">
                     <strong class="text-uppercase"><?php echo __('Club/Onderneming', 'hockey_vactures'); ?></strong>
                     <hr>
@@ -15,7 +15,7 @@
                 <?php $this->build_form($this->get_business_fields()); ?>
             </div>
 
-            <div class="person-fields disabled row animated fadeIn hideable-fields">
+            <div class="person-fields <?php echo ($this->edit && $this->get_hv_user_role() == 'person') ? '' : 'disabled' ?> row animated fadeIn hideable-fields">
                 <div class="col-12">
                     <strong class="text-uppercase"><?php echo __('Gebruiker', 'hockey_vactures'); ?></strong>
                     <hr>

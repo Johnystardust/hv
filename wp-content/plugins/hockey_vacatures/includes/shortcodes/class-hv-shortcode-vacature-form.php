@@ -7,11 +7,11 @@ if (!defined('ABSPATH')) {
 class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
 {
 
-    private   $form_fields;
-    private   $form_data;
-    private   $vacature;
-    private   $flags;
-    private   $user;
+    protected $form_fields;
+    protected $form_data;
+    protected $vacature;
+    protected $flags;
+    protected $user;
     protected $edit = false;
 
     public function __construct($atts = array())
@@ -54,6 +54,23 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
                 ),
                 'readonly'    => $this->edit
             ),
+//            'date' => array(
+//                'type'       => 'select',
+//                'label'      => __('Datum', 'hockey_vacatures'),
+//                'name'       => 'date',
+//                'options'    => array(
+//                    'default' => __('Maak een keuze...', 'hockey_vacatures'),
+//                    'male'    => __('Per direct', 'hockey_vacatures'),
+//                    'female'  => __('Vanaf Datum', 'hockey_vacatures'),
+//                ),
+//                'col_size'   => 'col-12 col-md-6',
+//                'required'   => true,
+//                'value'      => $this->vacature->date,
+//                'validation' => array(
+//                    'required' => true,
+//                    'type'     => 'date',
+//                ),
+//            ),
             'vacature_category' => array(
                 'type'       => 'select',
                 'label'      => __('Vacature Type', 'hockey_vacatures'),
@@ -464,26 +481,6 @@ class HV_Shortcode_Vacature_Form extends HV_Forms_Helper
         }
 
         return true;
-    }
-
-    /**
-     * Get an section of the form_fields by array key
-     *
-     * @param array $sections
-     *
-     * @return array
-     */
-    private function get_form_section($sections = array())
-    {
-        $data = array();
-
-        foreach ($sections as $section) {
-            if (array_key_exists((string)$section, $this->form_fields)) {
-                $data[$section] = $this->form_fields[$section];
-            }
-        }
-
-        return $data;
     }
 
     /**

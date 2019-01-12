@@ -6,10 +6,10 @@ if (!defined('ABSPATH')) {
 
 class HV_Shortcode_Register_Form extends HV_Forms_Helper
 {
-    private $id;
-    private $user;
-    private $form_fields;
-    private $form_data;
+    protected $id;
+    protected $user;
+    protected $form_fields;
+    protected $form_data;
 
     protected $edit = false;
 
@@ -70,20 +70,30 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
 
             // If the user is editing
             if ($this->edit) {
-                if (!is_wp_error($this->id = $this->update_user())) {
-                    $output .= $this->render_popup_message(
-                        __('Account aangepast!', 'hockey_vacatures'),
-                        __('Uw account is bewerkt.', 'hockey_vacatures'),
-                        'success',
-                        null,
-                        array('#message-popup-close', __('Terug', 'hockey_vacatures'))
-                    );
+                if(wp_check_password($this->form_data['password'], $this->user->user_pass)){
+                    if (!is_wp_error($this->id = $this->update_user())) {
+                        $output .= $this->render_popup_message(
+                            __('Account aangepast!', 'hockey_vacatures'),
+                            __('Uw account is bewerkt.', 'hockey_vacatures'),
+                            'success',
+                            null,
+                            array('#message-popup-close', __('Terug', 'hockey_vacatures'))
+                        );
+                    } else {
+                        $output .= $this->render_popup_message(
+                            __('Foutje bedankt', 'hockey_vacatures'),
+                            __('Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures'),
+                            'error',
+                            $this->id->get_error_message(),
+                            array('#message-popup-close', __('Terug', 'hockey_vacatures'))
+                        );
+                    }
                 } else {
                     $output .= $this->render_popup_message(
                         __('Foutje bedankt', 'hockey_vacatures'),
-                        __('Het account kan niet worden aangemaakt probeer het later nog een keer.', 'hockey_vacatures'),
+                        __('Het wachtwoord is niet correct.', 'hockey_vacatures'),
                         'error',
-                        $this->id->get_error_message(),
+                        null,
                         array('#message-popup-close', __('Terug', 'hockey_vacatures'))
                     );
                 }
@@ -108,7 +118,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 }
             }
         } else {
-            $error_message = '';
+            $error_message = null;
             if (is_wp_error($this->form_data)) {
                 $error_message = $this->form_data->get_error_message();
             }
@@ -186,13 +196,15 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      *
      * @return string
      */
-    private function get_hv_user_role()
+    public function get_hv_user_role()
     {
         if (in_array('business', $this->user->roles)) {
             return 'business';
         } elseif (in_array('person', $this->user->roles)) {
             return 'person';
         }
+
+        return false;
     }
 
     /**
@@ -202,7 +214,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
      */
     private function get_form_fields()
     {
-        return array(
+        $form_fields = array(
             'username'        => array(
                 'type'        => 'text',
                 'label'       => __('Gebruikersnaam', 'hockey_vacatures'),
@@ -218,6 +230,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'value'       => ($this->edit) ? $this->user->nickname : null,
                 'readonly'    => $this->edit,
                 'disabled'    => $this->edit,
+                'description' => ($this->edit) ? __('Kan niet gewijzigd worden.', 'hockey-vacatures') : null,
             ),
             'role'            => array(
                 'type'       => 'select',
@@ -237,37 +250,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'value'      => $this->get_hv_user_role(),
                 'readonly'   => $this->edit,
                 'disabled'   => $this->edit,
-            ),
-
-            // Password fields
-            'password'        => array(
-                'type'        => 'password',
-                'label'       => __('Wachtwoord', 'hockey_vacatures'),
-                'name'        => 'password',
-                'placeholder' => '',
-                'col_size'    => 'col-12 col-md-6',
-                'required'    => true,
-                'validation'  => ($this->edit) ? null : array(
-                    'required'   => !$this->edit,
-                    'type'       => 'text',
-                    'min_length' => 5
-                ),
-//                'readonly'    => $this->edit,
-//                'disabled'    => $this->edit,
-            ),
-            'password_check'  => array(
-                'type'        => 'password',
-                'label'       => __('Wachtwoord Check', 'hockey_vacatures'),
-                'name'        => 'password_check',
-                'placeholder' => '',
-                'col_size'    => 'col-12 col-md-6',
-                'required'    => true,
-                'validation'  => array(
-                    'required' => !$this->edit,
-                    'type'     => 'text'
-                ),
-//                'readonly'    => $this->edit,
-//                'disabled'    => $this->edit,
+                'description' => ($this->edit) ? __('Kan niet gewijzigd worden.', 'hockey-vacatures') : null,
             ),
 
             // Address fields
@@ -352,7 +335,57 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 ),
                 'value'       => $this->user->street
             ),
-// TODO: FIX POSTCODE API
+        );
+
+        // Add the password fields
+        if($this->edit){
+            $form_fields['password'] = array(
+                'type'        => 'password',
+                'label'       => __('Wachtwoord', 'hockey_vacatures'),
+                'name'        => 'password',
+                'placeholder' => '',
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => ($this->edit) ? null : array(
+                    'required'   => !$this->edit,
+                    'type'       => 'text',
+                    'min_length' => 5
+                ),
+            );
+        } else {
+            $form_fields['password'] = array(
+                'type'        => 'password',
+                'label'       => __('Wachtwoord', 'hockey_vacatures'),
+                'name'        => 'password',
+                'placeholder' => '',
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => ($this->edit) ? null : array(
+                    'required'   => !$this->edit,
+                    'type'       => 'text',
+                    'min_length' => 5
+                ),
+            );
+            $form_fields['password_check'] = array(
+                'type'        => 'password',
+                'label'       => __('Wachtwoord Check', 'hockey_vacatures'),
+                'name'        => 'password_check',
+                'placeholder' => '',
+                'col_size'    => 'col-12 col-md-6',
+                'required'    => true,
+                'validation'  => array(
+                    'required' => !$this->edit,
+                    'type'     => 'text'
+                ),
+            );
+        }
+
+        return $form_fields;
+
+
+
+
+        // TODO: FIX POSTCODE API
 
 //            'manual_location' => array(
 //                'type'     => 'checkbox',
@@ -370,7 +403,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
 //                ),
 //                'value'      => $this->user->coordinates
 //            ),
-        );
+
+
+
     }
 
 
@@ -425,6 +460,7 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                 'value'       => $this->user->user_email,
                 'readonly'   => $this->edit,
                 'disabled'   => $this->edit,
+                'description' => ($this->edit) ? __('Kan niet gewijzigd worden.', 'hockey-vacatures') : null,
             ),
             'business_web_url' => array(
                 'type'        => 'text',
@@ -516,8 +552,9 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
                     'type'     => 'email',
                 ),
                 'value'       => $this->user->user_email,
-//                'readonly'   => $this->edit,
-//                'disabled'   => $this->edit,
+                'readonly'    => $this->edit,
+                'disabled'    => $this->edit,
+                'description' => ($this->edit) ? __('Kan niet gewijzigd worden.', 'hockey-vacatures') : null,
             ),
             'person_age'    => array(
                 'type'        => 'number',
@@ -665,26 +702,6 @@ class HV_Shortcode_Register_Form extends HV_Forms_Helper
         }
 
         return array();
-    }
-
-    /**
-     * Get an section of the form_fields by array key
-     *
-     * @param array $sections
-     *
-     * @return array
-     */
-    private function get_form_section($sections = array())
-    {
-        $data = array();
-
-        foreach ($sections as $section) {
-            if (array_key_exists((string)$section, $this->form_fields)) {
-                $data[$section] = $this->form_fields[$section];
-            }
-        }
-
-        return $data;
     }
 
     /**

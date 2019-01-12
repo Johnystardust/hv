@@ -36,7 +36,7 @@ class HV_Install
     public static function install()
     {
         self::create_roles();
-        self::register_pages();
+//        self::register_pages();
     }
 
     /**
@@ -220,6 +220,8 @@ class HV_Install
     }
 
     /**
+     * // TODO: CREATE AN INSTALLER FOR THIS
+     *
      * Register the needed pages on activation
      */
     private static function register_pages()

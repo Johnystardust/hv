@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-md-11">
             <div class="row">
-                <?php $this->build_form($this->get_form_section(array('title', 'vacature_category', 'gender', 'age', 'field'))); ?>
+                <?php $this->build_form($this->get_form_section(array('title', 'date', 'vacature_category', 'gender', 'age', 'field'))); ?>
             </div>
             <div class="new-vacature-address-toggle row">
                 <div class="form-group col-12">

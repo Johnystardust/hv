@@ -4,12 +4,6 @@
             <div class="col-12">
                 <?php $user_id = get_current_user_id(); ?>
                 <?php $user_data = get_userdata( $user_id ); ?>
-
-                <!--                --><?php
-                //                $additional_data = get_user_meta(get_current_user_id(), 'hv_user_data', true);
-                //                var_dump($additional_data);
-                //                ?>
-
                 <h3><?php echo __( 'Hallo ', 'hockey_vacatures' ) . $user_data->first_name; ?></h3>
             </div>
 
@@ -19,9 +13,10 @@
                         <div class="widget widget_nav_menu">
                             <ul class="mt-3">
                                 <li><a class="hv-side-panel-tab" href="<?php echo get_permalink( get_page_by_path( 'nieuwe-vacature' ) ); ?>"><?php echo __( 'Nieuwe vacature maken', 'hockey_vacatures' ); ?></a></li>
-<!--                                <li><a class="hv-side-panel-tab user-vacatures" href="#user_vacatures">--><?php //echo __( 'Mijn vacatures', 'hockey_vacatures' ); ?><!--</a></li>--> <!-- TODO: MIJN VACATURES LINK MAKEN -->
+                                <li><a class="hv-side-panel-tab user-vacatures" href="#user_vacatures"><?php echo __( 'Mijn vacatures', 'hockey_vacatures' ); ?></a></li>
                                 <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'profiel-bewerken' ) ) ); ?>"><?php echo __( 'Profiel bewerken', 'hockey_vacatures' ); ?></a></li>
-<!--                                <li><a class="hv-side-panel-tab" href="#">--><?php //echo __( 'Tegoed kopen', 'hockey_vacatures' ); ?><!--</a></li>-->
+                                <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'wachtwoord-wijzigen' ) ) ); ?>"><?php echo __('Wachtwoord wijzigen', 'hockey_vacatures'); ?></a></li>
+                                <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'email-wijzigen' ) ) ); ?>"><?php echo __('E-mail wijzigen', 'hockey_vacatures'); ?></a></li>
                             </ul>
                         </div>
                     </div>

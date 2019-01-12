@@ -7,6 +7,9 @@
  */
 $(document).ready(function(){
 
+    // Init all datepickers
+    $('.datepicker').datepicker();
+
     // Nav toggle
     // ==========
     $('.menu-toggle a').on('click', function(){
