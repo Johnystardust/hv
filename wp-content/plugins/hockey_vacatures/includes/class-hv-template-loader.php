@@ -59,6 +59,13 @@ class HV_Template_Loader {
                 wp_die(__('You are trying to edit someone else post. You naughty!', 'hockey_vacatures'));
             }
         }
+        elseif(is_page('mijn-vacatures')){
+            if(is_user_logged_in() && (int)$_GET['id'] == get_current_user_id()){
+                $default_file = 'my-vacature-page.php';
+            } else {
+                wp_die(__('You need to be logged in to view your vacatures', 'hockey_vacatures'));
+            }
+        }
         elseif(is_page('wachtwoord-wijzigen')){
             if(is_user_logged_in() && (int)$_GET['id'] == get_current_user_id()){
                 $default_file = 'password-form-page.php';

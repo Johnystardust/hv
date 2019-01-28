@@ -13,7 +13,7 @@
                         <div class="widget widget_nav_menu">
                             <ul class="mt-3">
                                 <li><a class="hv-side-panel-tab" href="<?php echo get_permalink( get_page_by_path( 'nieuwe-vacature' ) ); ?>"><?php echo __( 'Nieuwe vacature maken', 'hockey_vacatures' ); ?></a></li>
-                                <li><a class="hv-side-panel-tab user-vacatures" href="#user_vacatures"><?php echo __( 'Mijn vacatures', 'hockey_vacatures' ); ?></a></li>
+                                <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'mijn-vacatures' ) ) ); ?>"><?php echo __( 'Mijn vacatures', 'hockey_vacatures' ); ?></a></li>
                                 <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'profiel-bewerken' ) ) ); ?>"><?php echo __( 'Profiel bewerken', 'hockey_vacatures' ); ?></a></li>
                                 <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'wachtwoord-wijzigen' ) ) ); ?>"><?php echo __('Wachtwoord wijzigen', 'hockey_vacatures'); ?></a></li>
                                 <li><a class="hv-side-panel-tab" href="<?php echo add_query_arg( 'id', $user_id, get_permalink( get_page_by_path( 'email-wijzigen' ) ) ); ?>"><?php echo __('E-mail wijzigen', 'hockey_vacatures'); ?></a></li>
@@ -21,14 +21,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-            <div class="ajax-contents col-12 mt-5">
-
-            </div>
-
-
         </div>
     </div>
 </div>
